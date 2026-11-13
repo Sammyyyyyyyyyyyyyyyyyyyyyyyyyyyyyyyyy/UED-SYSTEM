@@ -105,17 +105,25 @@ html, body {
     flex: 1;
 }
 
-/* PROGRESS BAR */
+/* =========================================
+   PROGRESS BAR (GINAWANG PAREHO SA UPLOAD)
+========================================= */
 .select-service .progress-container {
-    width: 80%;
-    max-width: 1140px;
     display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 50px; 
+    width: 86%;
+    max-width: 950px;
+    gap: 15px;
+    margin-bottom: 40px; 
 }
-.select-service .progress-step { flex: 1; height: 8px; background-color: #ffffff; }
-.select-service .progress-step.active { background-color: #4A4D21; }
+.select-service .progress-step { 
+    flex: 1; 
+    height: 6px; 
+    background-color: #ffffff; 
+    border-radius: 4px;
+}
+.select-service .progress-step.active { 
+    background-color: #605a36; 
+}
 
 /* TITLE */
 .select-service .service-title { width: 90%; text-align: center; margin-bottom: 60px; }
@@ -191,7 +199,9 @@ html, body {
 .notif-mark-read { background: none; border: none; color: #6d6b45; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
 .notif-mark-read:hover { color: #203B32; }
 
-/* RESPONSIVE */
+/* =========================================
+   RESPONSIVE
+========================================= */
 @media (max-width: 1100px) {
     .select-service .service-header { padding: 0 20px; }
     .select-service .main-navigation { gap: 16px; }
@@ -228,7 +238,9 @@ html, body {
     .select-service .menu-overlay.active { display: block; }
 
     .select-service .service-content { padding-top: 100px; padding-bottom: 180px; }
-    .select-service .progress-container { width: 90%; gap: 7px; margin-bottom: 30px; }
+    
+    /* Inayos ang progress bar sa mobile */
+    .select-service .progress-container { width: 86%; gap: 10px; margin-bottom: 30px; }
     .select-service .progress-step { height: 6px; }
 
     .select-service .service-title { margin-bottom: 30px; }
