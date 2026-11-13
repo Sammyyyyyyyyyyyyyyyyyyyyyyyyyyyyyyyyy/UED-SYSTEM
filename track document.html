@@ -46,6 +46,7 @@
         }
         
         .menu-toggle, .close-menu { display: none; }
+        
         @media (max-width: 850px) {
             .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
             .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
@@ -53,6 +54,41 @@
             .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
             .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
             .menu-overlay.active { display: block; }
+
+            /* ==========================================
+               FIX PARA HINDI LUMAGPAS SA SCREEN SA MOBILE
+            ========================================== */
+            .track-page .service-content {
+                padding: 100px 20px 60px !important; /* Bawasan ang padding sa ilalim */
+            }
+
+            .track-page .track-layout {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+                height: 75vh !important; /* Limitahan ang height ng layout */
+                overflow-y: auto !important; /* Gawing scrollable ang buong layout */
+                padding-bottom: 20px;
+            }
+
+            /* Custom Scrollbar para maganda */
+            .track-page .track-layout::-webkit-scrollbar {
+                width: 6px;
+            }
+            .track-page .track-layout::-webkit-scrollbar-thumb {
+                background-color: #a5b88f;
+                border-radius: 10px;
+            }
+            .track-page .track-layout::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            /* Siguraduhing hindi lalaki nang sobra ang card */
+            .track-page .order-details-card, 
+            .track-page .progress-card {
+                height: auto !important;
+                flex-shrink: 0 !important;
+            }
         }
     </style>
 </head>
