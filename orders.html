@@ -35,7 +35,7 @@
     <!-- HEADER -->
     <header class="service-header">
         <a href="dashboard.html" class="brand">
-            <img src="img/Printer.png" alt="PRINT Logo">
+            <img src="Printer.png" alt="PRINT Logo">
             <span>PRINT</span>
         </a>
 
@@ -120,8 +120,8 @@
         </div>
     </main>
 
-    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
-    <img src="img/Landscape.png" class="landscape" alt="">
+    <img src="Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="Landscape.png" class="landscape" alt="">
 </div>
 
 <script>
@@ -212,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function() {
             let firstName = (order.files && order.files.length > 0) ? order.files[0].name : "Document";
             let descText = fileCount + " file(s) - " + firstName;
             
-            let imgSrc = "img/Documentation_Preview.png"; 
-            if (order.service && order.service.includes("Photo")) imgSrc = "img/Photo.png";
-            if (order.service && order.service.includes("Tarpaulin")) imgSrc = "img/Tarpaulin.png";
+            let imgSrc = "Documentation_Preview.png"; 
+            if (order.service && order.service.includes("Photo")) imgSrc = "Photo.png";
+            if (order.service && order.service.includes("Tarpaulin")) imgSrc = "Tarpaulin.png";
 
             const card = document.createElement("div");
             card.className = "order-card";
