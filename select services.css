@@ -105,9 +105,7 @@ html, body {
     flex: 1;
 }
 
-/* =========================================
-   PROGRESS BAR (GINAWANG PAREHO SA UPLOAD)
-========================================= */
+/* PROGRESS BAR */
 .select-service .progress-container {
     display: flex;
     width: 86%;
