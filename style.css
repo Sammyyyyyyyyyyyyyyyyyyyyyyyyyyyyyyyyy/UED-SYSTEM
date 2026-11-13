@@ -188,7 +188,7 @@ html, body {
 
 @media (max-width: 768px) {
     .home-user main {
-        padding-top: 120px;
+        padding-top: 140px; /* In-adjust para may space sa taas */
     }
 
     .home-user .div {
@@ -197,28 +197,43 @@ html, body {
 
     .home-user .p {
         font-size: 14px;
+        margin-bottom: 30px;
     }
 
     .home-user .printer-illustration {
-        width: 300px;
+        width: 280px;
+        margin-top: 20px; /* Pababa ng bahagya ang printer */
+        margin-bottom: 30px;
+    }
+
+    .home-user .button-get-started {
+        margin-top: 15px; /* Pababa ng bahagya ang button */
     }
 }
 
 @media (max-width: 480px) {
+    .home-user main {
+        padding-top: 120px;
+    }
+
     .home-user .div {
         font-size: 28px;
     }
 
     .home-user .p {
         font-size: 13px;
+        margin-bottom: 20px;
     }
 
     .home-user .printer-illustration {
-        width: 250px;
+        width: 220px;
+        margin-top: 15px;
+        margin-bottom: 25px;
     }
 
     .home-user .button-get-started {
         font-size: 14px;
         padding: 12px 30px;
+        margin-top: 10px;
     }
 }
