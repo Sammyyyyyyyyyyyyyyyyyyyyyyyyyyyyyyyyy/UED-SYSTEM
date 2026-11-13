@@ -201,17 +201,17 @@ html, body {
         margin-bottom: 30px;
     }
 
-    /* PRINTER - LOWER AND CENTER */
+    /* PRINTER - BIGGER, LOWER AND CENTERED */
     .home-user .printer-illustration {
         display: block;
-        width: 280px;
-        max-width: 85%;
+        width: 320px;
+        max-width: 90%;
         height: auto;
         align-self: center;
         margin: 55px auto 40px;
     }
 
-    /* BUTTON - LOWER AND CENTER */
+    /* BUTTON - LOWER AND CENTERED */
     .home-user .button-get-started {
         align-self: center;
         display: flex;
@@ -236,10 +236,12 @@ html, body {
         margin-bottom: 25px;
     }
 
-    /* PRINTER */
+    /* PRINTER - BIGGER, LOWER AND CENTERED */
     .home-user .printer-illustration {
-        width: 240px;
-        max-width: 85%;
+        display: block;
+        width: 270px;
+        max-width: 90%;
+        height: auto;
         margin: 55px auto 40px;
         align-self: center;
     }
