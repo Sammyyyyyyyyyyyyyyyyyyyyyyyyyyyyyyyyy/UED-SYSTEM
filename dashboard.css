@@ -1,0 +1,433 @@
+/* =========================================
+   PRINT - DASHBOARD
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background);
+    overflow: hidden;
+}
+
+/* HEADER */
+.dashboard-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 40px 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation);
+    z-index: 5;
+}
+
+.dashboard .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Jaro', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.dashboard .brand img {
+    width: 43px;
+    height: 39px;
+    object-fit: contain;
+}
+
+/* NAVIGATION & ACTIONS */
+.dashboard .nav-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dashboard .main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.dashboard .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+}
+
+.dashboard .nav-link:hover,
+.dashboard .notification-link:hover {
+    opacity: 0.7;
+}
+
+.dashboard .nav-link svg {
+    display: block;
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   NOTIFICATION BELL & RED DOT
+========================================= */
+
+.dashboard .notification-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .notification-link {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dashboard .notification-link svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* RED DOT INDICATOR */
+.dashboard .notification-link.has-unread::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #d9534f; 
+    border-radius: 50%;
+    border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* Itago ang mobile buttons sa desktop */
+.dashboard .menu-toggle,
+.dashboard .close-menu,
+.dashboard .menu-overlay {
+    display: none;
+}
+
+/* MAIN CONTENT */
+.dashboard-content {
+    position: relative;
+    width: 100%;
+    min-height: 1024px;
+    z-index: 2;
+}
+
+.dashboard .welcome-section {
+    position: absolute;
+    top: 144px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+}
+
+.dashboard .welcome-section h1 {
+    margin: 0 0 12px;
+    color: var(--PRINT-COLORS-navigation);
+    font-family: var(--heading-h1-font-family);
+    font-size: var(--heading-h1-font-size);
+    font-weight: var(--heading-h1-font-weight);
+}
+
+.dashboard .welcome-section p {
+    max-width: 750px;
+    margin: 0 auto;
+    color: var(--PRINT-COLORS-supporting-text);
+    font-family: var(--body-regular-font-family);
+    font-size: var(--body-regular-font-size);
+    line-height: 1.5;
+}
+
+.dashboard .printer-illustration {
+    position: absolute;
+    top: 332px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 456px;
+    height: 360px;
+    object-fit: contain;
+}
+
+/* START ORDER BUTTON (Figma States) */
+.dashboard .start-order-button {
+    position: absolute;
+    top: 754px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: var(--PRINT-COLORS-primary-button, #304B37);
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: var(--button-label-font-family, 'Poppins', sans-serif);
+    font-size: var(--button-label-font-size, 13px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboard .start-order-button:hover {
+    background-color: var(--PRINT-COLORS-navigation, #203B32);
+}
+
+.dashboard .start-order-button:active {
+    background-color: #17251e;
+    transform: translateX(-50%) scale(0.98);
+}
+
+.dashboard .start-order-button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* LANDSCAPE BACKGROUND */
+.dashboard .foreground-landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    object-fit: fill;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.dashboard .landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 320px;
+    object-fit: fill;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+
+.notif-overlay {
+    position: absolute;
+    top: 45px; 
+    right: 0; 
+    width: 340px; 
+    background-color: #f2f2f2;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; 
+    flex-direction: column;
+    padding: 20px;
+    z-index: 999;
+    border: 1px solid #ddd;
+}
+
+.notif-overlay.active {
+    display: flex;
+}
+
+.notif-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #203B32;
+}
+.notif-close svg { width: 24px; height: 24px; }
+
+.notif-overlay h2 {
+    font-family: 'Jaro', sans-serif;
+    font-size: 24px;
+    color: #4A4D21;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.notif-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: transparent; /* Default transparent */
+    transition: background-color 0.2s ease;
+}
+
+/* DARK GREY BACKGROUND PAG UNREAD */
+.notif-item.unread {
+    background-color: #d1d1d1; 
+}
+
+.notif-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #203B32;
+    stroke-width: 2;
+    fill: none;
+}
+
+.notif-content h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.notif-content .notif-message {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6d6b45;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.notif-content .notif-time {
+    font-size: 9px;
+    color: #888;
+    font-weight: 600;
+}
+
+/* Kapag unread, dark green yung "Just now" */
+.notif-item.unread .notif-time {
+    color: #203B32; 
+    font-weight: 700;
+}
+
+.notif-mark-read {
+    background: none;
+    border: none;
+    color: #6d6b45;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: right;
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.notif-mark-read:hover { color: #203B32; }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+    .dashboard-header { padding: 0 20px; }
+    .dashboard .main-navigation { gap: 16px; }
+    .dashboard .nav-link { font-size: 12px; gap: 5px; }
+    .dashboard .nav-link svg { width: 22px; height: 22px; }
+    .dashboard .brand { font-size: 21px; }
+}
+
+@media (max-width: 700px) {
+    .dashboard { min-height: 850px; }
+    .dashboard-content { min-height: 850px; }
+    .dashboard-header { height: 70px; padding: 0 20px; }
+    .dashboard .brand { font-size: 21px; }
+    .dashboard .brand img { width: 36px; height: 36px; }
+    .dashboard .nav-actions-wrapper { gap: 15px; }
+
+    .dashboard .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .dashboard .main-navigation.active { right: 0; }
+    .dashboard .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .dashboard .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .dashboard .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .dashboard .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .dashboard .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .dashboard .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .dashboard .menu-overlay.active { display: block; }
+
+    .dashboard .welcome-section { top: 125px; width: 90%; }
+    .dashboard .welcome-section h1 { font-size: 27px; }
+    .dashboard .welcome-section p { font-size: 13px; }
+    .dashboard .printer-illustration { top: 275px; width: 85%; max-width: 400px; height: 300px; }
+    .dashboard .start-order-button { top: 620px; width: 180px; height: 46px; }
+    .dashboard .landscape { height: 200px; }
+    .dashboard .foreground-landscape { height: 110px; }
+
+    .notif-overlay {
+        right: -50px; 
+        width: 300px;
+    }
+}
+
+@media (max-width: 380px) {
+    .dashboard .welcome-section h1 { font-size: 24px; }
+    .dashboard .welcome-section p { font-size: 12px; }
+    .dashboard .printer-illustration { width: 90%; }
+}

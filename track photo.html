@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Photo | PRINT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="track.css">
+   
+    <style>
+        /* NOTIFICATION BELL FIX */
+        .notification-wrapper { position: relative; display: flex; align-items: center; }
+        .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
+        .notification-link svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .notif-overlay { position: absolute; top: 45px; right: 0; width: 320px; background: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; padding: 20px; z-index: 99999; border: 1px solid #ddd; }
+        .notif-overlay.active { display: flex; }
+        .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+        .notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+        .notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+        .notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; }
+        .notif-item.unread { background-color: #e5e5e5; }
+        .notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+        .notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+        .notif-content p { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 4px; }
+        .notif-content span { font-size: 9px; color: #888; }
+        .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+        
+        /* DAGDAG NA CSS PARA SA SCROLL NG FILES */
+        #trackFiles {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        #trackFiles::-webkit-scrollbar {
+            width: 6px;
+        }
+        #trackFiles::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #trackFiles::-webkit-scrollbar-thumb {
+            background-color: #a5b88f;
+            border-radius: 10px;
+        }
+        #trackFiles::-webkit-scrollbar-thumb:hover {
+            background-color: #203B32;
+        }
+        
+        .menu-toggle, .close-menu { display: none; }
+        @media (max-width: 850px) {
+            .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
+            .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
+            .main-navigation.active { right: 0; }
+            .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
+            .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+            .menu-overlay.active { display: block; }
+        }
+    </style>
+</head>
+<body>
+<div class="track-page">
+    <header class="service-header">
+        <a href="dashboard.html" class="brand"><img src="img/Printer.png" alt="PRINT Logo"><span>PRINT</span></a>
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg><span>HOME</span></a>
+                <a href="how it works.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg><span>HOW IT WORKS</span></a>
+                <a href="price list selection.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg><span>PRICE LIST</span></a>
+                <a href="orders.html" class="nav-link active"><svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg><span>ORDERS</span></a>
+                <a href="profile.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg><span>PROFILE</span></a>
+            </nav>
+            <div class="notification-wrapper">
+                <button class="notification-link" id="notificationBtn"><svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg></button>
+                <div class="notif-overlay" id="notifOverlay">
+                    <button class="notif-close" id="notifClose"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                    <h2>Notifications</h2>
+                    <div class="notif-list"><div class="notif-item unread"><div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="notif-content"><h3>Printing in Progress</h3><p>Your order is now being processed.</p><span>Just now</span></div></div></div>
+                    <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <main class="service-content">
+        <section class="page-title-section">
+            <h1>Track Your Order</h1>
+            <p>Check the latest status of your order</p>
+        </section>
+
+        <div class="track-layout">
+            <div class="order-details-card">
+                <div class="card-header">
+                    <div class="order-ref-group">
+                        <svg class="box-icon" viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        <h2>Order Reference No.<span id="trackRef">Loading...</span></h2>
+                    </div>
+                    <div class="status-badge processing" id="trackStatus">Processing</div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-group">
+                        <label>Order Date</label>
+                        <p id="trackDate">Loading...</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Printing Service</label>
+                        <p>Photo Printing</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Delivery Method</label>
+                        <p id="trackDelivery">Delivery</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Payment Method</label>
+                        <p id="trackPayment">Cash</p>
+                    </div>
+                </div>
+
+                <div class="files-section">
+                    <h3>Files in This Order</h3>
+                    <div id="trackFiles"></div>
+                </div>
+
+                <p class="notice-text">Your order is currently being processed. You will be notified once it's ready for pickup or delivery.</p>
+            </div>
+
+            <div class="progress-card">
+                <h2>Order Progress</h2>
+                <p>Here's the current status of your order</p>
+
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-step completed">
+                            <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                            <div class="timeline-content"><h3>Order Received</h3><span id="time1">Loading...</span><p>Your order has been received and is being reviewed.</p></div>
+                        </div>
+                        <div class="timeline-step active">
+                            <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg></div>
+                            <div class="timeline-content"><h3>Processing</h3><span id="time2">Loading...</span><p>Your files are being prepared.</p></div>
+                        </div>
+                        <div class="timeline-step pending">
+                            <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+                            <div class="timeline-content"><h3>Ready for Pickup/Out for Delivery</h3><p>Your order is ready for the selected fulfillment method.</p></div>
+                        </div>
+                        <div class="timeline-step pending">
+                            <div class="timeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+                            <div class="timeline-content"><h3>Completed</h3><p>Your order has been completed.</p></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="auto-update-text">The status will update automatically. You can also check again for the latest updates.</p>
+            </div>
+        </div>
+    </main>
+
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.getElementById("menuToggle"), closeMenu = document.getElementById("closeMenu"), mainNav = document.getElementById("mainNav"), menuOverlay = document.getElementById("menuOverlay");
+    if(menuToggle) menuToggle.addEventListener("click", () => { mainNav.classList.add("active"); menuOverlay.classList.add("active"); });
+    if(closeMenu) closeMenu.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    if(menuOverlay) menuOverlay.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+
+    const notifBtn = document.getElementById("notificationBtn"), notifOverlay = document.getElementById("notifOverlay"), notifClose = document.getElementById("notifClose"), notifMarkRead = document.getElementById("notifMarkRead");
+    if (notifBtn) notifBtn.addEventListener("click", (e) => { e.stopPropagation(); notifOverlay.classList.toggle("active"); });
+    if (notifClose) notifClose.addEventListener("click", () => notifOverlay.classList.remove("active"));
+    document.addEventListener("click", (e) => { if (notifOverlay && notifOverlay.classList.contains("active")) { if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) notifOverlay.classList.remove("active"); } });
+    if (notifMarkRead) notifMarkRead.addEventListener("click", () => { document.querySelectorAll(".notif-item.unread").forEach(i => i.classList.remove("unread")); notifMarkRead.style.display = "none"; });
+
+    // DATA
+    let orders = JSON.parse(localStorage.getItem("finalPhotoOrders")) || JSON.parse(localStorage.getItem("uploadedPhotos")) || [];
+    const deliveryMethod = localStorage.getItem("selectedDelivery") || "Delivery";
+    const paymentMethod = localStorage.getItem("selectedPayment") || "Cash";
+    
+    document.getElementById("trackDelivery").textContent = deliveryMethod;
+    document.getElementById("trackPayment").textContent = paymentMethod; // Walang hardcoded na "• ₱20"
+    
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + " - " + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById("trackDate").textContent = dateStr;
+    document.getElementById("time1").textContent = dateStr;
+    document.getElementById("time2").textContent = dateStr;
+
+    const trackFiles = document.getElementById("trackFiles");
+    const sizePrices = { "Wallet Size": 7.88, "3R": 15.00, "4R": 18.00, "5R": 25.00, "6R": 30.00, "8R": 45.00, "A4": 50.00, "Cute Size": 9.00 };
+    let grandTotal = 0;
+
+    if (orders.length === 0) {
+        trackFiles.innerHTML = `<p style="font-size:12px; color:#666;">No files found in this order.</p>`;
+    } else {
+        orders.forEach((file) => {
+            const copies = parseInt(file.settings?.copies) || 1;
+            const photoSize = file.settings?.photoSize || "Wallet Size";
+            const pricePerCopy = sizePrices[photoSize] || 15.00;
+            const subtotal = pricePerCopy * copies;
+            grandTotal += subtotal;
+
+            trackFiles.innerHTML += `
+                <div class="file-item">
+                    <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <div class="file-info">
+                        <h4>${file.name}</h4>
+                        <p>${photoSize} - ${file.settings?.finish || 'Glossy'} - ${copies} copy</p>
+                    </div>
+                    <div class="file-price">₱${subtotal.toFixed(2)}</div>
+                </div>
+            `;
+        });
+    }
+
+    const deliveryFee = (deliveryMethod === "Delivery") ? 20 : 0;
+    const finalTotal = grandTotal + deliveryFee;
+
+    // ==========================================
+    // LOGIC PARA SA SUNOD-SUNOD NA ID (PR-0003)
+    // ==========================================
+    const existingHistory = JSON.parse(localStorage.getItem("myOrdersHistory")) || [];
+    
+    // 1. Hanapin ang pinakamalaking ID number
+    let maxNum = 0;
+    existingHistory.forEach(order => {
+        const num = parseInt(order.orderId.replace("PR-", ""));
+        if (!isNaN(num) && num > maxNum) maxNum = num;
+    });
+    
+    // 2. Gumawa ng bagong ID (+1)
+    const newOrderId = "PR-" + String(maxNum + 1).padStart(4, '0');
+    
+    // 3. Ipakita sa screen
+    document.getElementById("trackRef").innerHTML = newOrderId;
+
+    // 4. I-save sa history
+    if (orders.length > 0) {
+        let currentActiveOrder = sessionStorage.getItem("activeTrackOrder");
+        
+        if (!currentActiveOrder) {
+            sessionStorage.setItem("activeTrackOrder", newOrderId);
+            existingHistory.push({
+                orderId: newOrderId, 
+                service: "Photo Printing",
+                files: orders.map(f => ({ name: f.name || "file", type: f.type || "" })),
+                total: finalTotal.toFixed(2), 
+                date: dateStr, 
+                status: "Processing", 
+                trackLink: "track photo.html"
+            });
+            localStorage.setItem("myOrdersHistory", JSON.stringify(existingHistory));
+            console.log("✅ Photo Order Saved:", newOrderId);
+        } else {
+            // Kung nag-refresh lang, huwag idagdag ulit
+            document.getElementById("trackRef").innerHTML = currentActiveOrder;
+        }
+    }
+});
+</script>
+
+</body>
+</html>

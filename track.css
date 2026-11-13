@@ -1,0 +1,389 @@
+/* =========================================
+   PRINT - TRACK ORDER PAGE
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #D9D9D9;
+    font-family: 'Poppins', sans-serif;
+}
+
+.track-page {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background, #D9D9D9);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.track-page .service-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation, #203B32);
+    z-index: 5;
+}
+
+.track-page .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Jaro', sans-serif;
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.track-page .brand img {
+    width: 43px;
+    height: 39px;
+    object-fit: contain;
+}
+
+/* NAVIGATION & ACTIONS */
+.track-page .nav-actions-wrapper { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+.track-page .main-navigation { display: flex; align-items: center; gap: 24px; flex-wrap: nowrap; }
+.track-page .nav-link { display: flex; align-items: center; gap: 9px; color: #ffffff; text-decoration: none; font-size: 12px; white-space: nowrap; flex-shrink: 0; transition: opacity 0.2s; }
+.track-page .nav-link:hover, .track-page .nav-link.active { opacity: 0.7; }
+.track-page .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.track-page .notification-link { display: flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; flex-shrink: 0; transition: opacity 0.2s; }
+.track-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Hidden Mobile Buttons */
+.track-page .menu-toggle, .track-page .close-menu, .track-page .menu-overlay { display: none; }
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.track-page .service-content {
+    position: relative;
+    width: 100%;
+    min-height: 1024px;
+    z-index: 2;
+    padding: 120px 40px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* TITLE */
+.track-page .page-title-section {
+    width: 86%;
+    max-width: 1000px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.track-page .page-title-section h1 {
+    color: #203B32;
+    font-family: 'Jaro', sans-serif;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.track-page .page-title-section p {
+    color: #4A4D21;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================================
+   TWO COLUMN LAYOUT
+========================================= */
+
+.track-page .track-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    width: 86%;
+    max-width: 1000px;
+    align-items: stretch;
+}
+
+/* =========================================
+   LEFT SIDE: ORDER DETAILS CARD
+========================================= */
+
+.track-page .order-details-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.track-page .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #203B32;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.track-page .order-ref-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.track-page .box-icon {
+    width: 45px;
+    height: 45px;
+}
+
+.track-page .order-ref-group h2 {
+    color: #203B32;
+    font-family: 'Jaro', sans-serif;
+    font-size: 24px;
+    line-height: 1.1;
+}
+
+.track-page .order-ref-group h2 span {
+    display: block;
+    font-size: 20px;
+    color: #4A4D21;
+    letter-spacing: 1px;
+}
+
+.track-page .status-badge {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.track-page .status-badge.processing { background-color: #6b7c6b; }
+.track-page .status-badge.completed { background-color: #203B32; }
+
+.track-page .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.track-page .info-group label {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.track-page .info-group p {
+    font-size: 13px;
+    color: #203B32;
+    font-weight: 700;
+}
+
+/* Files Section */
+.track-page .files-section h3 {
+    font-size: 13px;
+    color: #203B32;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.track-page .file-item {
+    background-color: #a5b88f;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.track-page .file-icon { width: 24px; height: 24px; flex-shrink: 0; }
+.track-page .file-info { flex: 1; }
+.track-page .file-info h4 { font-size: 12px; color: #203B32; font-weight: 700; }
+.track-page .file-info p { font-size: 10px; color: #333; font-weight: 600; }
+.track-page .file-price { font-size: 12px; font-weight: 700; color: #203B32; }
+
+.track-page .notice-text {
+    margin-top: auto;
+    text-align: center;
+    font-size: 10px;
+    color: #555;
+    font-weight: 600;
+    padding-top: 20px;
+}
+
+/* =========================================
+   RIGHT SIDE: ORDER PROGRESS (GREEN CARD)
+========================================= */
+
+.track-page .progress-card {
+    background-color: #a5b88f;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-page .progress-card h2 {
+    color: #203B32;
+    font-family: 'Jaro', sans-serif;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.track-page .progress-card > p {
+    color: #333;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* WHITE INNER CARD FOR TIMELINE */
+.track-page .timeline-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 25px 20px;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.track-page .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Vertical Line */
+.track-page .timeline::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    bottom: 15px;
+    width: 2px;
+    background-color: #ddd;
+    z-index: 1;
+}
+
+.track-page .timeline-step {
+    position: relative;
+    display: flex;
+    gap: 15px;
+    z-index: 2;
+}
+
+.track-page .timeline-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 0 4px #ffffff;
+}
+
+.track-page .timeline-icon svg { width: 20px; height: 20px; }
+
+.track-page .timeline-content { padding-top: 2px; }
+.track-page .timeline-content h3 { font-size: 12px; color: #333; font-weight: 700; margin-bottom: 2px; }
+.track-page .timeline-content span { display: block; font-size: 9px; color: #888; font-weight: 700; margin-bottom: 4px; }
+.track-page .timeline-content p { font-size: 10px; color: #666; font-weight: 600; line-height: 1.4; }
+
+/* Timeline States */
+.track-page .timeline-step.completed .timeline-icon { border-color: #304B37; }
+.track-page .timeline-step.completed .timeline-icon svg { stroke: #304B37; }
+.track-page .timeline-step.completed .timeline-content h3 { color: #203B32; }
+
+.track-page .timeline-step.active .timeline-icon { background-color: #a5b88f; border-color: #a5b88f; }
+.track-page .timeline-step.active .timeline-icon svg { stroke: #203B32; }
+.track-page .timeline-step.active .timeline-content h3 { color: #203B32; }
+
+.track-page .timeline-step.pending .timeline-icon { border-color: #ddd; }
+.track-page .timeline-step.pending .timeline-icon svg { stroke: #aaa; }
+.track-page .timeline-step.pending .timeline-content h3,
+.track-page .timeline-step.pending .timeline-content p { color: #999; }
+
+.track-page .auto-update-text {
+    text-align: center;
+    font-size: 10px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* =========================================
+   LANDSCAPE
+========================================= */
+
+.track-page .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; object-fit: fill; z-index: 0; pointer-events: none; }
+.track-page .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; object-fit: fill; z-index: 1; pointer-events: none; }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+    .track-page .service-header { padding: 0 20px; }
+    .track-page .main-navigation { gap: 16px; }
+    .track-page .nav-link { gap: 5px; font-size: 11px; }
+    .track-page .nav-link svg { width: 22px; height: 22px; }
+}
+
+@media (max-width: 850px) {
+    .track-page .track-layout { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@media (max-width: 600px) {
+    .track-page .service-header { height: 70px; padding: 0 20px; }
+    .track-page .brand { font-size: 21px; }
+    .track-page .brand img { width: 36px; height: 36px; }
+
+    /* Sidebar Menu Setup */
+    .track-page .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .track-page .main-navigation.active { right: 0; }
+    .track-page .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .track-page .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .track-page .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .track-page .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .track-page .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .track-page .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .track-page .menu-overlay.active { display: block; }
+
+    /* Mobile Adjustments */
+    .track-page .service-content { padding: 100px 20px 150px; }
+    .track-page .page-title-section h1 { font-size: 26px; }
+    .track-page .card-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .track-page .info-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document | PRINT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="upload.css">
+    
+    <style>
+        /* Layout Grid */
+        .upload-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+            align-items: start;
+        }
+
+        /* UPLOAD BOX (May puting background) */
+        .upload-box {
+            background: #fff;
+            border: 2px solid #203B32;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        /* ORDER LIST (Walang white card) */
+        .order-list-section {
+            background: transparent;
+            border: none;
+            padding: 0 10px;
+        }
+        .list-title {
+            color: #203B32;
+            font-family: 'Jaro', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* Scrollable File List */
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 380px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: #687B70 #e5e5e5;
+        }
+        .file-list::-webkit-scrollbar { width: 7px; }
+        .file-list::-webkit-scrollbar-thumb { background: #687B70; border-radius: 10px; }
+        .file-list::-webkit-scrollbar-track { background: #e5e5e5; }
+
+        /* File Items */
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            min-width: 0;
+            background: #ffffff;
+        }
+        .file-icon svg { width: 28px; height: 28px; }
+        .file-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+        .file-name { font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
+        .file-pages { font-size: 11px; color: #777; }
+        
+        .btn-remove {
+            border: 0; background: #eee; color: #a33; padding: 7px 10px;
+            border-radius: 5px; cursor: pointer; font-family: 'Poppins';
+            font-size: 11px; font-weight: 600; transition: 0.2s;
+        }
+        .btn-remove:hover { background: #ddd; }
+
+        /* Buttons */
+        .btn-browse, .btn-continue, .btn-back, .btn-confirm, .btn-cancel {
+            padding: 12px 25px; border-radius: 6px; cursor: pointer;
+            font-family: 'Poppins'; font-weight: 600;
+        }
+        .btn-browse, .btn-continue, .btn-confirm { background: #203B32; color: white; border: 2px solid #203B32; }
+        .btn-browse:hover, .btn-continue:hover, .btn-confirm:hover { background: #304B37; }
+        .btn-back, .btn-cancel { background: white; color: #203B32; border: 2px solid #203B32; }
+        .action-buttons { display: flex; justify-content: space-between; gap: 15px; margin: 25px 0; }
+
+        /* Modal Styles */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: #0008; z-index: 9999; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: #e5e5e5; width: 100%; max-width: 430px; padding: 25px; border-radius: 12px; text-align: center; }
+        .modal-title { font-family: 'Jaro'; font-size: 25px; color: #4A4D21; margin-bottom: 20px; }
+        .modal-upload-card { background: white; padding: 20px; border-radius: 8px; }
+        .file-preview { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; text-align: left; }
+        .file-preview svg { width: 35px; height: 35px; }
+        .file-preview-info { display: flex; flex-direction: column; min-width: 0; }
+        .file-preview-name { font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
+        .file-preview-pages, .file-types { font-size: 11px; color: #777; }
+        
+        .btn-click-select { padding: 12px; width: 100%; background: #203B32; color: white; border: 0; border-radius: 6px; cursor: pointer; font-family: 'Poppins'; font-weight: 600; }
+        .btn-click-select:hover { background: #304B37; }
+        
+        .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+        .modal-actions button { flex: 1; }
+        .confirm-message-box { background: white; padding: 18px; border-radius: 7px; font-size: 13px; font-weight: 600; }
+        
+        @media(max-width: 750px) {
+            .upload-layout { grid-template-columns: 1fr; }
+            .file-list { max-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+<div class="upload-page">
+    <header class="service-header">
+        <a href="dashboard.html" class="brand">
+            <img src="img/Printer.png" alt="PRINT Logo">
+            <span>PRINT</span>
+        </a>
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg><span>HOME</span></a>
+                <a href="how it works.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg><span>HOW IT WORKS</span></a>
+                <a href="price list selection.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg><span>PRICE LIST</span></a>
+                <a href="orders.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg><span>ORDERS</span></a>
+                <a href="profile.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg><span>PROFILE</span></a>
+            </nav>
+
+            <div class="notification-wrapper">
+                <button class="notification-link has-unread" id="notificationBtn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/>
+                        <path d="M9.5 21H14.5"/>
+                    </svg>
+                </button>
+
+                <div class="notif-overlay" id="notifOverlay">
+                    <div class="notif-popup">
+                        <button class="notif-close" id="notifClose">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="15" y1="9" x2="9" y2="15"/>
+                                <line x1="9" y1="9" x2="15" y2="15"/>
+                            </svg>
+                        </button>
+                        <h2>Notifications</h2>
+                        <div class="notif-list">
+                            <div class="notif-item unread">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M6 9V2h12v7"/>
+                                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                        <rect x="6" y="14" width="12" height="8"/>
+                                    </svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Printing in Progress</h3>
+                                    <p class="notif-message">Your document order is now being processed.</p>
+                                    <span class="notif-time">Just now</span>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="16 8 10 14 8 12"/>
+                                    </svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Order Confirmed</h3>
+                                    <p class="notif-message">Your order PR-0003 and PR-0004 has been confirmed.</p>
+                                    <span class="notif-time">1 minute ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <main class="service-content">
+        <div class="progress-bar">
+            <div class="progress-step"></div><div class="progress-step active"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div>
+        </div>
+
+        <section class="page-title-section">
+            <h1>Upload Your Files</h1>
+            <p>Upload the document or image you want us to print. Make sure your file is ready before continuing.</p>
+        </section>
+
+        <div class="upload-layout">
+            <div class="upload-box">
+                <div class="upload-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <h2 class="upload-title">Tap to upload files.</h2>
+                <div class="warning-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <p>Ensure files are accessible and<br>do not have passwords.</p>
+                </div>
+                <button class="btn-browse" id="openUploadModal">Browse Files</button>
+            </div>
+
+            <div class="order-list-section">
+                <h3 class="list-title">YOUR ORDER</h3>
+                <div class="file-list" id="fileList"></div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-back" id="backBtn">Back</button>
+            <button class="btn-continue" id="mainContinueBtn">Continue</button>
+        </div>
+    </main>
+
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+</div>
+
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal-box">
+        <h2 class="modal-title">Upload Your Files</h2>
+        <div class="modal-upload-card">
+            <div class="file-preview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <div class="file-preview-info">
+                    <span class="file-preview-name" id="previewFileName">No files selected</span>
+                    <span class="file-preview-pages" id="previewFileSize">—</span>
+                </div>
+            </div>
+
+            <button class="btn-click-select" id="chooseFilesBtn" type="button">Click to select files</button>
+            <input type="file" id="realFileInput" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
+
+            <p class="file-types" style="margin-top:10px;">PDF, JPG, or PNG</p>
+            <p class="file-types">You can select more files before continuing.</p>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" id="closeUploadModal">Cancel</button>
+            <button class="btn-confirm" id="continueToConfirm">Continue</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-box">
+        <h2 class="modal-title">Upload Confirmation</h2>
+        <div class="confirm-message-box">
+            <p id="confirmMessage"></p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="cancelConfirm">Back</button>
+            <button class="btn-confirm" id="finalConfirm">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="noFileModal">
+    <div class="modal-box">
+        <h2 class="modal-title">No Files Uploaded</h2>
+        <div class="confirm-message-box">
+            <p>Please upload at least one file before continuing.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-confirm" id="noFileOkay">Okay</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+    const DB_NAME = "PRINT_DocumentDB";
+    const STORE_NAME = "documents";
+
+    function openDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, 1);
+            request.onupgradeneeded = function () {
+                const db = request.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "id" });
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    const db = await openDB();
+
+    function dbAction(mode, action) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, mode);
+            const store = transaction.objectStore(STORE_NAME);
+            const request = action(store);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+    const saveBlob = file => dbAction("readwrite", store => store.put(file));
+
+    // NAV & NOTIF
+    const menuToggle = document.getElementById("menuToggle"), closeMenu = document.getElementById("closeMenu"), mainNav = document.getElementById("mainNav"), menuOverlay = document.getElementById("menuOverlay");
+    if(menuToggle) menuToggle.addEventListener("click", () => { mainNav.classList.add("active"); menuOverlay.classList.add("active"); });
+    if(closeMenu) closeMenu.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    if(menuOverlay) menuOverlay.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    
+    const notifBtn = document.getElementById("notificationBtn"), notifOverlay = document.getElementById("notifOverlay"), notifClose = document.getElementById("notifClose"), notifMarkRead = document.getElementById("notifMarkRead");
+    if (notifBtn) notifBtn.addEventListener("click", (e) => { e.stopPropagation(); notifOverlay.classList.toggle("active"); });
+    if (notifClose) notifClose.addEventListener("click", () => notifOverlay.classList.remove("active"));
+    if (notifMarkRead) notifMarkRead.addEventListener("click", () => { document.querySelectorAll(".notif-item.unread").forEach(i => i.classList.remove("unread")); notifMarkRead.style.display = "none"; });
+
+    // UPLOAD LOGIC
+    const fileList = document.getElementById("fileList"), uploadModal = document.getElementById("uploadModal"), confirmModal = document.getElementById("confirmModal"), noFileModal = document.getElementById("noFileModal");
+    const realFileInput = document.getElementById("realFileInput"), previewFileName = document.getElementById("previewFileName"), previewFileSize = document.getElementById("previewFileSize");
+    const pendingFiles = [];
+    
+    let savedFiles = JSON.parse(localStorage.getItem("uploadedDocs") || "[]");
+
+    function saveMetadata() { localStorage.setItem("uploadedDocs", JSON.stringify(savedFiles)); }
+    function formatSize(size) { return size >= 1024 * 1024 ? (size / (1024 * 1024)).toFixed(2) + " MB" : (size / 1024).toFixed(1) + " KB"; }
+
+    function renderFiles() {
+        fileList.innerHTML = "";
+        if (savedFiles.length === 0) {
+            fileList.innerHTML = `<p style="font-size:12px;color:#888;text-align:center;">No files uploaded yet.</p>`;
+            return;
+        }
+        savedFiles.forEach(file => {
+            const item = document.createElement("div");
+            item.className = "file-item";
+            item.innerHTML = `
+                <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                <div class="file-info"><span class="file-name">${file.name}</span><span class="file-pages">${formatSize(file.size)}</span></div>
+                <button class="btn-remove">Remove</button>
+            `;
+            item.querySelector(".btn-remove").addEventListener("click", () => {
+                savedFiles = savedFiles.filter(saved => saved.id !== file.id);
+                saveMetadata(); renderFiles();
+            });
+            fileList.appendChild(item);
+        });
+    }
+
+    function updatePendingPreview() {
+        if (pendingFiles.length === 0) { previewFileName.textContent = "No files selected"; previewFileSize.textContent = "—"; return; }
+        previewFileName.textContent = pendingFiles.length + " file(s) selected";
+        previewFileSize.textContent = formatSize(pendingFiles.reduce((total, file) => total + file.size, 0));
+    }
+
+    document.getElementById("openUploadModal").addEventListener("click", () => { updatePendingPreview(); uploadModal.classList.add("active"); });
+    document.getElementById("chooseFilesBtn").addEventListener("click", () => realFileInput.click());
+    
+    realFileInput.addEventListener("change", () => {
+        const selectedFiles = Array.from(realFileInput.files);
+        selectedFiles.forEach(file => {
+            if (!/\.(pdf|jpg|jpeg|png)$/i.test(file.name)) return;
+            const duplicate = [...savedFiles, ...pendingFiles].some(existing => existing.name === file.name && existing.size === file.size);
+            if (!duplicate) pendingFiles.push(file);
+        });
+        updatePendingPreview(); realFileInput.value = "";
+    });
+
+    document.getElementById("closeUploadModal").addEventListener("click", () => uploadModal.classList.remove("active"));
+    document.getElementById("continueToConfirm").addEventListener("click", () => {
+        if (pendingFiles.length === 0) { alert("Please select at least one file."); return; }
+        document.getElementById("confirmMessage").textContent = pendingFiles.length + " file(s) are ready to be added to your order.";
+        uploadModal.classList.remove("active"); confirmModal.classList.add("active");
+    });
+    
+    document.getElementById("cancelConfirm").addEventListener("click", () => { confirmModal.classList.remove("active"); uploadModal.classList.add("active"); });
+
+    document.getElementById("finalConfirm").addEventListener("click", async () => {
+        try {
+            for (const file of pendingFiles) {
+                const id = "doc_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+                await saveBlob({ id: id, blob: file, name: file.name, type: file.type, size: file.size });
+                savedFiles.push({ id: id, name: file.name, type: file.type, size: file.size, settings: { paperSize: "", color: "BW", sides: "", copies: 1, prefs: "" }, isEdited: false });
+            }
+            pendingFiles.length = 0; realFileInput.value = "";
+            updatePendingPreview(); saveMetadata(); renderFiles();
+            confirmModal.classList.remove("active");
+        } catch (error) { alert("Unable to save your files. Please try again."); }
+    });
+
+    // ==========================================
+    // BACK BUTTON LOGIC (CLEAR STORAGE)
+    // ==========================================
+    document.getElementById("backBtn").addEventListener("click", function() {
+        // Burahin ang mga files para malinis sa susunod na order
+        localStorage.removeItem("uploadedDocs");
+        localStorage.removeItem("finalOrders");
+        sessionStorage.removeItem("activeTrackOrder");
+        
+        // Balik sa Select Services
+        window.location.href = "select services.html";
+    });
+
+    // ==========================================
+    // CONTINUE BUTTON
+    // ==========================================
+    document.getElementById("mainContinueBtn").addEventListener("click", () => {
+        if (savedFiles.length === 0) { noFileModal.classList.add("active"); return; }
+        saveMetadata();
+        window.location.href = "customize document.html";
+    });
+
+    document.getElementById("noFileOkay").addEventListener("click", () => noFileModal.classList.remove("active"));
+    renderFiles(); updatePendingPreview();
+});
+</script>
+
+</body>
+</html>

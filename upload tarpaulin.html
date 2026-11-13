@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Design | PRINT</title>
+<link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="upload.css">
+
+<style>
+    .menu-toggle, .close-menu { display: none; }
+    @media (max-width: 850px) {
+        .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
+        .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
+        .main-navigation.active { right: 0; }
+        .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
+        .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+        .menu-overlay.active { display: block; }
+    }
+
+    .notification-wrapper { position: relative; display: flex; align-items: center; }
+    .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
+    .notification-link svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .notif-overlay { position: absolute; top: 45px; right: 0; width: 320px; background: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; padding: 20px; z-index: 99999; border: 1px solid #ddd; }
+    .notif-overlay.active { display: flex; }
+    .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+    .notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+    .notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+    .notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; }
+    .notif-item.unread { background-color: #e5e5e5; }
+    .notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+    .notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+    .notif-content p { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 4px; }
+    .notif-content span { font-size: 9px; color: #888; }
+    .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+
+    .upload-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; align-items: start; }
+    .upload-box { background: #fff; border: 2px solid #203B32; border-radius: 12px; padding: 25px; text-align: center; }
+    .order-list-section { background: transparent; border: none; padding: 0 10px; }
+    .list-title { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 18px; margin-bottom: 15px; letter-spacing: 1px; }
+
+    .file-list { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; overflow-x: hidden; padding-right: 8px; scrollbar-width: thin; scrollbar-color: #687B70 #e5e5e5; }
+    .file-list::-webkit-scrollbar { width: 7px; }
+    .file-list::-webkit-scrollbar-thumb { background: #687B70; border-radius: 10px; }
+    .file-list::-webkit-scrollbar-track { background: #e5e5e5; }
+
+    .file-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #ccc; border-radius: 7px; min-width: 0; background: #ffffff; }
+    .file-icon svg { width: 28px; height: 28px; }
+    .file-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .file-name { font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
+    .file-pages { font-size: 11px; color: #777; }
+    .btn-remove { border: 0; background: #eee; color: #a33; padding: 7px 10px; border-radius: 5px; cursor: pointer; font-family: 'Poppins'; font-size: 11px; font-weight: 600; }
+    .empty-message { text-align: left; color: #777; font-size: 13px; padding: 20px 0; }
+    .action-buttons { display: flex; justify-content: space-between; gap: 15px; margin: 25px 0; }
+
+    @media(max-width: 750px) {
+        .upload-layout { grid-template-columns: 1fr; }
+        .file-list { max-height: 250px; }
+    }
+</style>
+</head>
+<body>
+<div class="upload-page">
+    <header class="service-header">
+        <a href="dashboard.html" class="brand"><img src="img/Printer.png" alt="PRINT Logo"><span>PRINT</span></a>
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg><span>HOME</span></a>
+                <a href="how it works.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg><span>HOW IT WORKS</span></a>
+                <a href="price list selection.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg><span>PRICE LIST</span></a>
+                <a href="orders.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg><span>ORDERS</span></a>
+                <a href="profile.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg><span>PROFILE</span></a>
+            </nav>
+
+            <div class="notification-wrapper">
+                <button class="notification-link" id="notificationBtn"><svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg></button>
+                <div class="notif-overlay" id="notifOverlay">
+                    <button class="notif-close" id="notifClose"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                    <h2>Notifications</h2>
+                    <div class="notif-list">
+                        <div class="notif-item unread">
+                            <div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+                            <div class="notif-content"><h3>Printing in Progress</h3><p>Your design order is now being processed.</p><span>Just now</span></div>
+                        </div>
+                    </div>
+                    <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                </div>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <main class="service-content">
+        <div class="progress-bar"><div class="progress-step"></div><div class="progress-step active"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div></div>
+        <section class="page-title-section"><h1>Upload Your Design</h1><p>Upload the design you want us to print. Make sure your file is ready before continuing.</p></section>
+
+        <div class="upload-layout">
+            <div class="upload-box">
+                <div class="upload-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                <h2 class="upload-title">Tap to upload your design.</h2>
+                <div class="warning-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <p>Accepted formats: JPG, PNG, and PDF.<br>Make sure your file is accessible.</p>
+                </div>
+                <button class="btn-browse" id="openUploadModal">Browse Files</button>
+            </div>
+
+            <div class="order-list-section">
+                <h3 class="list-title">YOUR ORDER</h3>
+                <div class="file-list" id="fileList"></div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <!-- Pinalitan ang onclick ng id para ma-handle ng JS -->
+            <button class="btn-back" id="backBtn">Back</button>
+            <button class="btn-continue" id="mainContinueBtn" type="button">Continue</button>
+        </div>
+    </main>
+
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+</div>
+
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal-box">
+        <h2 class="modal-title">Upload Your Design</h2>
+        <div class="modal-upload-card">
+            <div class="file-preview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                <div class="file-preview-info">
+                    <span class="file-preview-name" id="previewFileName">No files selected</span>
+                    <span class="file-preview-pages" id="previewFileSize">—</span>
+                </div>
+            </div>
+            <button type="button" class="btn-click-select" id="chooseFilesBtn">Click to select files</button>
+            <input type="file" id="realFileInput" accept=".pdf,.jpg,.jpeg,.png" multiple hidden>
+            <p class="file-types" style="margin-top:10px;">PDF, JPG, or PNG</p>
+            <p class="file-types">You can select more files before continuing.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="closeUploadModal">Cancel</button>
+            <button class="btn-confirm" id="continueToConfirm">Continue</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-box confirm-box">
+        <h2 class="modal-title">Upload Confirmation</h2>
+        <div class="confirm-message-box"><p id="confirmMessage"></p></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="cancelConfirm">Back</button>
+            <button class="btn-confirm" id="finalConfirm">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="noFileModal">
+    <div class="modal-box confirm-box">
+        <h2 class="modal-title">No Files Uploaded</h2>
+        <div class="confirm-message-box"><p>Please upload at least one design file before continuing.</p></div>
+        <div class="modal-actions"><button class="btn-confirm" id="noFileOkay">Okay</button></div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const mainContinueBtn = document.getElementById("mainContinueBtn");
+
+    window.addEventListener("pageshow", function () {
+        mainContinueBtn.textContent = "Continue";
+        mainContinueBtn.disabled = false;
+    });
+
+    // NAVIGATION & NOTIF
+    const menuToggle = document.getElementById("menuToggle"), closeMenu = document.getElementById("closeMenu"), mainNav = document.getElementById("mainNav"), menuOverlay = document.getElementById("menuOverlay");
+    if(menuToggle) menuToggle.addEventListener("click", () => { mainNav.classList.add("active"); menuOverlay.classList.add("active"); });
+    if(closeMenu) closeMenu.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    if(menuOverlay) menuOverlay.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+
+    const notifBtn = document.getElementById("notificationBtn"), notifOverlay = document.getElementById("notifOverlay"), notifClose = document.getElementById("notifClose"), notifMarkRead = document.getElementById("notifMarkRead");
+    if (notifBtn) notifBtn.addEventListener("click", (e) => { e.stopPropagation(); notifOverlay.classList.toggle("active"); });
+    if (notifClose) notifClose.addEventListener("click", () => notifOverlay.classList.remove("active"));
+    document.addEventListener("click", (e) => { if (notifOverlay && notifOverlay.classList.contains("active")) { if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) notifOverlay.classList.remove("active"); } });
+    if (notifMarkRead) notifMarkRead.addEventListener("click", () => { document.querySelectorAll(".notif-item.unread").forEach(i => i.classList.remove("unread")); notifMarkRead.style.display = "none"; });
+
+    // UPLOAD ELEMENTS
+    const uploadModal = document.getElementById("uploadModal"), confirmModal = document.getElementById("confirmModal"), noFileModal = document.getElementById("noFileModal");
+    const realFileInput = document.getElementById("realFileInput"), fileList = document.getElementById("fileList");
+    const previewFileName = document.getElementById("previewFileName"), previewFileSize = document.getElementById("previewFileSize"), confirmMessage = document.getElementById("confirmMessage");
+
+    let pendingFiles = [];
+    
+    // LOCALSTORAGE PARA TULOY-TULOY
+    let savedFiles = JSON.parse(localStorage.getItem("uploadedTarps") || "[]");
+
+    function formatSize(size) {
+        return size >= 1024 * 1024 ? (size / (1024 * 1024)).toFixed(2) + " MB" : (size / 1024).toFixed(1) + " KB";
+    }
+
+    function renderFiles() {
+        fileList.innerHTML = "";
+        if (savedFiles.length === 0) {
+            fileList.innerHTML = '<p class="empty-message">No files uploaded yet.</p>';
+            return;
+        }
+        savedFiles.forEach((file, index) => {
+            const item = document.createElement("div");
+            item.className = "file-item";
+            item.innerHTML = `
+                <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div>
+                <div class="file-info"><span class="file-name">${file.name}</span><span class="file-pages">${formatSize(file.size)}</span></div>
+                <button class="btn-remove">Remove</button>
+            `;
+            item.querySelector(".btn-remove").addEventListener("click", () => {
+                savedFiles.splice(index, 1);
+                localStorage.setItem("uploadedTarps", JSON.stringify(savedFiles));
+                renderFiles();
+            });
+            fileList.appendChild(item);
+        });
+    }
+
+    function updatePendingPreview() {
+        if (pendingFiles.length === 0) {
+            previewFileName.textContent = "No files selected";
+            previewFileSize.textContent = "—";
+            return;
+        }
+        previewFileName.textContent = pendingFiles.length + " file(s) selected";
+        const totalSize = pendingFiles.reduce((sum, file) => sum + file.size, 0);
+        previewFileSize.textContent = formatSize(totalSize);
+    }
+
+    function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error("Unable to read " + file.name));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    renderFiles();
+
+    // OPEN UPLOAD MODAL
+    document.getElementById("openUploadModal").addEventListener("click", function () {
+        pendingFiles = [];
+        realFileInput.value = "";
+        updatePendingPreview();
+        uploadModal.classList.add("active");
+    });
+
+    document.getElementById("chooseFilesBtn").addEventListener("click", function () { realFileInput.click(); });
+
+    realFileInput.addEventListener("change", function () {
+        const selected = Array.from(realFileInput.files);
+        selected.forEach(file => {
+            const isDuplicate = [...savedFiles, ...pendingFiles].some(existing => existing.name === file.name && existing.size === file.size);
+            if (!isDuplicate) pendingFiles.push(file);
+        });
+        updatePendingPreview();
+        realFileInput.value = "";
+    });
+
+    document.getElementById("closeUploadModal").addEventListener("click", function () {
+        uploadModal.classList.remove("active");
+        pendingFiles = [];
+        updatePendingPreview();
+    });
+
+    document.getElementById("continueToConfirm").addEventListener("click", function () {
+        if (pendingFiles.length === 0) { alert("Please select at least one design file."); return; }
+        confirmMessage.textContent = pendingFiles.length + " design(s) are ready to be added to your order.";
+        uploadModal.classList.remove("active");
+        confirmModal.classList.add("active");
+    });
+
+    document.getElementById("cancelConfirm").addEventListener("click", function () {
+        confirmModal.classList.remove("active");
+        uploadModal.classList.add("active");
+    });
+
+    // FINAL CONFIRMATION - Save the files as Base64
+    document.getElementById("finalConfirm").addEventListener("click", async function () {
+        const confirmBtn = document.getElementById("finalConfirm");
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Saving...";
+
+        try {
+            const convertedFiles = await Promise.all(
+                pendingFiles.map(async file => {
+                    const dataUrl = await readFileAsDataURL(file);
+                    return {
+                        id: "tarp_" + Date.now() + "_" + Math.random().toString(36).slice(2),
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        dataUrl: dataUrl,
+                        isEdited: false,
+                        settings: { size: "", copies: 1, prefs: "" }
+                    };
+                })
+            );
+
+            savedFiles.push(...convertedFiles);
+            localStorage.setItem("uploadedTarps", JSON.stringify(savedFiles));
+
+            pendingFiles = [];
+            updatePendingPreview();
+            confirmModal.classList.remove("active");
+            renderFiles();
+        } catch (error) {
+            alert("Unable to save the selected file. Please try again.");
+        } finally {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "Confirm";
+        }
+    });
+
+    // MAIN CONTINUE BUTTON
+    mainContinueBtn.addEventListener("click", function () {
+        if (savedFiles.length === 0) { noFileModal.classList.add("active"); return; }
+        mainContinueBtn.disabled = true;
+        mainContinueBtn.textContent = "Processing...";
+
+        try {
+            localStorage.setItem("uploadedTarps", JSON.stringify(savedFiles));
+            window.location.href = "customize tarpaulin.html";
+        } catch (error) {
+            alert("Unable to continue. The uploaded files may be too large.");
+            mainContinueBtn.disabled = false;
+            mainContinueBtn.textContent = "Continue";
+        }
+    });
+
+    // ==========================================
+    // BACK BUTTON LOGIC (CLEAR STORAGE)
+    // ==========================================
+    document.getElementById("backBtn").addEventListener("click", function() {
+        // Burahin ang mga files para malinis sa susunod na order
+        localStorage.removeItem("uploadedTarps");
+        localStorage.removeItem("finalTarpaulinOrders");
+        sessionStorage.removeItem("activeTrackOrder");
+        
+        // Balik sa Select Services
+        window.location.href = "select services.html";
+    });
+
+    document.getElementById("noFileOkay").addEventListener("click", function () {
+        noFileModal.classList.remove("active");
+    });
+});
+</script>
+
+</body>
+</html>

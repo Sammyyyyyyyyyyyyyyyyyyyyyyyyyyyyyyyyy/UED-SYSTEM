@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Information | PRINT</title>
+
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="styleguide.css">
+    <link rel="stylesheet" href="customer.css">
+</head>
+<body>
+
+<main class="customer-information">
+
+    <!-- GREEN BACKGROUND CARD -->
+    <div class="card-service" aria-hidden="true"></div>
+
+    <!-- TITLE -->
+    <section class="div" aria-labelledby="customer-information-title">
+        <h1 class="text-wrapper-2" id="customer-information-title">
+            Customer Information
+        </h1>
+
+        <p class="p">
+            Please provide your details so we can process your printing order.
+        </p>
+    </section>
+
+    <!-- WHITE FORM CARD -->
+    <form id="customer-form" action="#" method="post">
+
+        <label for="customer-name">Full Name</label>
+        <input
+            id="customer-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Enter your name"
+            required
+        >
+
+        <label for="contact-number">Contact Number</label>
+        <input
+            id="contact-number"
+            name="contact"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            placeholder="Enter your contact number"
+            required
+        >
+
+        <label for="address">Address</label>
+        <textarea
+            id="address"
+            name="address"
+            autocomplete="street-address"
+            placeholder="Enter your complete address"
+            required
+        ></textarea>
+
+    </form>
+
+    <!-- BUTTON OUTSIDE BOTH CARDS -->
+    <button
+        id="continueBtn"
+        class="button"
+        type="submit"
+        form="customer-form"
+    >
+        <span class="get-started">Continue</span>
+    </button>
+
+    <!-- LANDSCAPE -->
+    <img
+        class="foreground-landscape"
+        src="img/Foreground landscape.png"
+        alt=""
+        aria-hidden="true"
+    >
+
+    <img
+        class="landscape"
+        src="img/landscape.png"
+        alt=""
+        aria-hidden="true"
+    >
+
+    <!-- HEADER -->
+    <header class="rectangle">
+        <div class="printer">
+            <img
+                class="icon"
+                src="img/Printer.png"
+                alt=""
+                aria-hidden="true"
+            >
+        </div>
+
+        <span class="text-wrapper">PRINT</span>
+    </header>
+
+</main>
+
+<!-- JAVASCRIPT PARA SA FUNCTIONALITY (Walang binago sa design) -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("customer-form");
+        const continueBtn = document.getElementById("continueBtn");
+        const inputs = form.querySelectorAll("input, textarea");
+
+        // I-check kung may laman lahat
+        function checkFormValidity() {
+            let isValid = true;
+            inputs.forEach(input => {
+                if (input.value.trim() === "") isValid = false;
+            });
+            continueBtn.disabled = !isValid;
+        }
+
+        inputs.forEach(input => input.addEventListener("input", checkFormValidity));
+        checkFormValidity();
+
+        // Kapag clinick ang Continue
+        continueBtn.addEventListener("click", function(e) {
+            e.preventDefault(); // Pipigilan ang form submit
+
+            // I-save sa localStorage
+            localStorage.setItem("customerName", document.getElementById("customer-name").value.trim());
+            localStorage.setItem("customerContact", document.getElementById("contact-number").value.trim());
+            localStorage.setItem("customerAddress", document.getElementById("address").value.trim());
+
+            // Pumunta sa Dashboard
+            window.location.href = "dashboard.html";
+        });
+    });
+</script>
+
+</body>
+</html>

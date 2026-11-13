@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt - Photo | PRINT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="receipt.css">
+  
+    <style>
+        /* Same styles */
+        .notification-wrapper { position: relative; display: flex; align-items: center; }
+        .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
+        .notification-link svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .notif-overlay { position: absolute; top: 45px; right: 0; width: 320px; background: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; padding: 20px; z-index: 99999; border: 1px solid #ddd; }
+        .notif-overlay.active { display: flex; }
+        .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+        .notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+        .notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+        .notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; }
+        .notif-item.unread { background-color: #e5e5e5; }
+        .notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+        .notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+        .notif-content p { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 4px; }
+        .notif-content span { font-size: 9px; color: #888; }
+        .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+        
+        .menu-toggle, .close-menu { display: none; }
+        @media (max-width: 850px) {
+            .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
+            .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
+            .main-navigation.active { right: 0; }
+            .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
+            .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+            .menu-overlay.active { display: block; }
+        }
+        .table-scroll-wrapper { max-height: 250px; overflow-y: auto; border-bottom: 2px solid #203B32; margin-bottom: 20px; }
+        .table-scroll-wrapper::-webkit-scrollbar { width: 6px; }
+        .table-scroll-wrapper::-webkit-scrollbar-thumb { background: #a5b88f; border-radius: 10px; }
+
+        .pdf-export-mode {
+            background: white !important;
+            width: 700px !important;
+            padding: 30px !important;
+            box-sizing: border-box !important;
+            border: 1px solid #203B32 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+        .pdf-export-mode .receipt-header { border-bottom: 2px solid #203B32 !important; }
+        .pdf-export-mode .check-icon { width: 40px !important; height: 40px !important; flex-shrink: 0 !important; }
+        .pdf-export-mode .table-scroll-wrapper { max-height: none !important; overflow: visible !important; border-bottom: 2px solid #203B32 !important; }
+        .pdf-export-mode table { width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; }
+        .pdf-export-mode th, .pdf-export-mode td { border: 1px solid #203B32 !important; padding: 6px !important; font-size: 10px !important; text-align: left !important; word-wrap: break-word !important; }
+        .pdf-export-mode th { background-color: #f0f0f0 !important; color: #203B32 !important; }
+        .pdf-export-mode .total-row { background: #a5b88f !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    </style>
+</head>
+<body>
+<div class="receipt-page">
+    <header class="service-header">
+        <a href="dashboard.html" class="brand"><img src="img/Printer.png" alt="PRINT Logo"><span>PRINT</span></a>
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg><span>HOME</span></a>
+                <a href="how it works.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg><span>HOW IT WORKS</span></a>
+                <a href="price list selection.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg><span>PRICE LIST</span></a>
+                <a href="orders.html" class="nav-link active"><svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg><span>ORDERS</span></a>
+                <a href="profile.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg><span>PROFILE</span></a>
+            </nav>
+            <div class="notification-wrapper">
+                <button class="notification-link" id="notificationBtn"><svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg></button>
+                <div class="notif-overlay" id="notifOverlay">
+                    <button class="notif-close" id="notifClose"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                    <h2>Notifications</h2>
+                    <div class="notif-list"><div class="notif-item unread"><div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="notif-content"><h3>Printing in Progress</h3><p>Your order is now being processed.</p><span>Just now</span></div></div></div>
+                    <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <main class="service-content">
+        <div class="progress-bar"><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step active"></div></div>
+
+        <div class="lower-content-wrapper">
+            <section class="page-title-section">
+                <h1>Order Summary Receipt</h1>
+                <p>Thank you! Your printing order details are shown below.</p>
+            </section>
+
+            <div class="receipt-container" id="receiptContent"></div>
+
+            <div class="action-buttons">
+                <button class="btn-download" id="btnDownload">Download Receipt</button>
+                <button class="btn-track" id="btnTrack">Track Order</button>
+            </div>
+        </div>
+    </main>
+
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.getElementById("menuToggle"), closeMenu = document.getElementById("closeMenu"), mainNav = document.getElementById("mainNav"), menuOverlay = document.getElementById("menuOverlay");
+    if(menuToggle) menuToggle.addEventListener("click", () => { mainNav.classList.add("active"); menuOverlay.classList.add("active"); });
+    if(closeMenu) closeMenu.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    if(menuOverlay) menuOverlay.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+
+    const notifBtn = document.getElementById("notificationBtn"), notifOverlay = document.getElementById("notifOverlay"), notifClose = document.getElementById("notifClose"), notifMarkRead = document.getElementById("notifMarkRead");
+    if (notifBtn) notifBtn.addEventListener("click", (e) => { e.stopPropagation(); notifOverlay.classList.toggle("active"); });
+    if (notifClose) notifClose.addEventListener("click", () => notifOverlay.classList.remove("active"));
+    document.addEventListener("click", (e) => { if (notifOverlay && notifOverlay.classList.contains("active")) { if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) notifOverlay.classList.remove("active"); } });
+    if (notifMarkRead) notifMarkRead.addEventListener("click", () => { document.querySelectorAll(".notif-item.unread").forEach(i => i.classList.remove("unread")); notifMarkRead.style.display = "none"; });
+
+    const custName = localStorage.getItem("customerName") || "Customer Name";
+    const custContact = localStorage.getItem("customerContact") || "Contact Number";
+    const custAddress = localStorage.getItem("customerAddress") || "Address";
+
+    let orders = JSON.parse(localStorage.getItem("finalPhotoOrders")) || JSON.parse(localStorage.getItem("uploadedPhotos")) || [];
+    const deliveryMethod = localStorage.getItem("selectedDelivery") || "Delivery";
+    const paymentMethod = localStorage.getItem("selectedPayment") || "Cash";
+    
+    // Delivery Fee Logic (Pickup = 0)
+    const deliveryFee = (deliveryMethod === "Delivery") ? (parseFloat(localStorage.getItem("deliveryFee")) || 20) : 0;
+    
+    // ORDER REFERENCE LOGIC
+    const history = JSON.parse(localStorage.getItem("myOrdersHistory")) || [];
+    let maxNum = 0;
+    history.forEach(o => { const num = parseInt(o.orderId.replace("PR-", "")); if (num > maxNum) maxNum = num; });
+    let currentOrderId = sessionStorage.getItem("activeTrackOrder");
+    if (!currentOrderId) { currentOrderId = "PR-" + String(maxNum + 1).padStart(4, '0'); }
+    const refHTML = currentOrderId;
+
+    let totalAmount = 0;
+    let tableRows = "";
+
+    orders.forEach((file, i) => {
+        const copies = parseInt(file.settings?.copies) || 1;
+        const photoSize = file.settings?.photoSize || "Wallet Size"; 
+        
+        // KASAMA NA ANG PACKAGES AT CUTE SIZE
+        const sizePrices = { 
+            "Wallet Size": 7.88, 
+            "3R": 15.00, 
+            "4R": 18.00, 
+            "5R": 25.00, 
+            "6R": 30.00, 
+            "8R": 45.00, 
+            "A4": 50.00, 
+            "Cute Size": 9.00,
+            "Package 1 (8pcs 1x1)": 25.00,
+            "Package 2 (4pcs 2x2)": 35.00,
+            "Package 3 (5pcs Passport)": 25.00,
+            "Package 4 (2pcs 2x2, 1x1, Passport)": 40.00,
+            "Package 5 (3pcs Passport, 4pcs 1x1)": 40.00
+        };
+        const pricePerCopy = sizePrices[photoSize] || 15.00;
+        const subtotal = pricePerCopy * copies;
+        totalAmount += subtotal;
+
+        tableRows += `
+            <tr>
+                <td>${i+1}</td>
+                <td>${file.name}</td>
+                <td>${photoSize} - ${file.settings?.finish || 'Glossy'} - ${copies} copy</td>
+                <td>1</td>
+                <td>₱${pricePerCopy.toFixed(2)}</td>
+                <td>₱${subtotal.toFixed(2)}</td>
+            </tr>
+        `;
+    });
+
+    const finalTotal = (totalAmount + deliveryFee).toFixed(2);
+
+    document.getElementById("receiptContent").innerHTML = `
+        <div class="receipt-header">
+            <div class="status-group">
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 14 8 12"/></svg>
+                <div class="status-text">
+                    <h2>ORDER CONFIRMED</h2>
+                    <p>Your printing order has been received and is being processed</p>
+                </div>
+            </div>
+            <div class="order-ref-box">
+                <span class="ref-label">Order Reference No.</span>
+                <span class="ref-number">${refHTML}</span>
+            </div>
+        </div>
+        <div class="receipt-details-grid">
+            <div class="details-block">
+                <h3>Customer Information</h3>
+                <div class="detail-row"><span class="label">Name</span><span class="value">${custName}</span></div>
+                <div class="detail-row"><span class="label">Contact Number</span><span class="value">${custContact}</span></div>
+                <div class="detail-row"><span class="label">Address</span><span class="value">${custAddress}</span></div>
+            </div>
+            <div class="details-block">
+                <h3>Order Details</h3>
+                <div class="detail-row"><span class="label">Printing Service</span><span class="value">Photo Printing</span></div>
+                <div class="detail-row"><span class="label">Delivery Method</span><span class="value">${deliveryMethod}</span></div>
+                <div class="detail-row"><span class="label">Payment Method</span><span class="value">${paymentMethod}</span></div>
+            </div>
+        </div>
+        <div class="table-container">
+            <h3 class="table-title">Order Items</h3>
+            <div class="table-scroll-wrapper">
+                <table>
+                    <thead>
+                        <tr><th>No.</th><th>File Name</th><th>Details</th><th>Pages</th><th>Unit Price</th><th>Subtotal</th></tr>
+                    </thead>
+                    <tbody>${tableRows}</tbody>
+                </table>
+            </div>
+        </div>
+        <div class="total-row">
+            <div class="total-left">
+                <svg class="total-icon" viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+                <div class="total-text"><h4>Total Amount Paid</h4><p>Thank you for choosing PRINT!</p></div>
+            </div>
+            <div class="total-amount">₱${finalTotal}</div>
+        </div>
+    `;
+
+    document.getElementById("btnDownload").addEventListener("click", () => {
+        const element = document.getElementById("receiptContent");
+        const btn = document.getElementById("btnDownload");
+        const originalContent = element.innerHTML;
+        const originalClass = element.className;
+
+        btn.textContent = "Downloading...";
+
+        element.innerHTML = `
+            <div style="border-bottom: 2px solid #203B32; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2 style="color: #203B32; font-family: 'Jaro', sans-serif; font-size: 24px; margin: 0 0 5px 0;">ORDER CONFIRMED</h2>
+                <p style="margin: 0; font-size: 12px; font-weight: 600; color: #333;">Your printing order has been received and is being processed</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: 700;">Order Reference No: <span style="color:#4A4D21;">${refHTML}</span></p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; font-size: 12px;">
+                <div>
+                    <h3 style="color: #203B32; font-size: 14px; margin: 0 0 10px 0;">Customer Information</h3>
+                    <p style="margin: 3px 0;"><strong>Name:</strong> ${custName}</p>
+                    <p style="margin: 3px 0;"><strong>Contact:</strong> ${custContact}</p>
+                    <p style="margin: 3px 0;"><strong>Address:</strong> ${custAddress}</p>
+                </div>
+                <div>
+                    <h3 style="color: #203B32; font-size: 14px; margin: 0 0 10px 0;">Order Details</h3>
+                    <p style="margin: 3px 0;"><strong>Service:</strong> Photo Printing</p>
+                    <p style="margin: 3px 0;"><strong>Delivery:</strong> ${deliveryMethod}</p>
+                    <p style="margin: 3px 0;"><strong>Payment:</strong> ${paymentMethod}</p>
+                </div>
+            </div>
+
+            <h3 style="color: #203B32; font-size: 14px; margin: 0 0 10px 0;">Order Items</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background: #f0f0f0;">
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">No.</th>
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">File Name</th>
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">Details</th>
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">Pages</th>
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">Price</th>
+                        <th style="border: 1px solid #203B32; padding: 8px; text-align: left;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tableRows.replace(/<td>/g, '<td style="border: 1px solid #203B32; padding: 8px;">').replace(/<th>/g, '<th style="border: 1px solid #203B32; padding: 8px;">')}
+                </tbody>
+            </table>
+
+            <div style="background: #a5b88f; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px;">
+                <div>
+                    <h4 style="margin: 0; color: #203B32; font-size: 16px;">Total Amount Paid</h4>
+                    <p style="margin: 0; font-size: 11px; color: #333;">Thank you for choosing PRINT!</p>
+                </div>
+                <div style="font-size: 20px; font-weight: 700; color: #203B32;">₱${finalTotal}</div>
+            </div>
+        `;
+
+        element.classList.add("pdf-export-mode");
+
+        setTimeout(() => {
+            const opt = {
+                margin:       0.5,
+                filename:     'PRINT-Receipt-Photo.pdf',
+                image:        { type: 'jpeg', quality: 1 },
+                html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.className = originalClass;
+                element.innerHTML = originalContent;
+                btn.textContent = "Download Receipt";
+            });
+        }, 100);
+    });
+
+    document.getElementById("btnTrack").addEventListener("click", () => {
+        window.location.href = "track photo.html";
+    });
+});
+</script>
+
+</body>
+</html>

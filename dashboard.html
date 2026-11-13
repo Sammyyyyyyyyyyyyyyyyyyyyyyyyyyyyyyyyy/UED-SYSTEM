@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dashboard | PRINT</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="styleguide.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- BACKGROUND LANDSCAPES -->
+    <img class="foreground-landscape" src="img/Foreground landscape.png" alt="" aria-hidden="true">
+    <img class="landscape" src="img/Landscape.png" alt="" aria-hidden="true">
+
+    <!-- HEADER -->
+    <header class="dashboard-header">
+
+        <!-- LOGO -->
+        <a href="dashboard.html" class="brand" aria-label="PRINT Home">
+            <img src="img/Printer.png" alt="">
+            <span>PRINT</span>
+        </a>
+
+        <!-- NAVIGATION & ACTIONS WRAPPER -->
+        <div class="nav-actions-wrapper">
+            
+            <!-- NAV LINKS -->
+            <nav class="main-navigation" id="mainNav" aria-label="Main navigation">
+                
+                <button class="close-menu" id="closeMenu" aria-label="Close Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
+                <a href="dashboard.html" class="nav-link active">
+                    <svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg>
+                    <span>HOME</span>
+                </a>
+                <a href="how it works.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg>
+                    <span>HOW IT WORKS</span>
+                </a>
+                <a href="price list selection.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg>
+                    <span>PRICE LIST</span>
+                </a>
+                <a href="orders.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg>
+                    <span>ORDERS</span>
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg>
+                    <span>PROFILE</span>
+                </a>
+            </nav>
+
+            <!-- NOTIFICATION BELL & POPUP CONTAINER -->
+            <div class="notification-wrapper">
+                <!-- Nilagyan natin ng 'has-unread' class yung button -->
+                <button class="notification-link has-unread" id="notificationBtn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/>
+                        <path d="M9.5 21H14.5"/>
+                    </svg>
+                </button>
+
+                <!-- NOTIFICATIONS POPUP -->
+                <div class="notif-overlay" id="notifOverlay">
+                    <div class="notif-popup">
+                        <button class="notif-close" id="notifClose">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        </button>
+                        <h2>Notifications</h2>
+                        
+                        <div class="notif-list">
+                            <!-- Notification 1 (Unread - Dark Grey Background) -->
+                            <div class="notif-item unread">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Printing in Progress</h3>
+                                    <p class="notif-message">Your document order is now being processed.</p>
+                                    <span class="notif-time">Just now</span>
+                                </div>
+                            </div>
+
+                            <!-- Notification 2 (Read) -->
+                            <div class="notif-item">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 14 8 12"/></svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Order Confirmed</h3>
+                                    <p class="notif-message">Your order PR-0003 and PR-0004 has been confirmed</p>
+                                    <span class="notif-time">1 minute ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HAMBURGER BUTTON -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="dashboard-content">
+        <section class="welcome-section">
+            <h1>Welcome to PRINT!</h1>
+            <p>What would you like to print today? Start a new order or check the status of an existing one.</p>
+        </section>
+
+        <img class="printer-illustration" src="img/Printer illustration 1x.png" alt="Illustration of a printer">
+
+        <!-- START ORDER BUTTON -->
+        <button id="startOrderBtn" class="start-order-button">
+            Start Order
+        </button>
+    </main>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // =========================================
+        // 1. MOBILE SIDEBAR LOGIC
+        // =========================================
+        const menuToggle = document.getElementById("menuToggle");
+        const closeMenu = document.getElementById("closeMenu");
+        const mainNav = document.getElementById("mainNav");
+        const menuOverlay = document.getElementById("menuOverlay");
+
+        if (menuToggle) {
+            menuToggle.addEventListener("click", function() {
+                mainNav.classList.add("active");
+                menuOverlay.classList.add("active");
+            });
+        }
+
+        if (closeMenu) {
+            closeMenu.addEventListener("click", function() {
+                mainNav.classList.remove("active");
+                menuOverlay.classList.remove("active");
+            });
+        }
+
+        if (menuOverlay) {
+            menuOverlay.addEventListener("click", function() {
+                mainNav.classList.remove("active");
+                menuOverlay.classList.remove("active");
+            });
+        }
+
+        // =========================================
+        // 2. START ORDER BUTTON NAVIGATION
+        // =========================================
+        const startOrderBtn = document.getElementById("startOrderBtn");
+        if (startOrderBtn) {
+                startOrderBtn.addEventListener("click", function() {
+        // I-reset lahat ng files para malinis sa bagong order
+        localStorage.removeItem("uploadedDocs");
+        localStorage.removeItem("uploadedPhotos");
+        localStorage.removeItem("uploadedTarps");
+        localStorage.removeItem("finalOrders");
+        localStorage.removeItem("finalPhotoOrders");
+        localStorage.removeItem("finalTarpaulinOrders");
+        sessionStorage.removeItem("activeTrackOrder");
+        
+        window.location.href = "select services.html";
+    });
+        }
+
+        // =========================================
+        // 3. NOTIFICATIONS POPUP LOGIC
+        // =========================================
+        const notifBtn = document.getElementById('notificationBtn');
+        const notifOverlay = document.getElementById('notifOverlay');
+        const notifClose = document.getElementById('notifClose');
+        const notifMarkRead = document.getElementById('notifMarkRead');
+
+        if (notifBtn) {
+            notifBtn.addEventListener('click', function(e) {
+                e.stopPropagation(); 
+                notifOverlay.classList.toggle('active');
+            });
+        }
+
+        if (notifClose) {
+            notifClose.addEventListener('click', function() {
+                notifOverlay.classList.remove('active');
+            });
+        }
+
+        // Isara kapag clinick sa labas
+        document.addEventListener('click', function(e) {
+            if (notifOverlay && notifOverlay.classList.contains('active')) {
+                if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) {
+                    notifOverlay.classList.remove('active');
+                }
+            }
+        });
+
+        // Mark all as read logic
+        if (notifMarkRead) {
+            notifMarkRead.addEventListener('click', function() {
+                const unreadItems = document.querySelectorAll('.notif-item.unread');
+                unreadItems.forEach(item => {
+                    item.classList.remove('unread');
+                });
+                
+                if (notifBtn) {
+                    notifBtn.classList.remove('has-unread');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

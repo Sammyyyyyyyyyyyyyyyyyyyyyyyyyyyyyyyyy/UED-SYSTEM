@@ -1,0 +1,477 @@
+/* =========================================
+   PRINT - HOW IT WORKS
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #D9D9D9;
+}
+
+.how-it-works {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background, #D9D9D9);
+    overflow: hidden;
+}
+
+/* HEADER */
+.how-it-works .service-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 40px 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation, #203B32);
+    z-index: 5;
+}
+
+.how-it-works .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Jaro', sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.how-it-works .brand img {
+    width: 43px;
+    height: 39px;
+    object-fit: contain;
+}
+
+/* NAVIGATION & ACTIONS */
+.how-it-works .nav-actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.how-it-works .main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.how-it-works .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+}
+
+.how-it-works .nav-link:hover,
+.how-it-works .notification-link:hover {
+    opacity: 0.7;
+}
+
+.how-it-works .nav-link svg {
+    display: block;
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   NOTIFICATION BELL & RED DOT
+========================================= */
+
+.how-it-works .notification-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.how-it-works .notification-link {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+}
+
+.how-it-works .notification-link svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* RED DOT INDICATOR */
+.how-it-works .notification-link.has-unread::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #d9534f; 
+    border-radius: 50%;
+    border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* HIDE MOBILE BUTTONS ON DESKTOP */
+.how-it-works .menu-toggle,
+.how-it-works .close-menu,
+.how-it-works .menu-overlay {
+    display: none;
+}
+
+/* MAIN CONTENT */
+.how-it-works .service-content {
+    position: relative;
+    width: 100%;
+    min-height: 1024px;
+    z-index: 2;
+}
+
+.how-it-works .content-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 1024px;
+}
+
+/* TITLE SECTION */
+.how-it-works .how-title-section {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 86%;
+    max-width: 1140px;
+    text-align: left;
+}
+
+.how-it-works .how-title-section h1 {
+    margin: 0 0 5px;
+    color: var(--PRINT-COLORS-navigation, #203B32);
+    font-family: 'Jaro', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.how-it-works .how-title-section p {
+    margin: 0;
+    color: var(--PRINT-COLORS-olive-green, #4A4D21);
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* STEPS GRID */
+.how-it-works .steps-grid {
+    position: absolute;
+    top: 260px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 86%;
+    max-width: 1140px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.how-it-works .step-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 35px 25px 30px;
+    border-right: 6px solid var(--PRINT-COLORS-muted-green, #A5B88F);
+    border-bottom: 6px solid var(--PRINT-COLORS-muted-green, #A5B88F);
+    border-top: 1px solid #eaeaea;
+    border-left: 1px solid #eaeaea;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.how-it-works .step-number {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--PRINT-COLORS-navigation, #203B32);
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.how-it-works .step-icon {
+    margin-top: 5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.how-it-works .step-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: var(--PRINT-COLORS-navigation, #203B32);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.how-it-works .step-card h2 {
+    margin: 0 0 10px;
+    color: var(--PRINT-COLORS-olive-green, #4A4D21);
+    font-family: 'Jaro', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.how-it-works .step-card p {
+    margin: 0;
+    color: var(--PRINT-COLORS-supporting-text, #414521);
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* LANDSCAPE BACKGROUND */
+.how-it-works .foreground-landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    object-fit: fill;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.how-it-works .landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 320px;
+    object-fit: fill;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+
+.notif-overlay {
+    position: absolute;
+    top: 45px; 
+    right: 0; 
+    width: 340px; 
+    background-color: #f2f2f2;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; 
+    flex-direction: column;
+    padding: 20px;
+    z-index: 999;
+    border: 1px solid #ddd;
+}
+
+.notif-overlay.active {
+    display: flex;
+}
+
+.notif-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #203B32;
+}
+.notif-close svg { width: 24px; height: 24px; }
+
+.notif-overlay h2 {
+    font-family: 'Jaro', sans-serif;
+    font-size: 24px;
+    color: #4A4D21;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.notif-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+}
+
+/* DARK GREY BACKGROUND PAG UNREAD */
+.notif-item.unread {
+    background-color: #d1d1d1; 
+}
+
+.notif-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #203B32;
+    stroke-width: 2;
+    fill: none;
+}
+
+.notif-content h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.notif-content .notif-message {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6d6b45;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.notif-content .notif-time {
+    font-size: 9px;
+    color: #888;
+    font-weight: 600;
+}
+
+.notif-item.unread .notif-time {
+    color: #203B32; 
+    font-weight: 700;
+}
+
+.notif-mark-read {
+    background: none;
+    border: none;
+    color: #6d6b45;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: right;
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.notif-mark-read:hover { color: #203B32; }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+    .how-it-works .service-header { padding: 0 20px; }
+    .how-it-works .main-navigation { gap: 16px; }
+    .how-it-works .nav-link { font-size: 12px; gap: 5px; }
+    .how-it-works .nav-link svg { width: 22px; height: 22px; }
+    .how-it-works .brand { font-size: 21px; }
+    .how-it-works .steps-grid { width: 90%; gap: 20px; }
+    .how-it-works .step-card { padding: 30px 15px 25px; }
+    .how-it-works .step-card h2 { font-size: 16px; }
+    .how-it-works .step-card p { font-size: 11px; }
+}
+
+@media (max-width: 700px) {
+    .how-it-works { min-height: 1450px; }
+    .how-it-works .service-content, .how-it-works .content-wrapper { min-height: 1450px; }
+    .how-it-works .service-header { height: 70px; padding: 0 20px; }
+    .how-it-works .brand { font-size: 21px; }
+    .how-it-works .brand img { width: 36px; height: 36px; }
+    .how-it-works .nav-actions-wrapper { gap: 15px; }
+
+    .how-it-works .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .how-it-works .main-navigation.active { right: 0; }
+    .how-it-works .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .how-it-works .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .how-it-works .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .how-it-works .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .how-it-works .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .how-it-works .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .how-it-works .menu-overlay.active { display: block; }
+
+    .how-it-works .how-title-section { top: 110px; width: 85%; }
+    .how-it-works .how-title-section h1 { font-size: 27px; }
+
+    .how-it-works .steps-grid {
+        top: 180px;
+        width: 85%;
+        max-width: 360px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .how-it-works .step-card { padding: 35px 20px 30px; }
+    .how-it-works .step-card h2 { font-size: 18px; }
+    .how-it-works .step-card p { font-size: 12px; }
+
+    .how-it-works .landscape { height: 200px; }
+    .how-it-works .foreground-landscape { height: 110px; }
+
+    .notif-overlay { right: -50px; width: 300px; }
+}
+
+@media (max-width: 380px) {
+    .how-it-works .how-title-section h1 { font-size: 24px; }
+    .how-it-works .steps-grid { width: 90%; }
+    .how-it-works .step-card p { font-size: 11px; }
+}

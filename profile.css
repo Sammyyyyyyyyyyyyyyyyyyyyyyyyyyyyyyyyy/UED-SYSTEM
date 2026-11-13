@@ -1,0 +1,297 @@
+/* =========================================
+   PRINT - PROFILE PAGE
+========================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { overflow-x: hidden; background-color: #D9D9D9; font-family: 'Poppins', sans-serif; }
+
+.profile-page {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background, #D9D9D9);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.profile-page .service-header {
+    position: absolute; top: 0; left: 0; width: 100%; height: 80px;
+    padding: 0 40px 0 32px; display: flex; align-items: center; justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation, #203B32); z-index: 5;
+}
+.profile-page .brand { display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-family: 'Jaro', sans-serif; font-size: 25px; }
+.profile-page .brand img { width: 43px; height: 39px; object-fit: contain; }
+
+/* NAVIGATION & ACTIONS */
+.profile-page .nav-actions-wrapper { display: flex; align-items: center; gap: 20px; }
+.profile-page .main-navigation { display: flex; align-items: center; gap: 24px; }
+.profile-page .nav-link { display: flex; align-items: center; gap: 9px; color: #ffffff; text-decoration: none; font-size: 12px; white-space: nowrap; transition: opacity 0.2s; }
+.profile-page .nav-link:hover, .profile-page .nav-link.active { opacity: 0.7; }
+.profile-page .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* NOTIFICATION BELL & RED DOT */
+.profile-page .notification-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
+.profile-page .notification-link {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; padding: 0; color: #ffffff; cursor: pointer; transition: opacity 0.2s;
+}
+.profile-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.profile-page .notification-link.has-unread::after {
+    content: ''; position: absolute; top: 0; right: 2px; width: 10px; height: 10px;
+    background-color: #d9534f; border-radius: 50%; border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* Hidden Mobile Buttons */
+.profile-page .menu-toggle, .profile-page .close-menu, .profile-page .menu-overlay { display: none; }
+
+/* MAIN CONTENT */
+.profile-page .service-content {
+    position: relative; width: 100%; min-height: 1024px; z-index: 2;
+    padding: 130px 40px 100px; 
+    display: flex; flex-direction: column; align-items: center;
+}
+
+.profile-page .page-title-section { width: 86%; max-width: 950px; margin-bottom: 20px; text-align: left; }
+.profile-page .page-title-section h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 38px; margin-bottom: 5px; }
+.profile-page .page-title-section p { color: #4A4D21; font-size: 14px; font-weight: 600; }
+
+/* GREEN CONTAINER */
+.profile-page .profile-container {
+    width: 86%; max-width: 950px;
+    background-color: #a5b88f;
+    border-radius: 12px; padding: 20px; margin-top: 40px; 
+}
+
+/* WHITE CARD */
+.profile-page .profile-card {
+    background-color: #ffffff; border-radius: 8px; padding: 40px;
+    display: flex; flex-direction: column; gap: 30px; 
+}
+
+.profile-page .profile-top-section { display: flex; gap: 40px; align-items: flex-start; }
+
+/* AVATAR */
+.profile-page .avatar-box {
+    width: 150px; height: 150px; border: 2px solid #203B32;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.profile-page .avatar-box svg { width: 90px; height: 90px; }
+
+/* FORM */
+.profile-page .profile-form-section { flex: 1; }
+.profile-page .section-title { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 24px; margin-bottom: 20px; }
+.profile-page .profile-form { display: flex; flex-direction: column; gap: 15px; }
+.profile-page .input-group { display: flex; flex-direction: column; gap: 6px; }
+.profile-page .input-group label { font-size: 12px; font-weight: 700; color: #333; }
+.profile-page .input-group input {
+    width: 100%; height: 45px; padding: 0 15px;
+    border: 2px solid #203B32; border-radius: 6px;
+    font-family: 'Poppins', sans-serif; font-size: 13px; color: #333;
+    outline: none; background-color: #ffffff;
+}
+.profile-page .input-group input:focus { border-color: #304B37; }
+
+/* BOTTOM SECTION (Help & Quit) */
+.profile-page .profile-actions { display: flex; gap: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+.profile-page .action-link {
+    display: flex; align-items: center; gap: 6px;
+    color: #203B32; background: none; border: none; cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px; font-weight: 700; transition: opacity 0.2s;
+}
+.profile-page .action-link:hover { opacity: 0.7; }
+.profile-page .action-link svg { width: 18px; height: 18px; }
+
+/* SAVE BUTTON */
+.profile-page .save-button-wrapper { width: 86%; max-width: 950px; display: flex; justify-content: center; margin-top: 30px; }
+.profile-page .btn-save {
+    background-color: #304B37; color: #ffffff; font-family: 'Poppins', sans-serif;
+    font-size: 14px; font-weight: 600; padding: 12px 35px;
+    border: 1px solid #ffffff; border-radius: 6px; cursor: pointer; transition: background 0.2s;
+}
+.profile-page .btn-save:hover { background-color: #203B32; }
+
+/* LANDSCAPE */
+.profile-page .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; object-fit: fill; z-index: 0; pointer-events: none; }
+.profile-page .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; object-fit: fill; z-index: 1; pointer-events: none; }
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+.notif-overlay {
+    position: absolute; top: 45px; right: 0; width: 340px; 
+    background-color: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; padding: 20px; z-index: 999; border: 1px solid #ddd;
+}
+.notif-overlay.active { display: flex; }
+.notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+.notif-close svg { width: 24px; height: 24px; }
+.notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+.notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+.notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; background-color: transparent; transition: background-color 0.2s ease; }
+.notif-item.unread { background-color: #d1d1d1; }
+.notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+.notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.notif-content .notif-message { font-size: 11px; font-weight: 700; color: #6d6b45; margin-bottom: 4px; line-height: 1.4; }
+.notif-content .notif-time { font-size: 9px; color: #888; font-weight: 600; }
+.notif-item.unread .notif-time { color: #203B32; font-weight: 700; }
+.notif-mark-read { background: none; border: none; color: #6d6b45; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+.notif-mark-read:hover { color: #203B32; }
+
+/* =========================================
+   MODALS (HELP & QUIT POPUP)
+========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-content {
+    background-color: #e5e5e5;
+    border-radius: 12px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 450px;
+}
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #203B32;
+}
+.modal-close svg { width: 30px; height: 30px; }
+.modal-title {
+    font-family: 'Jaro', sans-serif;
+    font-size: 28px;
+    color: #4A4D21;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* HELP POPUP SPECIFIC */
+.help-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.help-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 2px solid #203B32;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: #203B32;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: background-color 0.2s;
+}
+.help-item:hover {
+    background-color: #e0e0e0;
+}
+.help-item svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* QUIT POPUP SPECIFIC */
+.quit-popup {
+    text-align: center;
+    padding: 40px 30px;
+}
+.quit-popup .modal-title {
+    margin-bottom: 15px;
+}
+.modal-text {
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.quit-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.btn-cancel, .btn-confirm {
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #203B32;
+}
+.btn-cancel {
+    background-color: #ffffff;
+    color: #203B32;
+}
+.btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+.btn-confirm {
+    background-color: #203B32;
+    color: #ffffff;
+}
+.btn-confirm:hover {
+    background-color: #17251e;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 950px) {
+    .profile-page .profile-top-section { flex-direction: column; align-items: center; text-align: center; }
+    .profile-page .profile-form-section { width: 100%; text-align: left; }
+    .profile-page .profile-card { padding: 30px 20px; }
+}
+
+@media (max-width: 700px) {
+    .profile-page .service-header { height: 70px; padding: 0 20px; }
+    .profile-page .brand { font-size: 21px; }
+    .profile-page .brand img { width: 36px; height: 36px; }
+    .profile-page .nav-actions-wrapper { gap: 15px; }
+
+    .profile-page .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .profile-page .main-navigation.active { right: 0; }
+    .profile-page .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .profile-page .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .profile-page .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .profile-page .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .profile-page .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .profile-page .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .profile-page .menu-overlay.active { display: block; }
+
+    .profile-page .service-content { padding: 115px 20px 80px; }
+    .profile-page .page-title-section h1 { font-size: 32px; }
+    .profile-page .profile-container { margin-top: 20px; }
+
+    .notif-overlay { right: -50px; width: 300px; }
+}

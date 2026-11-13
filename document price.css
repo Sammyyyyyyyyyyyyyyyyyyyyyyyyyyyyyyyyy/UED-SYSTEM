@@ -1,0 +1,210 @@
+/* =========================================
+   PRINT - DOCUMENT PRICE LIST
+========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { overflow-x: hidden; background-color: #D9D9D9; font-family: 'Poppins', sans-serif; }
+
+.price-page {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background, #D9D9D9);
+    overflow: hidden;
+}
+
+/* HEADER */
+.price-page .service-header {
+    position: absolute; top: 0; left: 0; width: 100%; height: 80px;
+    padding: 0 40px 0 32px; display: flex; align-items: center; justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation, #203B32); z-index: 5;
+}
+.price-page .brand { display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-family: 'Jaro', sans-serif; font-size: 25px; }
+.price-page .brand img { width: 43px; height: 39px; object-fit: contain; }
+
+/* NAVIGATION & ACTIONS */
+.price-page .nav-actions-wrapper { display: flex; align-items: center; gap: 20px; }
+.price-page .main-navigation { display: flex; align-items: center; gap: 24px; }
+.price-page .nav-link { display: flex; align-items: center; gap: 9px; color: #ffffff; text-decoration: none; font-size: 12px; white-space: nowrap; transition: opacity 0.2s; }
+.price-page .nav-link:hover, .price-page .nav-link.active { opacity: 0.7; }
+.price-page .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* =========================================
+   NOTIFICATION BELL & RED DOT
+========================================= */
+.price-page .notification-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.price-page .notification-link {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.price-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.price-page .notification-link.has-unread::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: #d9534f; 
+    border-radius: 50%;
+    border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* Hidden Mobile Buttons */
+.price-page .menu-toggle, .price-page .close-menu, .price-page .menu-overlay { display: none; }
+
+/* =========================================
+   MAIN CONTENT 
+========================================= */
+.price-page .service-content { 
+    position: relative; width: 100%; min-height: 1024px; z-index: 2; 
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 160px; padding-bottom: 60px; 
+}
+
+.price-page .how-title-section { width: 86%; max-width: 1000px; text-align: left; margin-bottom: 20px; }
+.price-page .how-title-section h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 30px; margin-bottom: 5px; } 
+.price-page .how-title-section p { color: #4A4D21; font-size: 12px; font-weight: 600; } 
+
+/* LAYOUT WRAPPER */
+.price-page .price-layout-wrapper { width: 86%; max-width: 1000px; display: flex; justify-content: center; }
+
+/* GREEN OUTER CONTAINER */
+.price-page .price-container {
+    width: 100%;
+    background-color: #a5b88f;
+    border-radius: 12px;
+    padding: 20px; 
+    display: flex;
+    gap: 15px; 
+    align-items: stretch; 
+}
+
+/* LEFT SIDE (MAIN CARDS) */
+.price-page .main-cards-wrapper { flex: 2.5; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.price-page .doc-card { background-color: #ffffff; border-radius: 8px; padding: 15px 12px; display: flex; flex-direction: column; }
+.price-page .card-title { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 14px; text-align: center; margin-bottom: 12px; }
+.price-page .price-group { margin-bottom: 10px; } 
+.price-page .group-label { font-size: 8px; font-weight: 700; color: #4A4D21; display: block; text-align: center; margin-bottom: 5px; }
+.price-page .doc-card ul { list-style: none; display: flex; flex-direction: column; gap: 3px; } 
+.price-page .doc-card ul li { display: flex; justify-content: space-between; font-size: 10px; font-weight: 600; color: #333; }
+.price-page .doc-card ul li span:last-child { font-weight: 700; color: #203B32; }
+
+/* RIGHT SIDE (SIDE CARDS) */
+.price-page .side-cards-wrapper { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.price-page .side-card { background-color: #ffffff; border-radius: 8px; padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.price-page .side-title { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 13px; margin-bottom: 10px; } 
+.price-page .side-grid { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.price-page .side-grid > div { display: flex; flex-direction: column; gap: 2px; }
+.price-page .s-label { font-size: 8px; font-weight: 700; color: #4A4D21; } 
+.price-page .s-price { font-size: 10px; font-weight: 700; color: #203B32; } 
+.price-page .back-toback { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 5px; padding-top: 5px; border-top: 1px solid #eee; }
+
+/* ACTION BUTTONS */
+.price-page .action-buttons { width: 86%; max-width: 1000px; display: flex; justify-content: center; gap: 15px; margin-top: 30px; z-index: 3; }
+.price-page .btn-back, .price-page .btn-start {
+    display: flex; align-items: center; justify-content: center;
+    width: 130px; height: 40px; border-radius: 6px;
+    font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; 
+    text-decoration: none; cursor: pointer; transition: 0.2s;
+}
+.price-page .btn-back { background-color: #ffffff; color: #203B32; border: 1px solid #ccc; }
+.price-page .btn-back:hover { background-color: #f0f0f0; }
+.price-page .btn-start { background-color: #304B37; color: #ffffff; border: 1px solid #ffffff; }
+.price-page .btn-start:hover { background-color: #203B32; }
+
+/* LANDSCAPE */
+.price-page .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; object-fit: fill; z-index: 0; pointer-events: none; }
+.price-page .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; object-fit: fill; z-index: 1; pointer-events: none; }
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+.notif-overlay {
+    position: absolute; top: 45px; right: 0; width: 340px; 
+    background-color: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; padding: 20px; z-index: 999; border: 1px solid #ddd;
+}
+.notif-overlay.active { display: flex; }
+.notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+.notif-close svg { width: 24px; height: 24px; }
+.notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+.notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+.notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; background-color: transparent; transition: background-color 0.2s ease; }
+.notif-item.unread { background-color: #d1d1d1; }
+.notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+.notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.notif-content .notif-message { font-size: 11px; font-weight: 700; color: #6d6b45; margin-bottom: 4px; line-height: 1.4; }
+.notif-content .notif-time { font-size: 9px; color: #888; font-weight: 600; }
+.notif-item.unread .notif-time { color: #203B32; font-weight: 700; }
+.notif-mark-read { background: none; border: none; color: #6d6b45; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+.notif-mark-read:hover { color: #203B32; }
+
+/* =========================================
+   RESPONSIVE DESIGN (Tablet)
+========================================= */
+@media (max-width: 1050px) {
+    .price-page .service-header { padding: 0 20px; }
+    .price-page .main-navigation { gap: 16px; }
+    .price-page .nav-link { font-size: 12px; gap: 5px; }
+    .price-page .nav-link svg { width: 22px; height: 22px; }
+
+    .price-page .price-container { flex-direction: column; align-items: center; }
+    .price-page .main-cards-wrapper { width: 100%; grid-template-columns: repeat(3, 1fr); }
+    .price-page .side-cards-wrapper { width: 100%; flex-direction: row; justify-content: space-between; }
+    .price-page .side-card { flex: 1; margin: 0 5px; }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+@media (max-width: 700px) {
+    .price-page .service-header { height: 70px; padding: 0 20px; }
+    .price-page .brand { font-size: 21px; }
+    .price-page .brand img { width: 36px; height: 36px; }
+    .price-page .nav-actions-wrapper { gap: 15px; }
+
+    .price-page .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .price-page .main-navigation.active { right: 0; }
+    .price-page .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .price-page .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .price-page .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .price-page .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .price-page .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .price-page .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .price-page .menu-overlay.active { display: block; }
+
+    .price-page .service-content { padding-top: 90px; }
+    .price-page .how-title-section { text-align: center; }
+    .price-page .how-title-section h1 { font-size: 26px; }
+    
+    .price-page .price-container { padding: 15px; }
+    .price-page .main-cards-wrapper { grid-template-columns: 1fr; gap: 12px; }
+    .price-page .side-cards-wrapper { flex-direction: column; }
+
+    .price-page .action-buttons { flex-direction: row; align-items: center; margin-top: 25px; }
+    .price-page .btn-back, .price-page .btn-start { width: 45%; height: 42px; }
+
+    .notif-overlay { right: -50px; width: 300px; }
+}

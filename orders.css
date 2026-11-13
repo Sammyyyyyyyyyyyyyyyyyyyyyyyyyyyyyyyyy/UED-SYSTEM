@@ -1,0 +1,213 @@
+/* =========================================
+   PRINT - ORDERS PAGE
+========================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { overflow-x: hidden; background-color: #D9D9D9; font-family: 'Poppins', sans-serif; }
+
+.orders-page {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: var(--PRINT-COLORS-background, #D9D9D9);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.orders-page .service-header {
+    position: absolute; top: 0; left: 0; width: 100%; height: 80px;
+    padding: 0 40px; display: flex; align-items: center; justify-content: space-between;
+    background-color: var(--PRINT-COLORS-navigation, #203B32); z-index: 5;
+}
+.orders-page .brand { display: flex; align-items: center; gap: 10px; color: #ffffff; text-decoration: none; font-family: 'Jaro', sans-serif; font-size: 25px; flex-shrink: 0; }
+.orders-page .brand img { width: 43px; height: 39px; object-fit: contain; }
+
+/* NAVIGATION & ACTIONS */
+.orders-page .nav-actions-wrapper { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+.orders-page .main-navigation { display: flex; align-items: center; gap: 24px; flex-wrap: nowrap; }
+.orders-page .nav-link { display: flex; align-items: center; gap: 9px; color: #ffffff; text-decoration: none; font-size: 12px; white-space: nowrap; flex-shrink: 0; transition: opacity 0.2s; }
+.orders-page .nav-link:hover, .orders-page .nav-link.active { opacity: 0.7; }
+.orders-page .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* =========================================
+   NOTIFICATION BELL & RED DOT
+========================================= */
+.orders-page .notification-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
+.orders-page .notification-link {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; padding: 0; color: #ffffff; cursor: pointer; transition: opacity 0.2s;
+}
+.orders-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.orders-page .notification-link.has-unread::after {
+    content: ''; position: absolute; top: 0; right: 2px; width: 10px; height: 10px;
+    background-color: #d9534f; border-radius: 50%; border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* Hidden Mobile Buttons */
+.orders-page .menu-toggle, .orders-page .close-menu, .orders-page .menu-overlay { display: none; }
+
+/* MAIN CONTENT */
+.orders-page .service-content {
+    position: relative; width: 100%; min-height: 1024px; z-index: 2;
+    padding: 130px 40px 100px; display: flex; flex-direction: column; align-items: center;
+}
+
+.orders-page .page-title-section { width: 86%; max-width: 1050px; margin-bottom: 25px; text-align: left; }
+.orders-page .page-title-section h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 38px; margin-bottom: 7px; }
+.orders-page .page-title-section p { color: #4A4D21; font-size: 14px; font-weight: 600; }
+
+/* LAYOUT WRAPPER */
+.orders-page .orders-layout { display: flex; gap: 30px; width: 86%; max-width: 1050px; align-items: flex-start; }
+
+/* SIDEBAR */
+.orders-page .sidebar {
+    width: 210px; flex-shrink: 0; background-color: #ffffff; border-radius: 8px;
+    padding: 10px 0; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.orders-page .filter-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 18px; font-size: 12px; font-weight: 600; color: #333;
+    border-bottom: 1px solid #f0f0f0; cursor: pointer;
+}
+.orders-page .filter-item:last-child { border-bottom: none; }
+.orders-page .filter-item.active { background-color: #f9f9f9; border-left: 4px solid #203B32; }
+.orders-page .filter-item .count { font-weight: 700; color: #203B32; }
+
+/* ORDERS MAIN */
+.orders-page .orders-main { flex: 1; min-width: 0; }
+.orders-page .orders-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.orders-page .orders-header h2 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 26px; }
+.orders-page .sort-dropdown select {
+    padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px;
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+    color: #333; background-color: #ffffff; cursor: pointer; outline: none;
+}
+
+/* GREEN CONTAINER */
+.orders-page .orders-container {
+    background-color: #a5b88f; border-radius: 10px; padding: 20px;
+    display: flex; flex-direction: column; gap: 12px; 
+}
+
+/* ORDER CARD */
+.orders-page .order-card {
+    background-color: #ffffff; border-radius: 7px; padding: 12px 18px; 
+    display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.orders-page .order-image { width: 65px; height: 55px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background-color: #eaeaea; }
+.orders-page .order-image img { width: 100%; height: 100%; object-fit: cover; }
+.orders-page .order-details { flex: 1; min-width: 0; }
+.orders-page .order-top { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 3px; }
+.orders-page .order-id { font-size: 12px; font-weight: 700; color: #333; }
+.orders-page .status { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 10px; color: #ffffff; }
+.orders-page .status.processing { background-color: #6b7c6b; }
+.orders-page .status.completed { background-color: #203B32; }
+.orders-page .order-details h3 { font-size: 14px; color: #333; margin-bottom: 2px; font-weight: 700; }
+.orders-page .order-desc, .orders-page .order-date { font-size: 10px; color: #666; font-weight: 500; line-height: 1.4; }
+.orders-page .order-price-status { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; min-width: 80px; padding-right: 5px; }
+.orders-page .price-label { font-size: 9px; color: #666; font-weight: 600; }
+.orders-page .price-value { font-size: 14px; font-weight: 700; color: #203B32; }
+.orders-page .order-action { flex-shrink: 0; }
+.orders-page .btn-track {
+    background-color: #304B37; color: #ffffff; font-family: 'Poppins', sans-serif;
+    font-size: 11px; font-weight: 600; padding: 8px 16px; border: none;
+    border-radius: 5px; cursor: pointer; transition: background 0.2s;
+}
+.orders-page .btn-track:hover { background-color: #203B32; }
+
+/* EMPTY STATE MESSAGE */
+.orders-page .empty-state {
+    background-color: #ffffff; border-radius: 8px; padding: 40px;
+    text-align: center; width: 100%;
+}
+.orders-page .empty-state h3 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 22px; margin-bottom: 10px; }
+.orders-page .empty-state p { color: #666; font-size: 13px; }
+
+/* LANDSCAPE */
+.orders-page .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; object-fit: fill; z-index: 0; pointer-events: none; }
+.orders-page .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; object-fit: fill; z-index: 1; pointer-events: none; }
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+.notif-overlay {
+    position: absolute; top: 45px; right: 0; width: 340px; 
+    background-color: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; padding: 20px; z-index: 999; border: 1px solid #ddd;
+}
+.notif-overlay.active { display: flex; }
+.notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+.notif-close svg { width: 24px; height: 24px; }
+.notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+.notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+.notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; background-color: transparent; transition: background-color 0.2s ease; }
+.notif-item.unread { background-color: #d1d1d1; }
+.notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+.notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.notif-content .notif-message { font-size: 11px; font-weight: 700; color: #6d6b45; margin-bottom: 4px; line-height: 1.4; }
+.notif-content .notif-time { font-size: 9px; color: #888; font-weight: 600; }
+.notif-item.unread .notif-time { color: #203B32; font-weight: 700; }
+.notif-mark-read { background: none; border: none; color: #6d6b45; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+.notif-mark-read:hover { color: #203B32; }
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 1000px) {
+    .orders-page .service-header { padding: 0 20px; }
+    .orders-page .main-navigation { gap: 16px; }
+    .orders-page .nav-link { gap: 5px; font-size: 11px; }
+    .orders-page .nav-link svg { width: 22px; height: 22px; }
+}
+
+@media (max-width: 800px) {
+    .orders-page .service-header { height: 70px; padding: 0 20px; }
+    .orders-page .brand { font-size: 21px; }
+    .orders-page .brand img { width: 36px; height: 34px; }
+    .orders-page .nav-actions-wrapper { gap: 15px; }
+
+    .orders-page .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .orders-page .main-navigation.active { right: 0; }
+    .orders-page .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .orders-page .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .orders-page .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .orders-page .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .orders-page .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .orders-page .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .orders-page .menu-overlay.active { display: block; }
+
+    .orders-page .service-content { padding: 115px 20px 180px; }
+    .orders-page .page-title-section { width: 100%; text-align: center; margin-bottom: 20px; }
+    .orders-page .page-title-section h1 { font-size: 32px; }
+    
+    .orders-page .orders-layout { width: 100%; flex-direction: column; align-items: stretch; gap: 20px; }
+    
+    .orders-page .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 0; border-radius: 8px; }
+    .orders-page .filter-item { flex: 1; display: flex; justify-content: space-between; align-items: center; border-bottom: none; border-right: 1px solid #eee; white-space: nowrap; padding: 15px 12px; font-size: 11px; gap: 8px; }
+    .orders-page .filter-item:last-child { border-right: none; }
+    .orders-page .filter-item.active { border-left: none; border-bottom: 3px solid #203B32; }
+
+    .orders-page .orders-header h2 { font-size: 22px; }
+    .orders-page .sort-dropdown select { font-size: 10px; padding: 7px 9px; }
+
+    .orders-page .orders-container { padding: 12px; gap: 12px; }
+    .orders-page .order-card { flex-wrap: wrap; gap: 12px; padding: 15px; }
+    .orders-page .order-image { width: 65px; height: 55px; }
+    .orders-page .order-details h3 { font-size: 14px; }
+    .orders-page .order-id { font-size: 12px; }
+    .orders-page .order-price-status { min-width: 70px; padding-right: 0; }
+    .orders-page .btn-track { font-size: 12px; padding: 8px 15px; }
+
+    .notif-overlay { right: -50px; width: 300px; }
+}

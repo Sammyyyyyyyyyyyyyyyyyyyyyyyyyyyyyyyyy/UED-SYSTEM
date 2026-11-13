@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Printing Price List | PRINT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="photo price.css">
+</head>
+<body>
+
+<div class="price-page">
+
+    <!-- HEADER -->
+    <header class="service-header">
+        <a href="dashboard.html" class="brand">
+            <img src="img/Printer.png" alt="PRINT Logo">
+            <span>PRINT</span>
+        </a>
+
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+
+                <a href="dashboard.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg>
+                    <span>HOME</span>
+                </a>
+                <a href="how it works.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg>
+                    <span>HOW IT WORKS</span>
+                </a>
+                <a href="price list selection.html" class="nav-link active">
+                    <svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg>
+                    <span>PRICE LIST</span>
+                </a>
+                <a href="orders.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg>
+                    <span>ORDERS</span>
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg>
+                    <span>PROFILE</span>
+                </a>
+            </nav>
+
+            <!-- NOTIFICATION BELL -->
+            <div class="notification-wrapper">
+                <button class="notification-link has-unread" id="notificationBtn" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/>
+                        <path d="M9.5 21H14.5"/>
+                    </svg>
+                </button>
+
+                <!-- NOTIFICATIONS POPUP -->
+                <div class="notif-overlay" id="notifOverlay">
+                    <div class="notif-popup">
+                        <button class="notif-close" id="notifClose">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        </button>
+                        <h2>Notifications</h2>
+                        
+                        <div class="notif-list">
+                            <div class="notif-item unread">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Printing in Progress</h3>
+                                    <p class="notif-message">Your document order is now being processed.</p>
+                                    <span class="notif-time">Just now</span>
+                                </div>
+                            </div>
+
+                            <div class="notif-item">
+                                <div class="notif-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 14 8 12"/></svg>
+                                </div>
+                                <div class="notif-content">
+                                    <h3>Order Confirmed</h3>
+                                    <p class="notif-message">Your order PR-0003 and PR-0004 has been confirmed</p>
+                                    <span class="notif-time">1 minute ago</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HAMBURGER BUTTON -->
+            <button class="menu-toggle" id="menuToggle">
+                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="service-content">
+        
+        <section class="how-title-section">
+            <h1>Photo Printing Price List</h1>
+            <p>Photo size and package price</p>
+        </section>
+
+        <div class="cards-wrapper">
+            
+            <div class="green-card-container">
+                <div class="white-card packages-card">
+                    <h2 class="card-title">PACKAGES</h2>
+                    <div class="packages-content">
+                        <div class="pkg-list-col">
+                            <div class="pkg-row"><span class="label">PACKAGE 1</span><div class="item"><span>8pcs 1x1</span><span class="price">₱25.00</span></div></div>
+                            <div class="pkg-row"><span class="label">PACKAGE 2</span><div class="item"><span>4pcs 2x2</span><span class="price">₱35.00</span></div></div>
+                            <div class="pkg-row"><span class="label">PACKAGE 3</span><div class="item"><span>5pcs Passport Size</span><span class="price">₱25.00</span></div></div>
+                        </div>
+                        <div class="pkg-visual-col">
+                            <div class="visual-group">
+                                <span class="label">PACKAGE 4</span>
+                                <div class="item"><span>2pcs 2x2, 1x1,<br>Passport Size</span><span class="price">₱40.00</span></div>
+                                <div class="photo-grid pkg-4">
+                                    <div class="pbox"></div><div class="pbox"></div><div class="pbox"></div>
+                                    <div class="pbox"></div><div class="pbox sm"></div><div class="pbox sm"></div>
+                                </div>
+                            </div>
+                            <div class="visual-group">
+                                <span class="label">PACKAGE 5</span>
+                                <div class="item"><span>3pcs Passport<br>Size, 4pcs 1x1</span><span class="price">₱40.00</span></div>
+                                <div class="photo-grid pkg-5">
+                                    <div class="pbox"></div><div class="pbox"></div><div class="pbox"></div>
+                                    <div class="pbox"></div><div class="pbox sm"></div><div class="pbox sm"></div>
+                                    <div class="pbox sm"></div><div class="pbox sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="white-card wallet-card">
+                    <h2 class="card-title">WALLET SIZE / 2R<br><span class="sub">(2.5 x 3.5 in)</span><br><span class="sub-price">₱7.00</span></h2>
+                    <div class="sizes-grid">
+                        <div class="size-item"><strong>3R</strong><br><span class="dim">(3.5 x 5 in)</span><br><span class="price">₱15.00</span></div>
+                        <div class="size-item"><strong>4R</strong><br><span class="dim">(4 x 6 in)</span><br><span class="price">₱18.00</span></div>
+                        <div class="size-item"><strong>5R</strong><br><span class="dim">(5 x 7 in)</span><br><span class="price">₱25.00</span></div>
+                        <div class="size-item"><strong>6R</strong><br><span class="dim">(6 x 8 in)</span><br><span class="price">₱30.00</span></div>
+                        <div class="size-item"><strong>8R</strong><br><span class="dim">(8 x 10 in)</span><br><span class="price">₱45.00</span></div>
+                        <div class="size-item"><strong>A4</strong><br><span class="dim">(8 x 12 in)</span><br><span class="price">₱50.00</span></div>
+                    </div>
+                    <div class="cute-size">
+                        <strong>CUTE SIZE</strong><br><span class="dim">(2 x 3 in)</span><br><span class="price">₱5.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="white-card quality-card">
+                <h2 class="card-title">QUALITY</h2>
+                <div class="quality-row">
+                    <div class="quality-item"><span class="label">BETTER</span><span class="q-price">₱25.00</span></div>
+                    <div class="quality-item"><span class="label">BEST</span><span class="q-price">₱35.00</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons">
+            <button id="btnBack" class="btn-back">Back</button>
+            <button id="btnStart" class="btn-start">START ORDER</button>
+        </div>
+
+    </main>
+
+    <!-- LANDSCAPE -->
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // =========================================
+        // 1. MOBILE SIDEBAR LOGIC
+        // =========================================
+        const menuToggle = document.getElementById("menuToggle");
+        const closeMenu = document.getElementById("closeMenu");
+        const mainNav = document.getElementById("mainNav");
+        const menuOverlay = document.getElementById("menuOverlay");
+
+        if (menuToggle) {
+            menuToggle.addEventListener("click", function() {
+                mainNav.classList.add("active");
+                menuOverlay.classList.add("active");
+            });
+        }
+        if (closeMenu) {
+            closeMenu.addEventListener("click", function() {
+                mainNav.classList.remove("active");
+                menuOverlay.classList.remove("active");
+            });
+        }
+        if (menuOverlay) {
+            menuOverlay.addEventListener("click", function() {
+                mainNav.classList.remove("active");
+                menuOverlay.classList.remove("active");
+            });
+        }
+
+        // =========================================
+        // 2. BUTTON NAVIGATION
+        // =========================================
+        document.getElementById("btnBack").addEventListener("click", function() {
+            window.location.href = "price list selection.html";
+        });
+        document.getElementById("btnStart").addEventListener("click", function() {
+            window.location.href = "select services.html"; 
+        });
+
+        // =========================================
+        // 3. NOTIFICATIONS POPUP & LOCALSTORAGE
+        // =========================================
+        const notifBtn = document.getElementById('notificationBtn');
+        const notifOverlay = document.getElementById('notifOverlay');
+        const notifClose = document.getElementById('notifClose');
+        const notifMarkRead = document.getElementById('notifMarkRead');
+
+        const isRead = localStorage.getItem("notificationsRead");
+        if (isRead === "true") {
+            notifBtn.classList.remove("has-unread");
+            document.querySelectorAll('.notif-item.unread').forEach(item => {
+                item.classList.remove('unread');
+            });
+        }
+
+        if (notifBtn) {
+            notifBtn.addEventListener('click', function(e) {
+                e.stopPropagation(); 
+                notifOverlay.classList.toggle('active');
+            });
+        }
+
+        if (notifClose) {
+            notifClose.addEventListener('click', function() {
+                notifOverlay.classList.remove('active');
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (notifOverlay && notifOverlay.classList.contains('active')) {
+                if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) {
+                    notifOverlay.classList.remove('active');
+                }
+            }
+        });
+
+        if (notifMarkRead) {
+            notifMarkRead.addEventListener('click', function() {
+                document.querySelectorAll('.notif-item.unread').forEach(item => {
+                    item.classList.remove('unread');
+                });
+                notifBtn.classList.remove('has-unread');
+                localStorage.setItem("notificationsRead", "true");
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

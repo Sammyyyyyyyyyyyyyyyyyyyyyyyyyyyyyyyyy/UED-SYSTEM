@@ -1,0 +1,254 @@
+/* =========================================
+   PRINT - SELECT PRINTING SERVICE
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #D9D9D9;
+    font-family: 'Poppins', sans-serif;
+}
+
+.select-service {
+    position: relative;
+    width: 100%;
+    max-width: 1440px;
+    min-height: 1024px;
+    margin: 0 auto;
+    background-color: #D9D9D9;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.select-service .service-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    padding: 0 40px 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #203B32;
+    z-index: 5;
+}
+
+.select-service .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Jaro', sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+.select-service .brand img {
+    width: 43px;
+    height: 39px;
+    object-fit: contain;
+}
+
+/* NAVIGATION & ACTIONS */
+.select-service .nav-actions-wrapper { display: flex; align-items: center; gap: 20px; }
+.select-service .main-navigation { display: flex; align-items: center; gap: 24px; }
+.select-service .nav-link { 
+    display: flex; align-items: center; gap: 9px; 
+    color: #ffffff; text-decoration: none; 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 12px; white-space: nowrap; transition: opacity 0.2s; 
+}
+.select-service .nav-link:hover, .select-service .nav-link.active { opacity: 0.7; }
+.select-service .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* =========================================
+   NOTIFICATION BELL & RED DOT
+========================================= */
+.select-service .notification-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
+.select-service .notification-link {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; padding: 0; color: #ffffff; cursor: pointer; transition: opacity 0.2s;
+}
+.select-service .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.select-service .notification-link.has-unread::after {
+    content: ''; position: absolute; top: 0; right: 2px; width: 10px; height: 10px;
+    background-color: #d9534f; border-radius: 50%; border: 2px solid var(--PRINT-COLORS-navigation);
+}
+
+/* Hidden Mobile Buttons */
+.select-service .menu-toggle, .select-service .close-menu, .select-service .menu-overlay { display: none; }
+
+/* MAIN CONTENT */
+.select-service .service-content {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 130px; 
+    padding-bottom: 120px;
+    flex: 1;
+}
+
+/* PROGRESS BAR */
+.select-service .progress-container {
+    width: 80%;
+    max-width: 1140px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 50px; 
+}
+.select-service .progress-step { flex: 1; height: 8px; background-color: #ffffff; }
+.select-service .progress-step.active { background-color: #4A4D21; }
+
+/* TITLE */
+.select-service .service-title { width: 90%; text-align: center; margin-bottom: 60px; }
+.select-service .service-title h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 32px; font-weight: 400; margin: 0; }
+
+/* SERVICE CARDS GRID */
+.select-service .services-grid {
+    width: 86%;
+    max-width: 1140px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 60px;
+    text-align: center;
+}
+.select-service .service-card { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.select-service .service-card h2 { margin: 0 0 15px; color: #4A4D21; font-family: 'Jaro', sans-serif; font-size: 19px; font-weight: 400; }
+
+.select-service .service-image {
+    width: 100%; height: 198px; border: 1px solid #A8B995;
+    border-radius: 10px; overflow: hidden; background-color: #ffffff;
+}
+.select-service .service-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.select-service .service-card:hover .service-image img { transform: scale(1.04); }
+
+.select-service .service-card p { width: 100%; margin: 15px 0 16px; color: #414521; font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 1.5; }
+
+/* BUTTON */
+.select-service .select-button {
+    width: 196px;
+    max-width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #304B37;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.select-service .select-button:hover { background-color: #203B32; }
+.select-service .select-button:active { transform: scale(0.98); }
+
+/* LANDSCAPE */
+.select-service .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 160px; object-fit: fill; z-index: 0; pointer-events: none; }
+.select-service .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 320px; object-fit: fill; z-index: 1; pointer-events: none; }
+
+/* =========================================
+   NOTIFICATIONS POPUP
+========================================= */
+.notif-overlay {
+    position: absolute; top: 45px; right: 0; width: 340px; 
+    background-color: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    display: none; flex-direction: column; padding: 20px; z-index: 999; border: 1px solid #ddd;
+}
+.notif-overlay.active { display: flex; }
+.notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+.notif-close svg { width: 24px; height: 24px; }
+.notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+.notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+.notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; background-color: transparent; transition: background-color 0.2s ease; }
+.notif-item.unread { background-color: #d1d1d1; }
+.notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+.notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.notif-content .notif-message { font-size: 11px; font-weight: 700; color: #6d6b45; margin-bottom: 4px; line-height: 1.4; }
+.notif-content .notif-time { font-size: 9px; color: #888; font-weight: 600; }
+.notif-item.unread .notif-time { color: #203B32; font-weight: 700; }
+.notif-mark-read { background: none; border: none; color: #6d6b45; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+.notif-mark-read:hover { color: #203B32; }
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    .select-service .service-header { padding: 0 20px; }
+    .select-service .main-navigation { gap: 16px; }
+    .select-service .nav-link { font-size: 12px; gap: 5px; }
+    .select-service .nav-link svg { width: 22px; height: 22px; }
+    .select-service .brand { font-size: 21px; }
+
+    .select-service .services-grid { width: 90%; gap: 30px; }
+    .select-service .service-image { height: 170px; }
+    .select-service .service-card p { font-size: 11px; }
+}
+
+@media (max-width: 700px) {
+    .select-service .service-header { height: 70px; padding: 0 20px; }
+    .select-service .brand { font-size: 21px; }
+    .select-service .brand img { width: 36px; height: 36px; }
+    .select-service .nav-actions-wrapper { gap: 15px; }
+
+    .select-service .main-navigation {
+        position: fixed; top: 0; right: -100%; 
+        width: 250px; height: 100vh;
+        background-color: #203B32;
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .select-service .main-navigation.active { right: 0; }
+    .select-service .menu-toggle { display: block; background: none; border: none; cursor: pointer; }
+    .select-service .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
+    .select-service .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; cursor: pointer; }
+    .select-service .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
+    .select-service .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .select-service .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: 90; }
+    .select-service .menu-overlay.active { display: block; }
+
+    .select-service .service-content { padding-top: 100px; padding-bottom: 180px; }
+    .select-service .progress-container { width: 90%; gap: 7px; margin-bottom: 30px; }
+    .select-service .progress-step { height: 6px; }
+
+    .select-service .service-title { margin-bottom: 30px; }
+    .select-service .service-title h1 { font-size: 27px; }
+
+    .select-service .services-grid { width: 85%; max-width: 360px; grid-template-columns: 1fr; gap: 30px; }
+    .select-service .service-card h2 { font-size: 19px; margin-bottom: 10px; }
+    .select-service .service-image { height: 155px; }
+    .select-service .service-card p { margin: 10px 0; font-size: 12px; }
+    .select-service .select-button { width: 180px; height: 42px; }
+
+    .select-service .landscape { height: 200px; }
+    .select-service .foreground-landscape { height: 110px; }
+
+    .notif-overlay { right: -50px; width: 300px; }
+}
+
+@media (max-width: 380px) {
+    .select-service .service-title h1 { font-size: 24px; }
+    .select-service .services-grid { width: 90%; }
+    .select-service .service-image { height: 140px; }
+    .select-service .service-card p { font-size: 11px; }
+}

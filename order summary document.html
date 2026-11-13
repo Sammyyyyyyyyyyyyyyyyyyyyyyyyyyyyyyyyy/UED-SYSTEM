@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary - Document | PRINT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="summary.css">
+   
+    <style>
+        /* NAV & NOTIF STYLES */
+        .notification-wrapper { position: relative; display: flex; align-items: center; }
+        .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
+        .notification-link svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .notif-overlay { position: absolute; top: 45px; right: 0; width: 320px; background: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; padding: 20px; z-index: 99999; border: 1px solid #ddd; }
+        .notif-overlay.active { display: flex; }
+        .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+        .notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+        .notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+        .notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; }
+        .notif-item.unread { background-color: #e5e5e5; }
+        .notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+        .notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+        .notif-content p { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 4px; }
+        .notif-content span { font-size: 9px; color: #888; }
+        .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+        
+        .menu-toggle, .close-menu { display: none; }
+        @media (max-width: 850px) {
+            .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
+            .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
+            .main-navigation.active { right: 0; }
+            .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
+            .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+            .menu-overlay.active { display: block; }
+        }
+        /* POPUPS */
+        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        .popup-overlay.active { display: flex; }
+        .popup-box { background: #f2f2f2; border-radius: 12px; padding: 25px; width: 90%; max-width: 380px; position: relative; }
+        .popup-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #203B32; }
+        .popup-title { background: #a5b88f; color: #203B32; padding: 12px; border-radius: 8px; font-family: 'Jaro', sans-serif; font-size: 18px; text-align: center; margin-bottom: 20px; font-weight: 700; }
+        .popup-option { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 15px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+        .popup-option.selected { border: 2px solid #203B32; background: #f7f9f6; }
+        .popup-option svg { width: 24px; height: 24px; stroke: #203B32; }
+        .popup-option span { flex: 1; font-weight: 600; font-size: 13px; color: #333; }
+        .radio-circle { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #ccc; }
+        .popup-option.selected .radio-circle { background: #203B32; border-color: #203B32; }
+        .popup-confirm { background: #304b37; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 15px; }
+        .details-card { max-height: 350px; overflow-y: auto; padding-right: 5px; }
+        .details-card::-webkit-scrollbar { width: 6px; }
+        .details-card::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    </style>
+</head>
+<body>
+<div class="summary-page">
+    <header class="service-header">
+        <a href="dashboard.html" class="brand"><img src="img/Printer.png" alt="PRINT Logo"><span>PRINT</span></a>
+        <div class="nav-actions-wrapper">
+            <nav class="main-navigation" id="mainNav">
+                <button class="close-menu" id="closeMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                <a href="dashboard.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10V20H14V14H10V20H3Z"/></svg><span>HOME</span></a>
+                <a href="how it works.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9A2.5 2.5 0 0 1 14 10.5C14 12 12 12 12 14"/><path d="M12 17.5V17.6"/></svg><span>HOW IT WORKS</span></a>
+                <a href="price list selection.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M20 13L11 22L2 13V4H11Z"/><circle cx="7" cy="9" r="1"/></svg><span>PRICE LIST</span></a>
+                <a href="orders.html" class="nav-link"><svg viewBox="0 0 24 24"><path d="M6 3H15L20 8V21H6Z"/><path d="M15 3V8H20"/><path d="M9 13H16M9 17H16"/></svg><span>ORDERS</span></a>
+                <a href="profile.html" class="nav-link"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 16 7 14 12 14C17 14 20 16 20 21"/></svg><span>PROFILE</span></a>
+            </nav>
+            <div class="notification-wrapper">
+                <button class="notification-link" id="notificationBtn"><svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg></button>
+                <div class="notif-overlay" id="notifOverlay">
+                    <button class="notif-close" id="notifClose"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                    <h2>Notifications</h2>
+                    <div class="notif-list"><div class="notif-item unread"><div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div><div class="notif-content"><h3>Printing in Progress</h3><p>Your order is now being processed.</p><span>Just now</span></div></div></div>
+                    <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
+                </div>
+            </div>
+            <button class="menu-toggle" id="menuToggle"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+
+    <main class="service-content">
+        <div class="progress-bar"><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step"></div><div class="progress-step active"></div><div class="progress-step"></div></div>
+        <div class="lower-content-wrapper">
+            <section class="page-title-section"><h1>Order Summary</h1><p>Review your order details before continuing.</p></section>
+            <div class="summary-layout">
+                <div class="details-section"><div class="details-card" id="detailsCard"></div></div>
+                <div class="pricing-column">
+                    <div class="green-card">
+                        <div class="white-card-inner">
+                            <h2 class="price-title">Price Breakdown</h2>
+                            <div class="price-row"><span>Printing Cost</span><span id="printCost">₱0.00</span></div>
+                            <div class="price-row"><span>Delivery Fee</span><span id="deliveryFee">₱0.00</span></div>
+                            <hr class="price-divider">
+                            <div class="price-row total"><span>Estimated Total</span><span id="totalCost">₱0.00</span></div>
+                        </div>
+                    </div>
+                    <div class="outside-options">
+                        <div class="option-group"><label>Payment Method</label><div class="option-btn" id="btnPayment"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg><span id="paymentText">Cash</span><span class="change-link">Change</span></div></div>
+                        <div class="option-group"><label>Delivery/Pickup</label><div class="option-btn" id="btnDelivery"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span id="deliveryText">Delivery</span><span class="change-link">Change</span></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons"><button class="btn-back" onclick="window.location.href='customize document.html'">Back</button><button class="btn-continue" id="btnContinue">Continue</button></div>
+        </div>
+    </main>
+    <img src="img/Foreground landscape.png" class="foreground-landscape" alt="">
+    <img src="img/Landscape.png" class="landscape" alt="">
+</div>
+
+<div class="popup-overlay" id="paymentPopup">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('paymentPopup')">×</button>
+        <div class="popup-title">Choose Payment Method</div>
+        <div class="popup-option selected" data-val="Cash"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg><span>Cash</span><div class="radio-circle"></div></div>
+        <div class="popup-option" data-val="GCash"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>GCash</span><div class="radio-circle"></div></div>
+        <div class="popup-option" data-val="Maya"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span>Maya</span><div class="radio-circle"></div></div>
+        <button class="popup-confirm" onclick="confirmPayment()">CONFIRM</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="deliveryPopup">
+    <div class="popup-box">
+        <button class="popup-close" onclick="closePopup('deliveryPopup')">×</button>
+        <div class="popup-title">Choose Delivery Method</div>
+        <div class="popup-option selected" data-val="Delivery" data-fee="20"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span>Delivery</span><div class="radio-circle"></div></div>
+        <div class="popup-option" data-val="Pickup" data-fee="0"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg><span>Pickup</span><div class="radio-circle"></div></div>
+        <button class="popup-confirm" onclick="confirmDelivery()">CONFIRM</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const menuToggle = document.getElementById("menuToggle"), closeMenu = document.getElementById("closeMenu"), mainNav = document.getElementById("mainNav"), menuOverlay = document.getElementById("menuOverlay");
+    if(menuToggle) menuToggle.addEventListener("click", () => { mainNav.classList.add("active"); menuOverlay.classList.add("active"); });
+    if(closeMenu) closeMenu.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+    if(menuOverlay) menuOverlay.addEventListener("click", () => { mainNav.classList.remove("active"); menuOverlay.classList.remove("active"); });
+
+    const notifBtn = document.getElementById("notificationBtn"), notifOverlay = document.getElementById("notifOverlay"), notifClose = document.getElementById("notifClose"), notifMarkRead = document.getElementById("notifMarkRead");
+    if (notifBtn) notifBtn.addEventListener("click", (e) => { e.stopPropagation(); notifOverlay.classList.toggle("active"); });
+    if (notifClose) notifClose.addEventListener("click", () => notifOverlay.classList.remove("active"));
+    document.addEventListener("click", (e) => { if (notifOverlay && notifOverlay.classList.contains("active")) { if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) notifOverlay.classList.remove("active"); } });
+    if (notifMarkRead) notifMarkRead.addEventListener("click", () => { document.querySelectorAll(".notif-item.unread").forEach(i => i.classList.remove("unread")); notifMarkRead.style.display = "none"; });
+
+    let orders = [];
+    try {
+        orders = JSON.parse(localStorage.getItem("finalOrders")) || JSON.parse(localStorage.getItem("uploadedDocs")) || [];
+    } catch(e) { orders = []; }
+
+    const detailsCard = document.getElementById("detailsCard");
+    let printCostTotal = 0;
+
+    if(orders.length === 0) {
+        detailsCard.innerHTML = "<p style='text-align:center; padding:20px;'>No documents found.</p>";
+    } else {
+        orders.forEach((file, i) => {
+            const copies = parseInt(file.settings?.copies) || 1;
+            const pages = file.pages || 1;
+            const paperSize = file.settings?.paperSize || "A4";
+            const color = file.settings?.color || "BW"; 
+            
+            const isImage = (file.type && file.type.startsWith("image/")) || /\.(jpg|jpeg|png)$/i.test(file.name || "");
+            const isText = !isImage;
+            
+            let pricePerPage = 0;
+
+            // LOGIC PARA SA SPECIAL PAPER AT VELLUM BOARD
+            if (paperSize === "Special Paper" || paperSize === "Vellum Board") {
+                pricePerPage = (color === "BW") ? 25.00 : 35.00;
+            } else {
+                // DEFAULT RATES
+                if (isText) {
+                    if (color === "BW") {
+                        const rates = { "SHORT": 3.00, "A4": 4.00, "LONG": 5.00, "B2B": 2.00 };
+                        pricePerPage = rates[paperSize] || 4.00;
+                    } else if (color === "Color") {
+                        const rates = { "SHORT": 6.00, "A4": 7.00, "LONG": 8.00, "B2B": 4.00 };
+                        pricePerPage = rates[paperSize] || 7.00;
+                    }
+                } else {
+                    if (color === "BW") {
+                        const rates = { "SHORT": 6.00, "A4": 6.00, "LONG": 7.00, "B2B": 3.00 };
+                        pricePerPage = rates[paperSize] || 6.00;
+                    } else if (color === "Color") {
+                        const rates = { "SHORT": 10.00, "A4": 12.00, "LONG": 15.00, "B2B": 7.00 };
+                        pricePerPage = rates[paperSize] || 12.00;
+                    }
+                }
+            }
+            
+            const subtotal = pricePerPage * pages * copies;
+            printCostTotal += subtotal;
+
+            detailsCard.innerHTML += `
+                <div class="item-row" style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                    <div class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#203B32" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <div class="item-info">
+                        <h3>Document ${i+1} (${isImage ? 'Image only' : 'Text only'})</h3>
+                        <p style="font-weight:600; color:#203B32;">${file.name}</p>
+                        <p>Paper Size: ${paperSize}</p>
+                        <p>Print Color: ${color === 'BW' ? 'Black & White' : 'Partially/Full Colored'}</p>
+                        <p>Pages: ${pages}</p>
+                        <p>Copies: ${copies}</p>
+                        <p class="subtotal">Subtotal: ₱${subtotal.toFixed(2)}</p>
+                    </div>
+                </div>`;
+        });
+    }
+
+    let currentDeliveryFee = 20; 
+    function updateTotals() {
+        document.getElementById("printCost").textContent = "₱" + printCostTotal.toFixed(2);
+        document.getElementById("deliveryFee").textContent = "₱" + currentDeliveryFee.toFixed(2);
+        document.getElementById("totalCost").textContent = "₱" + (printCostTotal + currentDeliveryFee).toFixed(2);
+    }
+    updateTotals();
+
+    window.openPopup = function(id) { document.getElementById(id).classList.add("active"); }
+    window.closePopup = function(id) { document.getElementById(id).classList.remove("active"); }
+    document.querySelectorAll(".popup-option").forEach(opt => { opt.addEventListener("click", function() { this.parentElement.querySelectorAll(".popup-option").forEach(o => o.classList.remove("selected")); this.classList.add("selected"); }); });
+
+    document.getElementById("btnPayment").addEventListener("click", () => openPopup("paymentPopup"));
+    window.confirmPayment = function() { const selected = document.querySelector("#paymentPopup .popup-option.selected"); if(selected) document.getElementById("paymentText").textContent = selected.dataset.val; closePopup("paymentPopup"); };
+    document.getElementById("btnDelivery").addEventListener("click", () => openPopup("deliveryPopup"));
+    window.confirmDelivery = function() { const selected = document.querySelector("#deliveryPopup .popup-option.selected"); if(selected) { document.getElementById("deliveryText").textContent = selected.dataset.val; currentDeliveryFee = parseFloat(selected.dataset.fee); updateTotals(); } closePopup("deliveryPopup"); };
+
+    document.getElementById("btnContinue").addEventListener("click", () => {
+        const paymentSelected = document.querySelector("#paymentPopup .popup-option.selected")?.dataset.val || "Cash";
+        const deliverySelected = document.querySelector("#deliveryPopup .popup-option.selected")?.dataset.val || "Delivery";
+        const deliveryFee = parseFloat(document.querySelector("#deliveryPopup .popup-option.selected")?.dataset.fee) || 20;
+
+        localStorage.setItem("selectedPayment", paymentSelected);
+        localStorage.setItem("selectedDelivery", deliverySelected);
+        localStorage.setItem("deliveryFee", deliveryFee);
+
+        window.location.href = "receipt document.html";
+    });
+});
+</script>
+
+</body>
+</html>

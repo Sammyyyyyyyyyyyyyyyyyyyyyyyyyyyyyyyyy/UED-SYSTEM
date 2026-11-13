@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>PRINT — Your Printing Needs, Made Simple</title>
+    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alatsi&family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="styleguide.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="home-user">
+    <!-- BACKGROUND LANDSCAPES -->
+    <img class="foreground-landscape" src="img/Foreground landscape.png" alt="" aria-hidden="true">
+    <img class="landscape" src="img/Landscape.png" alt="" aria-hidden="true">
+
+    <!-- HEADER -->
+    <header class="rectangle" aria-label="PRINT">
+        <div class="printer">
+            <img class="icon" src="img/Printer.png" alt="PRINT logo">
+        </div>
+        <span class="text-wrapper">PRINT</span>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <h1 class="div">Your Printing Needs, Made Simple.</h1>
+        <p class="p">
+            Place your printing orders, choose your preferences, and track your order status in one convenient place.
+        </p>
+
+        <img class="printer-illustration" src="img/Printer illustration 1x.png" alt="Illustration of a printer">
+
+        <!-- GET STARTED BUTTON -->
+        <button id="getStartedBtn" class="button-get-started" type="button">
+            <span class="text-wrapper-2">Get Started</span>
+        </button>
+    </main>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const getStartedBtn = document.getElementById("getStartedBtn");
+
+        if (getStartedBtn) {
+            getStartedBtn.addEventListener("click", function() {
+                // Palitan mo ito ng tamang file path ng Customer Information page mo
+                // Kung 'customer.html' ang tawag mo, gawin mong 'customer.html'
+                window.location.href = "customer.html"; 
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
