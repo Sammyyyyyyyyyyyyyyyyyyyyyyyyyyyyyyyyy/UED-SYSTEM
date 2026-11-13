@@ -182,58 +182,78 @@ html, body {
     pointer-events: none;
 }
 
+
 /* =========================================
    RESPONSIVE DESIGN
 ========================================= */
 
 @media (max-width: 768px) {
     .home-user main {
-        padding-top: 140px; /* In-adjust para may space sa taas */
+        padding-top: 140px;
+        align-items: center;
     }
 
     .home-user .div {
         font-size: 32px;
+        text-align: center;
     }
 
     .home-user .p {
         font-size: 14px;
+        text-align: center;
         margin-bottom: 30px;
     }
 
+    /* PRINTER - LOWER AND CENTER */
     .home-user .printer-illustration {
+        display: block;
         width: 280px;
-        margin-top: 20px; /* Pababa ng bahagya ang printer */
-        margin-bottom: 30px;
+        max-width: 85%;
+        height: auto;
+        align-self: center;
+        margin: 35px auto 35px;
     }
 
+    /* BUTTON - LOWER AND CENTER */
     .home-user .button-get-started {
-        margin-top: 15px; /* Pababa ng bahagya ang button */
+        align-self: center;
+        display: flex;
+        margin: 20px auto 0;
     }
 }
 
 @media (max-width: 480px) {
     .home-user main {
         padding-top: 120px;
+        align-items: center;
     }
 
     .home-user .div {
         font-size: 28px;
+        text-align: center;
     }
 
     .home-user .p {
         font-size: 13px;
-        margin-bottom: 20px;
-    }
-
-    .home-user .printer-illustration {
-        width: 220px;
-        margin-top: 15px;
+        text-align: center;
         margin-bottom: 25px;
     }
 
+    /* PRINTER */
+    .home-user .printer-illustration {
+        width: 240px;
+        max-width: 85%;
+        margin: 40px auto 35px;
+        align-self: center;
+    }
+
+    /* GET STARTED BUTTON */
     .home-user .button-get-started {
         font-size: 14px;
         padding: 12px 30px;
-        margin-top: 10px;
+        margin: 20px auto 0;
+        align-self: center;
     }
+}
+
 }
