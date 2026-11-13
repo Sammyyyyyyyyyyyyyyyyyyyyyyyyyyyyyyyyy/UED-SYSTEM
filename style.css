@@ -116,19 +116,17 @@ html, body {
 ========================================= */
 
 .home-user .button-get-started {
-    /* Default State */
     background-color: #304B37;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 600;
     padding: 15px 40px;
-    border: 1px solid #ffffff; /* White border kapareho ng ibang pages */
+    border: 1px solid #ffffff;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
-    
-    /* Positioning */
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -182,7 +180,6 @@ html, body {
     pointer-events: none;
 }
 
-
 /* =========================================
    RESPONSIVE DESIGN
 ========================================= */
@@ -211,14 +208,14 @@ html, body {
         max-width: 85%;
         height: auto;
         align-self: center;
-        margin: 35px auto 35px;
+        margin: 55px auto 40px;
     }
 
     /* BUTTON - LOWER AND CENTER */
     .home-user .button-get-started {
         align-self: center;
         display: flex;
-        margin: 20px auto 0;
+        margin: 25px auto 0;
     }
 }
 
@@ -243,7 +240,7 @@ html, body {
     .home-user .printer-illustration {
         width: 240px;
         max-width: 85%;
-        margin: 40px auto 35px;
+        margin: 55px auto 40px;
         align-self: center;
     }
 
@@ -251,9 +248,7 @@ html, body {
     .home-user .button-get-started {
         font-size: 14px;
         padding: 12px 30px;
-        margin: 20px auto 0;
+        margin: 25px auto 0;
         align-self: center;
     }
-}
-
 }
