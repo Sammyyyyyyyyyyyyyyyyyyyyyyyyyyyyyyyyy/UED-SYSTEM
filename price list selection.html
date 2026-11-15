@@ -164,7 +164,6 @@
         // =========================================
         // 2. PRICE BUTTONS NAVIGATION
         // =========================================
-        // Palitan mo ng tamang filename kung iba ang tawag mo sa file
         document.getElementById("btn-document").addEventListener("click", function() {
             window.location.href = "document price.html"; 
         });
@@ -183,7 +182,6 @@
         const notifClose = document.getElementById('notifClose');
         const notifMarkRead = document.getElementById('notifMarkRead');
 
-        // Check kung nabasa na ba
         const isRead = localStorage.getItem("notificationsRead");
         if (isRead === "true") {
             notifBtn.classList.remove("has-unread");
