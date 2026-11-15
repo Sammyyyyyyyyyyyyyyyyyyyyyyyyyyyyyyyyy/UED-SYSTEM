@@ -10,6 +10,7 @@
 <body>
 
 <div class="price-list-page">
+    <!-- HEADER -->
     <header class="service-header">
         <a href="dashboard.html" class="brand">
             <img src="Printer.png" alt="PRINT Logo">
@@ -29,38 +30,26 @@
             </nav>
 
             <div class="notification-wrapper">
-                <button class="notification-link has-unread" id="notificationBtn" aria-label="Notifications">
-                    <svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg>
-                </button>
+                <button class="notification-link has-unread" id="notificationBtn"><svg viewBox="0 0 24 24"><path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/><path d="M9.5 21H14.5"/></svg></button>
                 <div class="notif-overlay" id="notifOverlay">
-                    <div class="notif-popup">
-                        <button class="notif-close" id="notifClose">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                        </button>
-                        <h2>Notifications</h2>
-                        <div class="notif-list">
-                            <div class="notif-item unread">
-                                <div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
-                                <div class="notif-content"><h3>Printing in Progress</h3><p class="notif-message">Your document order is now being processed.</p><span class="notif-time">Just now</span></div>
-                            </div>
-                            <div class="notif-item">
-                                <div class="notif-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 14 8 12"/></svg></div>
-                                <div class="notif-content"><h3>Order Confirmed</h3><p class="notif-message">Your order PR-0003 and PR-0004 has been confirmed</p><span class="notif-time">1 minute ago</span></div>
-                            </div>
+                    <button class="notif-close" id="notifClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                    <h2>Notifications</h2>
+                    <div class="notif-list">
+                        <div class="notif-item unread">
+                            <div class="notif-icon"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
+                            <div class="notif-content"><h3>Printing in Progress</h3><p>Your document order is now being processed.</p><span>Just now</span></div>
                         </div>
-                        <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
                     </div>
+                    <button class="notif-mark-read" id="notifMarkRead">Mark all as read</button>
                 </div>
             </div>
 
-            <button class="menu-toggle" id="menuToggle">
-                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
+            <button class="menu-toggle" id="menuToggle"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
         </div>
-
         <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main class="service-content">
         <section class="how-title-section">
             <h1>PRINT Price List</h1>
@@ -76,6 +65,7 @@
         </div>
     </main>
 
+    <!-- LANDSCAPE -->
     <img src="Foreground landscape.png" class="foreground-landscape" alt="">
     <img src="Landscape.png" class="landscape" alt="">
 </div>
