@@ -107,13 +107,71 @@
         .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
         .modal-actions button { flex: 1; }
         .confirm-message-box { background: white; padding: 18px; border-radius: 7px; font-size: 13px; font-weight: 600; }
-        
+
         /* =========================================
-           PINALITAN ANG 750PX NG 1024PX PARA SA TABLET
+           TABLET / MINI IPAD NAVIGATION OVERRIDES
+           (Changed 750px to 1024px)
         ========================================= */
         @media(max-width: 1024px) {
             .upload-layout { grid-template-columns: 1fr; }
             .file-list { max-height: 250px; }
+
+            /* Hide the nav links by default */
+            .main-navigation {
+                display: none; /* Hidden by default on tablet */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #203B32; /* Match header background */
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 0 0 12px 12px;
+                z-index: 1000;
+                margin-top: 10px;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            }
+
+            /* Show when active */
+            .main-navigation.active {
+                display: flex;
+            }
+
+            /* Style the nav links for mobile view */
+            .main-navigation .nav-link {
+                width: 100%;
+                padding: 12px 15px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                justify-content: flex-start;
+            }
+
+            .main-navigation .nav-link:last-child {
+                border-bottom: none;
+            }
+
+            /* Show the hamburger menu */
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Adjust the wrapper to align items properly */
+            .nav-actions-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            /* Hide the close button inside nav on tablet if not needed */
+            .main-navigation .close-menu {
+                display: none; /* Or block if you want it */
+            }
+        }
+
+        /* Ensure menu toggle is hidden on desktop */
+        @media(min-width: 1025px) {
+            .menu-toggle {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -125,6 +183,7 @@
             <span>PRINT</span>
         </a>
         <div class="nav-actions-wrapper">
+            <!-- Main Navigation (Desktop view) -->
             <nav class="main-navigation" id="mainNav">
                 <button class="close-menu" id="closeMenu">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -191,6 +250,7 @@
                 </div>
             </div>
 
+            <!-- Hamburger Menu (Visible on Tablet) -->
             <button class="menu-toggle" id="menuToggle">
                 <svg viewBox="0 0 24 24">
                     <line x1="3" y1="12" x2="21" y2="12"/>
