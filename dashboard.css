@@ -1,11 +1,7 @@
 /* =========================================
-   PRINT - DASHBOARD (PINAKA-AYOS NA VERSION)
+   PRINT - DASHBOARD (EXACT REFERENCE FIX)
 ========================================= */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
     width: 100%;
@@ -86,9 +82,8 @@ html, body {
 }
 
 .dashboard .nav-link:hover,
-.dashboard .notification-link:hover {
-    opacity: 0.7;
-}
+.dashboard .notification-link:hover { opacity: 0.7; }
+.dashboard .nav-link.active { opacity: 0.7; }
 
 .dashboard .nav-link svg {
     display: block;
@@ -155,39 +150,32 @@ html, body {
 .dashboard .menu-overlay { display: none; }
 
 /* =========================================
-   MAIN CONTENT CONTAINER
+   MAIN CONTENT (Eksaktong layout)
 ========================================= */
 .dashboard-content {
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 2;
+    /* Flexbox para ma-center ang lahat-lahat nang perpekto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* 
-   BAGONG CONTAINER: 
-   Ito ang magce-center sa welcome text, image, at button nang sabay
-*/
-.dashboard .main-center-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 800px; /* Para hindi masyadong malaki sa malaking screen */
+.main-center-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: 100%;
+    max-width: 800px;
     padding: 0 20px;
-    z-index: 3;
-    /* Inaadjust ang gitna para hindi masagkaan ang header at landscape */
-    margin-top: 30px; 
+    /* Inaadjust pataas nang konti para hindi matamaan ang landscape */
+    margin-top: -50px; 
 }
 
-.dashboard .welcome-section {
-    margin-bottom: 30px;
-}
+.dashboard .welcome-section { margin-bottom: 30px; }
 
 .dashboard .welcome-section h1 {
     margin: 0 0 12px;
@@ -207,14 +195,14 @@ html, body {
 }
 
 .dashboard .printer-illustration {
-    width: 456px;
+    width: 350px; /* Saktong laki gaya ng reference */
     max-width: 100%;
     height: auto;
     object-fit: contain;
-    margin-bottom: 30px; /* Space sa pagitan ng image at button */
+    margin-bottom: 40px; /* Space papunta sa button */
 }
 
-/* Start Order Button */
+/* START ORDER BUTTON */
 .dashboard .start-order-button {
     width: 200px;
     height: 48px;
@@ -318,19 +306,16 @@ html, body {
     .dashboard .brand img { width: 36px; height: 36px; }
     .dashboard .nav-actions-wrapper { gap: 15px; }
 
-    /* IPAKITA ANG HAMBURGER */
+    /* Show Hamburger */
     .dashboard .menu-toggle { 
         display: block !important; 
         background: none !important; 
         border: none !important; 
         cursor: pointer; 
     }
-    .dashboard .menu-toggle svg { 
-        width: 28px; height: 28px; 
-        stroke: #ffffff; stroke-width: 2.5; fill: none; 
-    }
+    .dashboard .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; fill: none; }
     
-    /* SIDE DRAWER MENU */
+    /* Side Drawer */
     .dashboard .main-navigation {
         position: fixed !important; 
         top: 0 !important; 
@@ -350,7 +335,7 @@ html, body {
     }
     .dashboard .main-navigation.active { right: 0 !important; }
     
-    /* CLOSE (X) BUTTON */
+    /* Close (X) Button */
     .dashboard .close-menu { 
         display: block !important; 
         position: absolute; 
@@ -365,7 +350,7 @@ html, body {
     
     .dashboard .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
     
-    /* OVERLAY */
+    /* Overlay */
     .dashboard .menu-overlay { 
         display: none; 
         position: fixed; 
@@ -378,13 +363,10 @@ html, body {
     }
     .dashboard .menu-overlay.active { display: block !important; }
 
-    /* TABLET ADJUSTMENTS */
-    .dashboard .main-center-wrapper {
-        margin-top: 10px; /* Ibinaba nang konti */
-    }
+    /* Tablet Adjustments */
     .dashboard .welcome-section h1 { font-size: 27px; }
     .dashboard .welcome-section p { font-size: 13px; }
-    .dashboard .printer-illustration { width: 350px; max-width: 80%; }
+    .dashboard .printer-illustration { width: 280px; }
     .dashboard .start-order-button { width: 180px; height: 46px; font-size: 12px; }
     
     .dashboard .landscape { height: 200px; }
@@ -394,8 +376,9 @@ html, body {
 }
 
 @media (max-width: 600px) {
+    .main-center-wrapper { margin-top: 0; }
     .dashboard .welcome-section h1 { font-size: 24px; }
     .dashboard .welcome-section p { font-size: 12px; }
-    .dashboard .printer-illustration { width: 280px; }
+    .dashboard .printer-illustration { width: 240px; }
     .dashboard .start-order-button { width: 170px; height: 44px; }
 }
