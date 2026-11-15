@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - PRICE LIST (FINAL COMPACT VERSION)
+   PRINT - PRICE LIST (MAIKSI AT SAKTO)
 ========================================= */
 * { 
     margin: 0; 
@@ -9,23 +9,26 @@
 
 html, body { 
     width: 100%; 
-    min-height: 100vh; 
+    min-height: 100%; 
     background-color: #D9D9D9; 
     font-family: 'Poppins', sans-serif; 
-    overflow: hidden; /* Pinipigilan ang scroll sa buong page */
+    overflow-x: hidden; 
 }
 
+/* Main container - hindi na 100vh para umiksi */
 .price-list-page { 
     position: relative; 
     width: 100%; 
-    height: 100vh; /* Eksaktong sakto sa screen, walang dead space */
     display: flex; 
     flex-direction: column; 
+    overflow: hidden;
 }
 
-/* HEADER */
+/* =========================================
+   HEADER
+========================================= */
 .price-list-page .service-header {
-    position: absolute; /* Naka-puwesto sa tuktok */
+    position: absolute; 
     top: 0; 
     left: 0; 
     width: 100%; 
@@ -50,7 +53,9 @@ html, body {
 
 .price-list-page .brand img { width: 36px; height: 36px; object-fit: contain; }
 
-/* NAV & ICONS */
+/* =========================================
+   NAV & ICONS
+========================================= */
 .price-list-page .nav-actions-wrapper { display: flex; align-items: center; gap: 15px; position: relative; }
 .price-list-page .main-navigation { display: flex; align-items: center; gap: 24px; }
 .price-list-page .nav-link { display: flex; align-items: center; gap: 9px; color: #fff; text-decoration: none; font-size: 12px; transition: 0.2s; }
@@ -62,7 +67,9 @@ html, body {
 .price-list-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #fff; stroke-width: 2.2; }
 .price-list-page .notification-link.has-unread::after { content: ''; position: absolute; top: 0; right: 2px; width: 10px; height: 10px; background: #d9534f; border-radius: 50%; border: 2px solid #203B32; }
 
-/* NOTIFICATION POPUP */
+/* =========================================
+   NOTIFICATION POPUP
+========================================= */
 .notif-overlay { position: absolute; top: 45px; right: 0; width: 340px; background: #f2f2f2; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; padding: 20px; z-index: 999999; border: 1px solid #ddd; }
 .notif-overlay.active { display: flex; }
 .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
@@ -77,12 +84,13 @@ html, body {
 .notif-content span { font-size: 9px; color: #888; font-weight: 600; }
 .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
 
-/* MAIN CONTENT */
+/* =========================================
+   MAIN CONTENT (Sakto lang, walang sobrang haba)
+========================================= */
 .price-list-page .service-content { 
-    flex: 1; 
     width: 100%; 
-    padding-top: 100px; /* Space para sa header */
-    padding-bottom: 180px; /* Space para sa landscape */
+    padding-top: 100px; /* Space mula sa header */
+    padding-bottom: 40px; /* Sapat na space sa ilalim */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
@@ -90,20 +98,36 @@ html, body {
     position: relative;
 }
 
-.price-list-page .how-title-section { width: 90%; max-width: 600px; margin-bottom: 25px; text-align: center; }
+.price-list-page .how-title-section { width: 90%; max-width: 600px; margin-bottom: 20px; text-align: center; }
 .price-list-page .how-title-section h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 26px; margin-bottom: 5px; }
 .price-list-page .how-title-section p { color: #4A4D21; font-size: 12px; font-weight: 600; }
 
-/* CARD */
-.price-list-page .price-card-wrapper { width: 90%; max-width: 380px; padding: 20px; background: #a5b88f; border-radius: 12px; margin-bottom: 20px; }
-.price-list-page .price-card { background: #fff; border-radius: 8px; padding: 30px 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-.price-list-page .price-button { width: 100%; max-width: 260px; height: 50px; background: #304B37; border: 1px solid #fff; border-radius: 6px; color: #fff; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+/* CARD (Pinaliit pa) */
+.price-list-page .price-card-wrapper { width: 90%; max-width: 340px; padding: 15px; background: #a5b88f; border-radius: 12px; margin-bottom: 20px; }
+.price-list-page .price-card { background: #fff; border-radius: 8px; padding: 25px 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.price-list-page .price-button { width: 100%; max-width: 250px; height: 45px; background: #304B37; border: 1px solid #fff; border-radius: 6px; color: #fff; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; }
 .price-list-page .price-button:hover { background: #203B32; }
 .price-list-page .price-button:active { transform: scale(0.98); }
 
-/* LANDSCAPE (Naka-pirme sa ilalim para hindi humatak pababa) */
-.price-list-page .foreground-landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; object-fit: fill; z-index: 0; pointer-events: none; }
-.price-list-page .landscape { position: absolute; bottom: 0; left: 0; width: 100%; height: 240px; object-fit: fill; z-index: 1; pointer-events: none; }
+/* LANDSCAPE (Naka-relative para sumunod lang sa content at hindi humatak pababa) */
+.price-list-page .foreground-landscape { 
+    width: 100%; 
+    height: 80px; 
+    object-fit: fill; 
+    z-index: 0; 
+    pointer-events: none; 
+    display: block;
+}
+
+.price-list-page .landscape { 
+    width: 100%; 
+    height: 160px; 
+    object-fit: fill; 
+    z-index: 1; 
+    pointer-events: none; 
+    display: block;
+    margin-top: -160px; /* Pinapatong sa ilalim ng foreground */
+}
 
 /* =========================================
    TABLET VIEW (1024px and below)
