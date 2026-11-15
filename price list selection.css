@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - PRICE LIST (FIXED NAV & LAYOUT)
+   PRINT - PRICE LIST (AYOS NA NAVIGATION)
 ========================================= */
 * { 
     margin: 0; 
@@ -12,7 +12,7 @@ html, body {
     min-height: 100%; 
     margin: 0; 
     padding: 0; 
-    overflow-x: hidden; /* Pinipigilan lang ang horizontal scroll */
+    overflow-x: hidden; 
     background-color: #D9D9D9; 
     font-family: 'Poppins', sans-serif; 
 }
@@ -21,7 +21,7 @@ html, body {
     position: relative;
     width: 100%;
     max-width: 1440px;
-    min-height: 100vh; /* Sinisiguro na sasakop sa screen */
+    min-height: 100vh; 
     margin: 0 auto;
     background-color: #D9D9D9;
     overflow: hidden;
@@ -169,7 +169,7 @@ html, body {
 }
 
 /* =========================================
-   MAIN CONTENT (Absolute Positioning)
+   MAIN CONTENT
 ========================================= */
 .price-list-page .service-content {
     position: relative;
@@ -207,7 +207,7 @@ html, body {
 /* PRICE CARD WRAPPER */
 .price-list-page .price-card-wrapper {
     position: absolute;
-    top: 280px; /* Inayos ang top para maging saktong gitna */
+    top: 280px;
     left: 50%;
     transform: translateX(-50%);
     width: 500px;
@@ -361,7 +361,8 @@ html, body {
         display: flex !important; 
         flex-direction: column !important; 
         align-items: flex-start;
-        padding: 60px 0 20px !important; 
+        justify-content: flex-start !important; /* Pinipilit na magsimula sa taas */
+        padding-top: 80px !important; /* Space sa taas para sa X button */
         gap: 0 !important; 
         z-index: 100001 !important;
         transition: right 0.3s ease; 
@@ -374,8 +375,8 @@ html, body {
     .price-list-page .close-menu { 
         display: block !important; 
         position: absolute !important; 
-        top: 15px !important; 
-        right: 15px !important; 
+        top: 20px !important; 
+        right: 20px !important; 
         background: none !important; 
         border: none !important; 
         cursor: pointer !important; 
@@ -386,13 +387,16 @@ html, body {
         stroke: #ffffff !important; stroke-width: 2.5 !important; 
     }
 
+    /* Inayos ang layout ng mga links sa loob ng menu */
     .price-list-page .nav-link { 
-        width: 100%; 
-        justify-content: flex-start; 
-        padding: 18px 20px; 
-        font-size: 14px; 
+        width: 100% !important; 
+        display: flex !important;
+        justify-content: flex-start !important; 
+        align-items: center !important;
+        padding: 18px 20px !important; 
+        font-size: 14px !important; 
         border-bottom: 1px solid rgba(255,255,255,0.1); 
-        gap: 15px; 
+        gap: 15px !important; 
     }
     .price-list-page .nav-link svg { width: 22px; height: 22px; stroke: #ffffff; }
 
