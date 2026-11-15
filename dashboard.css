@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - DASHBOARD (ORIGINAL DESKTOP DESIGN)
+   PRINT - DASHBOARD (PERFECT DESKTOP FIX)
 ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -152,13 +152,14 @@ html, body {
 .dashboard .menu-overlay { display: none; }
 
 /* =========================================
-   MAIN CONTENT (ORIGINAL POSITIONS)
+   MAIN CONTENT (Ito ang inayos)
 ========================================= */
 .dashboard-content {
     position: relative;
     width: 100%;
     min-height: 1024px;
     z-index: 2;
+    display: block; /* Sinigurong block, hindi flex */
 }
 
 .dashboard .welcome-section {
@@ -197,7 +198,6 @@ html, body {
     object-fit: contain;
 }
 
-/* START ORDER BUTTON */
 .dashboard .start-order-button {
     position: absolute;
     top: 754px;
@@ -300,7 +300,6 @@ html, body {
 }
 
 @media (max-width: 1024px) { 
-    /* Inaayos para sa Tablet */
     .dashboard { min-height: 850px; }
     .dashboard-content { min-height: 850px; }
     .dashboard-header { height: 70px; padding: 0 20px; }
@@ -308,7 +307,6 @@ html, body {
     .dashboard .brand img { width: 36px; height: 36px; }
     .dashboard .nav-actions-wrapper { gap: 15px; }
 
-    /* IPAKITA ANG HAMBURGER AT ITAGO ANG DESKTOP NAV */
     .dashboard .menu-toggle { 
         display: block !important; 
         background: none; 
@@ -361,11 +359,9 @@ html, body {
     }
     .dashboard .menu-overlay.active { display: block !important; }
 
-    /* Tablet positioning (binaba nang konti para hindi mag-overlap) */
     .dashboard .welcome-section { top: 110px; width: 90%; }
     .dashboard .welcome-section h1 { font-size: 27px; }
     .dashboard .welcome-section p { font-size: 13px; }
-    
     .dashboard .printer-illustration { top: 250px; width: 85%; max-width: 400px; height: 300px; }
     .dashboard .start-order-button { top: 580px; width: 180px; height: 46px; }
     
