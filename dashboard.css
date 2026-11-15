@@ -1,28 +1,21 @@
 /* =========================================
-   PRINT - DASHBOARD (FULLY RESPONSIVE)
+   PRINT - DASHBOARD (FULLY RESPONSIVE FIX)
 ========================================= */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
     width: 100%;
     height: 100%;
     background-color: #D9D9D9;
     font-family: 'Poppins', sans-serif;
-    overflow: hidden; /* Pinipigilan ang scroll para hindi mabitin */
+    overflow: hidden; /* Walang scroll sa buong page */
 }
 
-/* Main Container */
 .dashboard {
     position: relative;
     width: 100%;
     height: 100vh;
-    height: 100dvh; /* Para sa mobile browser address bars */
-    display: flex;
-    flex-direction: column;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -152,31 +145,29 @@ html, body {
     border: 2px solid #203B32;
 }
 
-/* Itago ang mobile buttons sa desktop */
+/* HIDE MOBILE BUTTONS ON DESKTOP */
 .dashboard .menu-toggle,
 .dashboard .close-menu,
 .dashboard .menu-overlay { display: none; }
 
 /* =========================================
-   MAIN CONTENT (Flexbox para mag-center)
+   MAIN CONTENT (Absolute Positioning)
 ========================================= */
 .dashboard-content {
-    flex: 1;
     position: relative;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 80px; /* Space para sa header */
-    padding-bottom: 220px; /* Space para sa landscape */
+    height: 100%;
     z-index: 2;
 }
 
+/* Welcome Text */
 .dashboard .welcome-section {
+    position: absolute;
+    top: 15%; /* 15% layo mula sa taas */
+    left: 50%;
+    transform: translateX(-50%);
     width: 90%;
     text-align: center;
-    margin-bottom: 30px;
 }
 
 .dashboard .welcome-section h1 {
@@ -196,16 +187,25 @@ html, body {
     line-height: 1.5;
 }
 
+/* Illustration (Absolute para hindi humila ng layout) */
 .dashboard .printer-illustration {
+    position: absolute;
+    top: 35%; /* 35% layo mula sa taas */
+    left: 50%;
+    transform: translateX(-50%);
     width: 456px;
-    max-width: 85%;
+    max-width: 45%;
     height: auto;
     object-fit: contain;
-    margin-bottom: 40px;
+    z-index: 3;
 }
 
-/* START ORDER BUTTON */
+/* Start Order Button */
 .dashboard .start-order-button {
+    position: absolute;
+    top: 72%; /* 72% layo mula sa taas, saktong ilalim ng image */
+    left: 50%;
+    transform: translateX(-50%);
     width: 200px;
     height: 48px;
     display: flex;
@@ -221,10 +221,11 @@ html, body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    z-index: 4;
 }
 
 .dashboard .start-order-button:hover { background-color: #203B32; }
-.dashboard .start-order-button:active { background-color: #17251e; transform: scale(0.98); }
+.dashboard .start-order-button:active { transform: translateX(-50%) scale(0.98); }
 
 /* =========================================
    LANDSCAPE BACKGROUND
@@ -308,16 +309,19 @@ html, body {
     .dashboard .brand img { width: 36px; height: 36px; }
     .dashboard .nav-actions-wrapper { gap: 15px; }
 
-    /* Show Hamburger */
+    /* IPAKITA ANG HAMBURGER */
     .dashboard .menu-toggle { 
         display: block !important; 
         background: none !important; 
         border: none !important; 
         cursor: pointer; 
     }
-    .dashboard .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; fill: none; }
+    .dashboard .menu-toggle svg { 
+        width: 28px; height: 28px; 
+        stroke: #ffffff; stroke-width: 2.5; fill: none; 
+    }
     
-    /* Side Drawer */
+    /* SIDE DRAWER MENU */
     .dashboard .main-navigation {
         position: fixed !important; 
         top: 0 !important; 
@@ -337,6 +341,7 @@ html, body {
     }
     .dashboard .main-navigation.active { right: 0 !important; }
     
+    /* CLOSE (X) BUTTON */
     .dashboard .close-menu { 
         display: block !important; 
         position: absolute; 
@@ -345,12 +350,13 @@ html, body {
         background: none; 
         border: none; 
         cursor: pointer; 
-        z-index: 100002;
+        z-index: 100002 !important;
     }
     .dashboard .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
     
     .dashboard .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
     
+    /* OVERLAY */
     .dashboard .menu-overlay { 
         display: none; 
         position: fixed; 
@@ -359,16 +365,17 @@ html, body {
         width: 100vw; 
         height: 100vh; 
         background-color: rgba(0,0,0,0.5); 
-        z-index: 100000; 
+        z-index: 100000 !important; 
     }
     .dashboard .menu-overlay.active { display: block !important; }
 
-    /* Content adjustments for Tablet */
-    .dashboard-content { padding-top: 70px; padding-bottom: 200px; }
+    /* TABLET ADJUSTMENTS */
+    .dashboard .welcome-section { top: 12%; }
     .dashboard .welcome-section h1 { font-size: 27px; }
     .dashboard .welcome-section p { font-size: 13px; }
-    .dashboard .printer-illustration { width: 80%; max-width: 350px; margin-bottom: 30px; }
-    .dashboard .start-order-button { width: 180px; height: 46px; }
+    
+    .dashboard .printer-illustration { top: 33%; max-width: 60%; }
+    .dashboard .start-order-button { top: 70%; width: 180px; height: 46px; font-size: 12px; }
     
     .dashboard .landscape { height: 200px; }
     .dashboard .foreground-landscape { height: 110px; }
@@ -376,8 +383,11 @@ html, body {
     .notif-overlay { top: 60px; right: -50px; width: 300px; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+    .dashboard .welcome-section { top: 12%; }
     .dashboard .welcome-section h1 { font-size: 24px; }
     .dashboard .welcome-section p { font-size: 12px; }
-    .dashboard-content { padding-bottom: 180px; }
+    
+    .dashboard .printer-illustration { top: 30%; max-width: 80%; }
+    .dashboard .start-order-button { top: 65%; width: 170px; height: 44px; }
 }
