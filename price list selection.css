@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - PRICE LIST (PERFECT DESKTOP FIX)
+   PRINT - PRICE LIST (EXACT SCREEN FIT)
 ========================================= */
 * { 
     margin: 0; 
@@ -9,10 +9,10 @@
 
 html, body { 
     width: 100%; 
-    min-height: 100%; 
+    height: 100%; 
     margin: 0; 
     padding: 0; 
-    overflow-x: hidden; 
+    overflow: hidden; /* Walang scroll sa buong page */
     background-color: #D9D9D9; 
     font-family: 'Poppins', sans-serif; 
 }
@@ -20,11 +20,11 @@ html, body {
 .price-list-page {
     position: relative;
     width: 100%;
-    max-width: 1440px;
-    height: 100vh; /* Sinigurong sakto lang sa screen */
+    height: 100vh;
     height: 100dvh;
-    margin: 0 auto;
     background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
 }
 
@@ -170,23 +170,25 @@ html, body {
 }
 
 /* =========================================
-   MAIN CONTENT
+   MAIN CONTENT (Naka-Flex para hindi lumampas)
 ========================================= */
 .price-list-page .service-content {
+    flex: 1;
     position: relative;
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px; /* Space mula sa header */
+    padding-bottom: 220px; /* Space para sa landscape */
     z-index: 2;
 }
 
 .price-list-page .how-title-section {
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 86%;
     max-width: 1140px;
     text-align: left;
+    margin-bottom: 30px;
 }
 
 .price-list-page .how-title-section h1 {
@@ -205,14 +207,10 @@ html, body {
     font-weight: 600;
 }
 
-/* PRICE CARD WRAPPER (Inayos ang top) */
+/* PRICE CARD WRAPPER */
 .price-list-page .price-card-wrapper {
-    position: absolute;
-    top: 230px; /* Ginawang 230px imbes na 280px para umangat */
-    left: 50%;
-    transform: translateX(-50%);
     width: 500px;
-    padding: 40px;
+    padding: 30px;
     background-color: #a5b88f;
     border-radius: 12px;
     z-index: 3;
@@ -221,10 +219,10 @@ html, body {
 .price-list-page .price-card {
     background-color: #ffffff;
     border-radius: 8px;
-    padding: 60px 50px;
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     align-items: center;
 }
 
@@ -338,7 +336,6 @@ html, body {
     .price-list-page .brand { font-size: 21px; }
     .price-list-page .brand img { width: 36px; height: 36px; }
     
-    /* IPAKITA ANG HAMBURGER */
     .price-list-page .menu-toggle { 
         display: block !important; 
         background: none !important; 
@@ -354,11 +351,10 @@ html, body {
         fill: none;
     }
 
-    /* SIDE DRAWER NAVIGATION */
     .price-list-page .main-navigation {
         position: fixed !important; 
         top: 0 !important; 
-        right: -100%; /* Nakatago pakanan */
+        right: -100%; 
         width: 250px; 
         height: 100vh;
         height: 100dvh; 
@@ -379,7 +375,6 @@ html, body {
         right: 0 !important; 
     }
 
-    /* CLOSE (X) BUTTON */
     .price-list-page .close-menu { 
         display: block !important; 
         position: absolute !important; 
@@ -398,7 +393,6 @@ html, body {
         fill: none !important;
     }
     
-    /* NAVIGATION LINKS SA LOOB NG MENU */
     .price-list-page .nav-link { 
         width: 100% !important; 
         justify-content: flex-start !important; 
@@ -420,20 +414,23 @@ html, body {
         display: block !important; 
     }
 
-    /* INAYOS ANG POSISYON SA TABLET PARA HINDI LUMAGPAS */
+    /* INAYOS ANG POSISYON SA TABLET */
+    .price-list-page .service-content {
+        padding-top: 90px;
+        padding-bottom: 160px;
+    }
+    
     .price-list-page .how-title-section { 
-        top: 110px; 
         text-align: center; 
     }
     .price-list-page .how-title-section h1 { font-size: 27px; }
 
     .price-list-page .price-card-wrapper {
-        top: 180px; 
         width: 90%; 
         max-width: 350px; 
-        padding: 25px 20px; 
+        padding: 20px; 
     }
-    .price-list-page .price-card { padding: 35px 20px; gap: 15px; }
+    .price-list-page .price-card { padding: 30px 20px; gap: 15px; }
     .price-list-page .price-button { max-width: 100%; height: 50px; font-size: 13px; }
     
     .notif-overlay { top: 60px; right: 10px; width: 300px; }
