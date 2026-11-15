@@ -1,7 +1,11 @@
 /* =========================================
-   PRINT - DASHBOARD (FULLY RESPONSIVE FIX)
+   PRINT - DASHBOARD (PINAKA-AYOS NA VERSION)
 ========================================= */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 html, body {
     width: 100%;
@@ -151,7 +155,7 @@ html, body {
 .dashboard .menu-overlay { display: none; }
 
 /* =========================================
-   MAIN CONTENT (Absolute Positioning)
+   MAIN CONTENT CONTAINER
 ========================================= */
 .dashboard-content {
     position: relative;
@@ -160,14 +164,29 @@ html, body {
     z-index: 2;
 }
 
-/* Welcome Text */
-.dashboard .welcome-section {
+/* 
+   BAGONG CONTAINER: 
+   Ito ang magce-center sa welcome text, image, at button nang sabay
+*/
+.dashboard .main-center-wrapper {
     position: absolute;
-    top: 15%; /* 15% layo mula sa taas */
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 800px; /* Para hindi masyadong malaki sa malaking screen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    padding: 0 20px;
+    z-index: 3;
+    /* Inaadjust ang gitna para hindi masagkaan ang header at landscape */
+    margin-top: 30px; 
+}
+
+.dashboard .welcome-section {
+    margin-bottom: 30px;
 }
 
 .dashboard .welcome-section h1 {
@@ -187,25 +206,16 @@ html, body {
     line-height: 1.5;
 }
 
-/* Illustration (Absolute para hindi humila ng layout) */
 .dashboard .printer-illustration {
-    position: absolute;
-    top: 35%; /* 35% layo mula sa taas */
-    left: 50%;
-    transform: translateX(-50%);
     width: 456px;
-    max-width: 45%;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
-    z-index: 3;
+    margin-bottom: 30px; /* Space sa pagitan ng image at button */
 }
 
 /* Start Order Button */
 .dashboard .start-order-button {
-    position: absolute;
-    top: 72%; /* 72% layo mula sa taas, saktong ilalim ng image */
-    left: 50%;
-    transform: translateX(-50%);
     width: 200px;
     height: 48px;
     display: flex;
@@ -221,11 +231,10 @@ html, body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    z-index: 4;
 }
 
 .dashboard .start-order-button:hover { background-color: #203B32; }
-.dashboard .start-order-button:active { transform: translateX(-50%) scale(0.98); }
+.dashboard .start-order-button:active { transform: scale(0.98); }
 
 /* =========================================
    LANDSCAPE BACKGROUND
@@ -370,12 +379,13 @@ html, body {
     .dashboard .menu-overlay.active { display: block !important; }
 
     /* TABLET ADJUSTMENTS */
-    .dashboard .welcome-section { top: 12%; }
+    .dashboard .main-center-wrapper {
+        margin-top: 10px; /* Ibinaba nang konti */
+    }
     .dashboard .welcome-section h1 { font-size: 27px; }
     .dashboard .welcome-section p { font-size: 13px; }
-    
-    .dashboard .printer-illustration { top: 33%; max-width: 60%; }
-    .dashboard .start-order-button { top: 70%; width: 180px; height: 46px; font-size: 12px; }
+    .dashboard .printer-illustration { width: 350px; max-width: 80%; }
+    .dashboard .start-order-button { width: 180px; height: 46px; font-size: 12px; }
     
     .dashboard .landscape { height: 200px; }
     .dashboard .foreground-landscape { height: 110px; }
@@ -384,10 +394,8 @@ html, body {
 }
 
 @media (max-width: 600px) {
-    .dashboard .welcome-section { top: 12%; }
     .dashboard .welcome-section h1 { font-size: 24px; }
     .dashboard .welcome-section p { font-size: 12px; }
-    
-    .dashboard .printer-illustration { top: 30%; max-width: 80%; }
-    .dashboard .start-order-button { top: 65%; width: 170px; height: 44px; }
+    .dashboard .printer-illustration { width: 280px; }
+    .dashboard .start-order-button { width: 170px; height: 44px; }
 }
