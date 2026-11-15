@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - PRICE LIST (PERFECT FIT)
+   PRINT - PRICE LIST (FINAL & CENTERED)
 ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -8,15 +8,15 @@ html, body {
     height: 100%; 
     background-color: #D9D9D9; 
     font-family: 'Poppins', sans-serif; 
-    overflow: hidden; /* Pinipigilan ang scroll sa buong page */
+    overflow: hidden; /* Walang scroll */
 }
 
-/* Ginawang Flex container para kontrolado ang height */
+/* Main Container */
 .price-list-page {
     position: relative;
     width: 100%;
     height: 100vh;
-    height: 100dvh; 
+    height: 100dvh; /* Para sa mobile browser address bars */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ html, body {
     padding: 0 20px;
     display: flex; align-items: center; justify-content: space-between;
     background-color: #203B32;
-    z-index: 99; 
+    z-index: 999; 
 }
 
 .price-list-page .brand {
@@ -40,66 +40,84 @@ html, body {
 }
 .price-list-page .brand img { width: 36px; height: 36px; object-fit: contain; }
 
-/* NAV & ACTIONS */
-.price-list-page .nav-actions-wrapper {
-    display: flex; align-items: center; gap: 15px; position: relative;
-}
+/* NAV & ICONS */
+.price-list-page .nav-actions-wrapper { display: flex; align-items: center; gap: 15px; position: relative; }
 .price-list-page .main-navigation { display: flex; align-items: center; gap: 24px; }
-.price-list-page .nav-link {
-    display: flex; align-items: center; gap: 9px; color: #ffffff;
-    text-decoration: none; font-size: 12px; transition: 0.2s;
-}
+.price-list-page .nav-link { display: flex; align-items: center; gap: 9px; color: #ffffff; text-decoration: none; font-size: 12px; transition: 0.2s; }
 .price-list-page .nav-link:hover, .price-list-page .nav-link.active { opacity: 0.7; }
-.price-list-page .nav-link svg {
-    width: 27px; height: 27px; fill: none; stroke: #ffffff;
-    stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
-}
+.price-list-page .nav-link svg { width: 27px; height: 27px; fill: none; stroke: #ffffff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-/* NOTIFICATION BELL */
 .price-list-page .notification-wrapper { position: relative; display: flex; align-items: center; }
 .price-list-page .notification-link { background: none; border: none; padding: 0; cursor: pointer; position: relative; }
 .price-list-page .notification-link svg { width: 30px; height: 30px; fill: none; stroke: #ffffff; stroke-width: 2.2; }
-.price-list-page .notification-link.has-unread::after {
-    content: ''; position: absolute; top: 0; right: 2px;
-    width: 10px; height: 10px; background-color: #d9534f; border-radius: 50%; border: 2px solid #203B32;
-}
+.price-list-page .notification-link.has-unread::after { content: ''; position: absolute; top: 0; right: 2px; width: 10px; height: 10px; background-color: #d9534f; border-radius: 50%; border: 2px solid #203B32; }
 
-/* MAIN CONTENT */
+/* =========================================
+   MAIN CONTENT (PINAKA-IMPORTANTENG BAHAGI)
+========================================= */
 .price-list-page .service-content { 
-    flex: 1; /* Kukunin lahat ng natitirang space sa gitna */
+    flex: 1; 
     width: 100%; 
-    padding-top: 90px; /* Space para sa header */
-    padding-bottom: 180px; /* Space sa ilalim para sa landscape */
+    /* Dito natin gagawin ang centering */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center; /* Center vertically */
+    align-items: center;     /* Center horizontally */
+    
+    padding-top: 70px; /* Space para hindi matakpan ng header */
+    padding-bottom: 220px; /* Space sa ilalim para hindi matakpan ng landscape */
     z-index: 2; 
     position: relative;
 }
 
-.price-list-page .how-title-section { width: 90%; max-width: 600px; margin-bottom: 25px; text-align: center; }
+/* Title Section */
+.price-list-page .how-title-section { 
+    width: 90%; 
+    max-width: 600px; 
+    margin-bottom: 25px; 
+    text-align: center; 
+}
 .price-list-page .how-title-section h1 { color: #203B32; font-family: 'Jaro', sans-serif; font-size: 26px; margin-bottom: 5px; }
 .price-list-page .how-title-section p { color: #4A4D21; font-size: 12px; font-weight: 600; }
 
-/* CARD */
+/* CARD (Pinalaki nang konti) */
 .price-list-page .price-card-wrapper { 
-    width: 90%; max-width: 340px; padding: 20px; 
-    background: #a5b88f; border-radius: 12px; 
+    width: 90%; 
+    max-width: 380px; /* Pinalaki mula 340px */
+    padding: 25px; /* Pinalaki ang padding */
+    background: #a5b88f; 
+    border-radius: 14px; 
 }
+
 .price-list-page .price-card { 
-    background: #ffffff; border-radius: 8px; padding: 30px 20px; 
-    display: flex; flex-direction: column; gap: 15px; align-items: center; 
+    background: #ffffff; 
+    border-radius: 10px; 
+    padding: 40px 25px; /* Pinalaki ang padding sa loob */
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; /* Nilakihan ang gap */
+    align-items: center; 
 }
+
 .price-list-page .price-button { 
-    width: 100%; max-width: 260px; height: 50px; 
-    background: #304B37; border: 1px solid #ffffff; border-radius: 6px; 
-    color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; 
-    cursor: pointer; transition: 0.2s; 
+    width: 100%; 
+    max-width: 290px; /* Pinalaki mula 260px */
+    height: 55px; /* Pinalaki mula 50px */
+    background: #304B37; 
+    border: 1px solid #ffffff; 
+    border-radius: 8px; 
+    color: #ffffff; 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 14px; /* Pinalaki ang font */
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: 0.2s; 
 }
+
 .price-list-page .price-button:hover { background: #203B32; }
 .price-list-page .price-button:active { transform: scale(0.98); }
 
-/* LANDSCAPE (Naka-absolute para hindi humatak sa flexbox) */
+/* LANDSCAPE (Naka-pirme sa ilalim) */
 .price-list-page .foreground-landscape { 
     position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; 
     object-fit: fill; z-index: 0; pointer-events: none; 
@@ -154,9 +172,7 @@ html, body {
         background: none !important; border: none !important; 
         cursor: pointer !important; z-index: 100002 !important; 
     }
-    .price-list-page .close-menu svg { 
-        width: 24px !important; height: 24px !important; stroke: #ffffff !important; stroke-width: 2.5 !important; 
-    }
+    .price-list-page .close-menu svg { width: 24px !important; height: 24px !important; stroke: #ffffff !important; stroke-width: 2.5 !important; }
 
     .price-list-page .nav-link { 
         width: 100%; justify-content: flex-start; padding: 18px 20px !important;
@@ -169,6 +185,12 @@ html, body {
     }
     .price-list-page .menu-overlay.active { display: block !important; }
 
-    .price-list-page .service-content { padding-top: 90px; padding-bottom: 140px; }
-    .notif-overlay { top: 50px; right: -50px; width: 300px; }
+    /* Adjust konti para sa tablet screen */
+    .price-list-page .service-content { 
+        padding-bottom: 200px; 
+    }
+    .price-list-page .how-title-section h1 {
+        font-size: 30px; /* Pinalaki ang title */
+    }
+    .notif-overlay { top: 50px; right: -10px; width: 300px; }
 }
