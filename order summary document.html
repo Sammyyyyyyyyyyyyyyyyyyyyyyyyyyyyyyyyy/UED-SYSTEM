@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Summary - Document | PRINT</title>
     <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="summary.css">
    
     <style>
+        /* MGA PANGUNAHING STYLES PARA HINDI MAG-OVERLAP */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; min-height: 100%; background-color: #D9D9D9; font-family: 'Poppins', sans-serif; }
 
         .summary-page { position: relative; width: 100%; min-height: 100vh; background-color: #D9D9D9; display: flex; flex-direction: column; overflow: hidden; }
 
         /* =========================================
-           HEADER (matching upload/dashboard reference)
+           HEADER (Fixed sa Taas)
         ========================================= */
         .service-header {
             position: fixed;
@@ -27,7 +27,7 @@
             align-items: center;
             justify-content: space-between;
             background-color: #203B32;
-            z-index: 100;
+            z-index: 99999; /* Mataas para hindi mababalot ng popup */
         }
 
         .service-header .brand {
@@ -84,7 +84,7 @@
             flex-shrink: 0;
         }
 
-        /* NOTIFICATION */
+        /* NOTIFICATION BELL */
         .service-header .notification-wrapper { position: relative; display: flex; align-items: center; justify-content: center; }
         .service-header .notification-link {
             position: relative;
@@ -103,7 +103,36 @@
             border-radius: 50%; border: 2px solid #203B32;
         }
 
-        /* Hide mobile buttons on desktop */
+        /* =========================================
+           NOTIFICATION POPUP (FIXED PARA HINDI SUMAMA SA SCROLL)
+        ========================================= */
+        .notif-overlay {
+            position: fixed;
+            top: 70px; /* Tamang position sa ilalim ng header */
+            right: 20px;
+            width: 320px;
+            background: #f2f2f2;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+            z-index: 100000; /* Pinakamataas para lumutang sa lahat */
+            border: 1px solid #ddd;
+        }
+        .notif-overlay.active { display: flex; }
+        .notif-close { position: absolute; top: 15px; right: 15px; background: none; border: none; cursor: pointer; color: #203B32; }
+        .notif-overlay h2 { font-family: 'Jaro', sans-serif; font-size: 24px; color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px; }
+        .notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+        .notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; }
+        .notif-item.unread { background-color: #e5e5e5; }
+        .notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+        .notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+        .notif-content p { font-size: 11px; color: #666; font-weight: 600; margin-bottom: 4px; }
+        .notif-content span { font-size: 9px; color: #888; }
+        .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
+
+        /* Itago sa desktop, ipakita sa tablet */
         .service-header .menu-toggle,
         .service-header .close-menu,
         .service-header .menu-overlay { display: none; }
@@ -116,22 +145,19 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 100px 40px 80px;
+            padding: 110px 40px 80px; /* Sapat na espasyo para sa fixed header */
             position: relative;
             z-index: 2;
         }
 
-        /* Progress */
         .progress-bar { display: flex; gap: 8px; margin-bottom: 30px; }
         .progress-step { flex: 1; height: 6px; background: #b0b0b0; border-radius: 3px; }
         .progress-step.active { background: #203B32; }
 
-        /* Page title */
         .page-title-section { text-align: center; margin-bottom: 30px; }
         .page-title-section h1 { font-family: 'Jaro', sans-serif; font-size: 32px; color: #203B32; margin-bottom: 10px; }
         .page-title-section p { font-size: 14px; color: #4A4D21; max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
-        /* Summary Layout */
         .summary-layout {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
@@ -164,7 +190,6 @@
         .item-info p { font-size: 12px; color: #555; margin-bottom: 3px; }
         .item-info p.subtotal { margin-top: 8px; font-weight: 700; color: #203B32; }
 
-        /* Pricing */
         .pricing-column { display: flex; flex-direction: column; gap: 20px; }
         .green-card { background: #304B37; border-radius: 12px; padding: 8px; }
         .white-card-inner { background: #fff; border-radius: 8px; padding: 20px; }
@@ -173,7 +198,6 @@
         .price-row.total { font-weight: 700; font-size: 15px; color: #203B32; }
         .price-divider { border: none; border-top: 1px solid #ddd; margin: 12px 0; }
 
-        /* Options */
         .outside-options { display: flex; flex-direction: column; gap: 15px; }
         .option-group label { display: block; font-size: 12px; font-weight: 600; color: #203B32; margin-bottom: 6px; }
         .option-btn {
@@ -186,7 +210,6 @@
         .option-btn span { font-size: 13px; font-weight: 600; color: #203B32; }
         .option-btn .change-link { margin-left: auto; font-size: 11px; color: #6d6b45; text-decoration: underline; font-weight: 700; }
 
-        /* Action buttons */
         .action-buttons { display: flex; justify-content: space-between; gap: 15px; margin: 30px 0 20px; }
         .btn-back, .btn-continue {
             padding: 12px 30px; border-radius: 6px; cursor: pointer;
@@ -197,9 +220,9 @@
         .btn-continue:hover { background: #304B37; }
 
         /* =========================================
-           POPUP STYLES
+           POPUP STYLES (Payment & Delivery)
         ========================================= */
-        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 15px; }
+        .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 99999; padding: 15px; }
         .popup-overlay.active { display: flex; }
         .popup-box { background: #f2f2f2; border-radius: 12px; padding: 25px; width: 100%; max-width: 380px; position: relative; }
         .popup-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #203B32; }
@@ -213,7 +236,7 @@
         .popup-confirm { background: #304b37; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: 15px; }
 
         /* =========================================
-           RESPONSIVE (TABLET & MOBILE) - SIDEBAR DRAWER
+           RESPONSIVE (TABLET & MOBILE)
         ========================================= */
         @media (max-width: 1100px) {
             .service-header { padding: 0 20px; }
@@ -234,65 +257,46 @@
 
             .service-header .menu-toggle {
                 display: block !important;
-                background: none;
-                border: none;
-                cursor: pointer;
+                background: none; border: none; cursor: pointer;
             }
             .service-header .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; stroke-linecap: round; }
 
             .service-header .main-navigation {
                 position: fixed !important;
-                top: 0 !important;
-                right: -100%;
-                width: 250px;
-                height: 100vh;
+                top: 0 !important; right: -100%;
+                width: 250px; height: 100vh;
                 background-color: #203B32;
-                display: flex !important;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 60px 0 20px;
-                gap: 0;
-                z-index: 9999 !important;
+                display: flex !important; flex-direction: column;
+                align-items: flex-start; padding: 60px 0 20px;
+                gap: 0; z-index: 100001 !important;
                 transition: right 0.3s ease;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.2);
             }
             .service-header .main-navigation.active { right: 0 !important; }
 
             .service-header .close-menu {
-                display: block !important;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-                background: none;
-                border: none;
-                cursor: pointer;
-                z-index: 10000;
+                display: block !important; position: absolute;
+                top: 20px; right: 20px; background: none; border: none;
+                cursor: pointer; z-index: 100002;
             }
             .service-header .close-menu svg { width: 24px; height: 24px; stroke: #ffffff; }
 
             .service-header .nav-link {
-                width: 100%;
-                justify-content: flex-start;
-                padding: 18px 20px;
-                font-size: 14px;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                gap: 15px;
+                width: 100%; justify-content: flex-start;
+                padding: 18px 20px; font-size: 14px;
+                border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px;
             }
             .service-header .nav-link svg { width: 22px; height: 22px; }
 
             .service-header .menu-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 9998;
+                display: none; position: fixed;
+                top: 0; left: 0; width: 100vw; height: 100vh;
+                background-color: rgba(0,0,0,0.5); z-index: 100000;
             }
             .service-header .menu-overlay.active { display: block !important; }
 
-            .notif-overlay { right: -50px; width: 300px; }
+            /* Ayusin ang posisyon ng notification sa tablet */
+            .notif-overlay { top: 65px; right: 15px; width: 300px; }
 
             .service-content { padding: 90px 20px 60px; }
             .page-title-section h1 { font-size: 26px; }
