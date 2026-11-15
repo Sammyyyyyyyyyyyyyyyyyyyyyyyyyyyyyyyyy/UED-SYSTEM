@@ -25,6 +25,7 @@
         </a>
 
         <div class="nav-actions-wrapper">
+            <!-- MAIN NAVIGATION (Desktop & Sidebar Drawer) -->
             <nav class="main-navigation" id="mainNav">
                 <button class="close-menu" id="closeMenu">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -97,11 +98,16 @@
             </div>
 
             <!-- HAMBURGER BUTTON -->
-            <button class="menu-toggle" id="menuToggle">
-                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
             </button>
         </div>
 
+        <!-- OVERLAY PARA SA DRAWER -->
         <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
@@ -115,12 +121,9 @@
 
         <div class="price-card-wrapper">
             <div class="price-card">
-                
-                <!-- BUTTONS (Nilagyan natin ng ID) -->
                 <button id="btn-document" class="price-button">DOCUMENT PRINTING</button>
                 <button id="btn-photo" class="price-button">PHOTO PRINTING</button>
                 <button id="btn-tarpaulin" class="price-button">TARPAULIN PRINTING</button>
-
             </div>
         </div>
 
@@ -175,20 +178,12 @@
         });
 
         // =========================================
-        // 3. NOTIFICATIONS POPUP & LOCALSTORAGE
+        // 3. NOTIFICATIONS POPUP
         // =========================================
         const notifBtn = document.getElementById('notificationBtn');
         const notifOverlay = document.getElementById('notifOverlay');
         const notifClose = document.getElementById('notifClose');
         const notifMarkRead = document.getElementById('notifMarkRead');
-
-        const isRead = localStorage.getItem("notificationsRead");
-        if (isRead === "true") {
-            notifBtn.classList.remove("has-unread");
-            document.querySelectorAll('.notif-item.unread').forEach(item => {
-                item.classList.remove('unread');
-            });
-        }
 
         if (notifBtn) {
             notifBtn.addEventListener('click', function(e) {
@@ -217,7 +212,6 @@
                     item.classList.remove('unread');
                 });
                 notifBtn.classList.remove('has-unread');
-                localStorage.setItem("notificationsRead", "true");
             });
         }
     });
