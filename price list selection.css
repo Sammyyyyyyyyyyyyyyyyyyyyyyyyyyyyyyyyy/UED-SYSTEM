@@ -1,5 +1,5 @@
 /* =========================================
-   PRINT - PRICE LIST
+   PRINT - PRICE LIST (PERFECT GRID FIX)
 ========================================= */
 * { 
     margin: 0; 
@@ -9,22 +9,22 @@
 
 html, body { 
     width: 100%; 
-    min-height: 100%; 
+    height: 100%; 
     margin: 0; 
     padding: 0; 
-    overflow-x: hidden; 
+    overflow: hidden; /* Walang scroll */
     background-color: #D9D9D9; 
     font-family: 'Poppins', sans-serif; 
 }
 
-/* Main container - eksaktong sinundan ang dashboard layout */
+/* Grid Layout para hindi magkaroon ng sobrang space sa gitna */
 .price-list-page {
     position: relative;
     width: 100%;
-    max-width: 1440px;
-    min-height: 100vh; 
-    margin: 0 auto;
-    background-color: #D9D9D9;
+    height: 100vh;
+    height: 100dvh;
+    display: grid;
+    grid-template-rows: 80px 1fr; /* Header, tapos Content */
     overflow: hidden;
 }
 
@@ -32,17 +32,16 @@ html, body {
    HEADER
 ========================================= */
 .price-list-page .service-header {
-    position: absolute;
-    top: 0;
-    left: 0;
+    grid-row: 1;
+    position: relative;
     width: 100%;
-    height: 80px;
+    height: 100%;
     padding: 0 40px 0 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #203B32;
-    z-index: 5;
+    z-index: 100;
 }
 
 .price-list-page .brand {
@@ -170,24 +169,27 @@ html, body {
 }
 
 /* =========================================
-   MAIN CONTENT
+   MAIN CONTENT (Sasakop sa natitirang space)
 ========================================= */
 .price-list-page .service-content {
+    grid-row: 2;
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Magsisimula sa taas */
+    align-items: center; 
+    padding-top: 40px; /* Saktong layo mula sa header */
     z-index: 2;
 }
 
 /* TITLE SECTION */
 .price-list-page .how-title-section {
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 86%;
     max-width: 1140px;
     text-align: left;
+    margin-bottom: 40px;
 }
 
 .price-list-page .how-title-section h1 {
@@ -210,10 +212,6 @@ html, body {
    PRICE CARD WRAPPER
 ========================================= */
 .price-list-page .price-card-wrapper {
-    position: absolute;
-    top: 250px; /* Ibinalik sa dating posisyon, sakto lang */
-    left: 50%;
-    transform: translateX(-50%);
     width: 500px;
     padding: 40px;
     background-color: #a5b88f;
@@ -264,7 +262,7 @@ html, body {
 }
 
 /* =========================================
-   LANDSCAPE BACKGROUND
+   LANDSCAPE BACKGROUND (Naka-pirme sa ilalim)
 ========================================= */
 .price-list-page .foreground-landscape {
     position: absolute;
@@ -306,224 +304,77 @@ html, body {
     border: 1px solid #ddd;
 }
 
-.notif-overlay.active {
-    display: flex;
-}
+.notif-overlay.active { display: flex; }
 
 .notif-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #203B32;
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; cursor: pointer; color: #203B32;
 }
 .notif-close svg { width: 24px; height: 24px; }
 
 .notif-overlay h2 {
-    font-family: 'Jaro', sans-serif;
-    font-size: 24px;
-    color: #4A4D21;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+    font-family: 'Jaro', sans-serif; font-size: 24px;
+    color: #4A4D21; margin-bottom: 15px; letter-spacing: 1px;
 }
 
-.notif-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.notif-item {
-    display: flex;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    background-color: transparent;
-    transition: background-color 0.2s ease;
-}
-
-.notif-item.unread {
-    background-color: #d1d1d1; 
-}
-
-.notif-icon svg {
-    width: 24px;
-    height: 24px;
-    stroke: #203B32;
-    stroke-width: 2;
-    fill: none;
-}
-
-.notif-content h3 {
-    font-size: 13px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 3px;
-}
-
-.notif-content p {
-    font-size: 11px;
-    font-weight: 700;
-    color: #6d6b45;
-    margin-bottom: 4px;
-    line-height: 1.4;
-}
-
-.notif-content span {
-    font-size: 9px;
-    color: #888;
-    font-weight: 600;
-}
-
-.notif-item.unread .notif-time {
-    color: #203B32; 
-    font-weight: 700;
-}
-
-.notif-mark-read {
-    background: none;
-    border: none;
-    color: #6d6b45;
-    font-family: 'Poppins', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    text-align: right;
-    margin-top: 15px;
-    cursor: pointer;
-    text-decoration: underline;
-}
-.notif-mark-read:hover { color: #203B32; }
+.notif-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
+.notif-item { display: flex; gap: 12px; padding: 12px; border-radius: 8px; transition: background-color 0.2s ease; }
+.notif-item.unread { background-color: #d1d1d1; }
+.notif-icon svg { width: 24px; height: 24px; stroke: #203B32; stroke-width: 2; fill: none; }
+.notif-content h3 { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.notif-content p { font-size: 11px; font-weight: 700; color: #6d6b45; margin-bottom: 4px; line-height: 1.4; }
+.notif-content span { font-size: 9px; color: #888; font-weight: 600; }
+.notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
 
 /* =========================================
    RESPONSIVE (TABLET & MOBILE)
 ========================================= */
-
 @media (max-width: 1100px) {
     .price-list-page .service-header { padding: 0 20px; }
     .price-list-page .main-navigation { gap: 16px; }
-    .price-list-page .nav-link { font-size: 12px; gap: 5px; }
     .price-list-page .nav-link svg { width: 22px; height: 22px; }
 }
 
-/* TABLET VIEW */
 @media (max-width: 1024px) {
+    .price-list-page { grid-template-rows: 70px 1fr; }
     .price-list-page .service-header { height: 70px; padding: 0 20px; }
     .price-list-page .brand { font-size: 21px; }
     .price-list-page .brand img { width: 36px; height: 36px; }
     .price-list-page .nav-actions-wrapper { gap: 15px; }
 
-    /* Show hamburger */
-    .price-list-page .menu-toggle { 
-        display: block !important; 
-        background: none !important; 
-        border: none !important; 
-        cursor: pointer; 
-    }
-    .price-list-page .menu-toggle svg { 
-        width: 28px; 
-        height: 28px; 
-        stroke: #ffffff; 
-        stroke-width: 2.5; 
-        fill: none;
-    }
+    /* Show Hamburger */
+    .price-list-page .menu-toggle { display: block !important; background: none !important; border: none !important; cursor: pointer; }
+    .price-list-page .menu-toggle svg { width: 28px; height: 28px; stroke: #ffffff; stroke-width: 2.5; fill: none; }
 
     /* Side Drawer */
     .price-list-page .main-navigation {
-        position: fixed !important; 
-        top: 0 !important; 
-        right: -100%; 
-        width: 250px; 
-        height: 100vh;
-        height: 100dvh; 
-        background-color: #203B32;
-        display: flex !important; 
-        flex-direction: column; 
-        align-items: flex-start;
-        justify-content: flex-start; 
-        padding: 60px 0 20px; 
-        gap: 0; 
-        z-index: 100001 !important; 
-        transition: right 0.3s ease; 
-        box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-        overflow-y: auto; 
+        position: fixed !important; top: 0 !important; right: -100% !important;
+        width: 250px; height: 100vh; height: 100dvh; background-color: #203B32;
+        display: flex !important; flex-direction: column; align-items: flex-start;
+        padding: 60px 0 20px; gap: 0; z-index: 100001 !important;
+        transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.2); overflow-y: auto;
     }
-    
-    .price-list-page .main-navigation.active { 
-        right: 0 !important; 
-    }
+    .price-list-page .main-navigation.active { right: 0 !important; }
 
-    /* Close Button (X) */
-    .price-list-page .close-menu { 
-        display: block !important; 
-        position: absolute !important; 
-        top: 15px !important; 
-        right: 15px !important; 
-        background: none !important; 
-        border: none !important; 
-        cursor: pointer !important; 
-        z-index: 100002 !important;
-    }
-    .price-list-page .close-menu svg { 
-        width: 24px !important; 
-        height: 24px !important; 
-        stroke: #ffffff !important; 
-        stroke-width: 2.5 !important;
-        fill: none !important;
-    }
-    
-    .price-list-page .nav-link { 
-        width: 100%; 
-        justify-content: flex-start; 
-        padding: 18px 20px; 
-        font-size: 14px; 
-        border-bottom: 1px solid rgba(255,255,255,0.1); 
-        gap: 15px; 
-    }
-    .price-list-page .nav-link svg {
-        width: 22px;
-        height: 22px;
-        stroke: #ffffff;
-    }
-    
-    .price-list-page .menu-overlay { 
-        display: none; 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100vw; 
-        height: 100vh; 
-        background-color: rgba(0,0,0,0.5); 
-        z-index: 100000 !important; 
-    }
-    
-    .price-list-page .menu-overlay.active { 
-        display: block !important; 
-    }
+    /* Close Button */
+    .price-list-page .close-menu { display: block !important; position: absolute !important; top: 15px !important; right: 15px !important; background: none !important; border: none !important; cursor: pointer !important; z-index: 100002 !important; }
+    .price-list-page .close-menu svg { width: 24px !important; height: 24px !important; stroke: #ffffff !important; stroke-width: 2.5 !important; }
 
-    /* Inayos ang layout para magkasya sa screen at hindi masyadong malayo sa taas */
-    .price-list-page .how-title-section { 
-        top: 100px; 
-        text-align: center; 
-    }
+    .price-list-page .nav-link { width: 100%; justify-content: flex-start; padding: 18px 20px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 15px; }
+    .price-list-page .nav-link svg { width: 22px; height: 22px; stroke: #ffffff; }
+
+    .price-list-page .menu-overlay { display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 100000 !important; }
+    .price-list-page .menu-overlay.active { display: block !important; }
+
+    /* Tablet Positioning */
+    .price-list-page .service-content { padding-top: 20px; }
+    .price-list-page .how-title-section { text-align: center; margin-bottom: 30px; }
     .price-list-page .how-title-section h1 { font-size: 27px; }
-
-    .price-list-page .price-card-wrapper {
-        top: 200px; /* Saktong baba para maging maayos at hindi mag-blangko sa ilalim */
-        width: 90%;
-        max-width: 380px;
-        padding: 25px 20px; 
-    }
-    .price-list-page .price-card { padding: 40px 25px; gap: 20px; }
-    .price-list-page .price-button { max-width: 100%; height: 55px; font-size: 13px; }
-
+    
+    /* Pinaliit nang konti para hindi umabot sa landscape */
+    .price-list-page .price-card-wrapper { width: 90%; max-width: 380px; padding: 25px 20px; }
+    .price-list-page .price-card { padding: 35px 20px; gap: 15px; }
+    .price-list-page .price-button { max-width: 100%; height: 50px; font-size: 13px; }
+    
     .notif-overlay { right: -50px; width: 300px; }
-}
-
-@media (max-width: 380px) {
-    .price-list-page .how-title-section h1 { font-size: 24px; }
-    .price-list-page .price-card-wrapper { width: 94%; }
 }
