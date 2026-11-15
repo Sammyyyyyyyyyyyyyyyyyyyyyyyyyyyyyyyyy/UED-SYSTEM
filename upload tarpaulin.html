@@ -8,15 +8,8 @@
 <link rel="stylesheet" href="upload.css">
 
 <style>
+    /* NAV & NOTIF FIX */
     .menu-toggle, .close-menu { display: none; }
-    @media (max-width: 850px) {
-        .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
-        .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
-        .main-navigation.active { right: 0; }
-        .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
-        .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
-        .menu-overlay.active { display: block; }
-    }
 
     .notification-wrapper { position: relative; display: flex; align-items: center; }
     .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
@@ -34,6 +27,7 @@
     .notif-content span { font-size: 9px; color: #888; }
     .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
 
+    /* UPLOAD LAYOUT */
     .upload-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; align-items: start; }
     .upload-box { background: #fff; border: 2px solid #203B32; border-radius: 12px; padding: 25px; text-align: center; }
     .order-list-section { background: transparent; border: none; padding: 0 10px; }
@@ -53,9 +47,110 @@
     .empty-message { text-align: left; color: #777; font-size: 13px; padding: 20px 0; }
     .action-buttons { display: flex; justify-content: space-between; gap: 15px; margin: 25px 0; }
 
-    @media(max-width: 750px) {
+    /* =========================================
+       TABLET VIEW (1024px and below)
+    ========================================= */
+    @media (max-width: 1024px) {
         .upload-layout { grid-template-columns: 1fr; }
         .file-list { max-height: 250px; }
+
+        /* Siguraduhing magkatabi ang bell at hamburger */
+        .nav-actions-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        /* Ipakita ang hamburger */
+        .menu-toggle { 
+            display: block !important; 
+            background: none !important; 
+            border: none !important; 
+            color: white; 
+            cursor: pointer; 
+        }
+        .menu-toggle svg {
+            width: 28px;
+            height: 28px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+        }
+
+        /* Slide-in drawer mula sa kanan */
+        .main-navigation { 
+            position: fixed !important; 
+            top: 0 !important; 
+            right: -100% !important; 
+            width: 250px; 
+            height: 100vh; 
+            height: 100dvh;
+            background: #203B32 !important; 
+            display: flex !important; 
+            flex-direction: column !important; 
+            padding: 60px 0 20px !important; 
+            gap: 0 !important;
+            transition: right 0.3s !important; 
+            z-index: 100001 !important; 
+            overflow-y: auto;
+        }
+        .main-navigation.active { 
+            right: 0 !important; 
+        }
+
+        /* Ibalik at ayusin ang Close (X) button */
+        .close-menu { 
+            display: block !important; 
+            position: absolute !important; 
+            top: 15px !important; 
+            right: 15px !important; 
+            background: none !important; 
+            border: none !important; 
+            color: white !important; 
+            cursor: pointer !important; 
+            z-index: 100002 !important; 
+        }
+        .close-menu svg {
+            width: 24px;
+            height: 24px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .menu-overlay { 
+            display: none; 
+            position: fixed !important; 
+            inset: 0 !important; 
+            background: rgba(0,0,0,0.5) !important; 
+            z-index: 100000 !important; 
+        }
+        .menu-overlay.active { 
+            display: block !important; 
+        }
+        
+        .nav-link { 
+            width: 100% !important; 
+            justify-content: flex-start !important; 
+            padding: 18px 20px !important; 
+            font-size: 14px !important; 
+            border-bottom: 1px solid rgba(255,255,255,0.1) !important; 
+            gap: 15px !important; 
+        }
+        .nav-link svg {
+            width: 22px;
+            height: 22px;
+            stroke: #ffffff;
+        }
+
+        /* Notification Popup Position */
+        .notif-overlay { 
+            top: 60px; 
+            right: 10px; 
+            width: 300px; 
+        }
     }
 </style>
 </head>
@@ -115,7 +210,6 @@
         </div>
 
         <div class="action-buttons">
-            <!-- Pinalitan ang onclick ng id para ma-handle ng JS -->
             <button class="btn-back" id="backBtn">Back</button>
             <button class="btn-continue" id="mainContinueBtn" type="button">Continue</button>
         </div>
@@ -166,7 +260,6 @@
         <div class="modal-actions"><button class="btn-confirm" id="noFileOkay">Okay</button></div>
     </div>
 </div>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -339,16 +432,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ==========================================
     // BACK BUTTON LOGIC (CLEAR STORAGE)
-    // ==========================================
     document.getElementById("backBtn").addEventListener("click", function() {
-        // Burahin ang mga files para malinis sa susunod na order
         localStorage.removeItem("uploadedTarps");
         localStorage.removeItem("finalTarpaulinOrders");
         sessionStorage.removeItem("activeTrackOrder");
-        
-        // Balik sa Select Services
         window.location.href = "select services.html";
     });
 
