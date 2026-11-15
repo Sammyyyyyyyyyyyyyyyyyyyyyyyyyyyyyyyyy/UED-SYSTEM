@@ -22,10 +22,12 @@ html, body {
     position: relative;
     width: 100%;
     max-width: 1440px;
-    min-height: 1024px;
+    min-height: 100vh; /* Pinalitan ang 1024px ng 100vh */
     margin: 0 auto;
     background-color: var(--PRINT-COLORS-background, #D9D9D9);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* =========================================
@@ -33,7 +35,7 @@ html, body {
 ========================================= */
 
 .price-list-page .service-header {
-    position: absolute;
+    position: fixed; /* Ginawang fixed para hindi sumama sa scroll */
     top: 0;
     left: 0;
     width: 100%;
@@ -43,7 +45,7 @@ html, body {
     align-items: center;
     justify-content: space-between;
     background-color: var(--PRINT-COLORS-navigation, #203B32);
-    z-index: 5;
+    z-index: 99999; /* Mataas para hindi matakpan */
 }
 
 .price-list-page .brand {
@@ -72,6 +74,7 @@ html, body {
     display: flex;
     align-items: center;
     gap: 20px;
+    position: relative;
 }
 
 .price-list-page .main-navigation {
@@ -179,18 +182,18 @@ html, body {
 .price-list-page .service-content {
     position: relative;
     width: 100%;
-    min-height: 1024px;
+    flex: 1;
     z-index: 2;
+    padding-top: 120px; /* Sapat na espasyo para sa fixed header */
+    padding-bottom: 80px;
 }
 
 /* TITLE SECTION */
 .price-list-page .how-title-section {
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative; /* Ginawang relative para hindi umasa sa absolute */
     width: 86%;
     max-width: 1140px;
+    margin: 0 auto 40px;
     text-align: left;
 }
 
@@ -215,11 +218,9 @@ html, body {
 ========================================= */
 
 .price-list-page .price-card-wrapper {
-    position: absolute;
-    top: 320px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative; /* Ginawang relative */
     width: 500px;
+    margin: 0 auto; /* Center gamit ang margin */
     padding: 40px;
     background-color: var(--PRINT-COLORS-muted-green, #a5b88f);
     border-radius: 12px;
@@ -274,7 +275,7 @@ html, body {
 ========================================= */
 
 .price-list-page .foreground-landscape {
-    position: absolute;
+    position: fixed; /* Naka-fixed para laging nasa ilalim */
     bottom: 0;
     left: 0;
     width: 100%;
@@ -285,7 +286,7 @@ html, body {
 }
 
 .price-list-page .landscape {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -310,7 +311,7 @@ html, body {
     display: none; 
     flex-direction: column;
     padding: 20px;
-    z-index: 999;
+    z-index: 999999;
     border: 1px solid #ddd;
 }
 
@@ -407,7 +408,7 @@ html, body {
 .notif-mark-read:hover { color: #203B32; }
 
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE (TABLET & MOBILE)
 ========================================= */
 
 @media (max-width: 1100px) {
@@ -417,15 +418,30 @@ html, body {
     .price-list-page .nav-link svg { width: 22px; height: 22px; }
 }
 
-@media (max-width: 700px) {
+/* PINALITAN ANG 700PX NG 1024PX PARA SA TABLET */
+@media (max-width: 1024px) {
     .price-list-page .service-header { height: 70px; padding: 0 20px; }
     .price-list-page .brand { font-size: 21px; }
     .price-list-page .brand img { width: 36px; height: 36px; }
     .price-list-page .nav-actions-wrapper { gap: 15px; }
 
-    /* =========================================
-       INAYOS NA MOBILE SIDEBAR
-    ========================================= */
+    /* IPAKITA ANG HAMBURGER */
+    .price-list-page .menu-toggle { 
+        display: block !important; 
+        background: none !important; 
+        border: none !important; 
+        cursor: pointer; 
+    }
+    .price-list-page .menu-toggle svg { 
+        width: 28px; 
+        height: 28px; 
+        stroke: #ffffff; 
+        stroke-width: 2.5; 
+        stroke-linecap: round; 
+        fill: none;
+    }
+
+    /* SIDE DRAWER NAVIGATION */
     .price-list-page .main-navigation {
         position: fixed !important; 
         top: 0 !important; 
@@ -434,15 +450,13 @@ html, body {
         height: 100vh;
         height: 100dvh; 
         background-color: var(--PRINT-COLORS-navigation, #203B32);
-        display: flex; 
+        display: flex !important; 
         flex-direction: column; 
         align-items: flex-start;
         justify-content: flex-start; 
-        
-        padding: 40px 0 20px; 
-        
+        padding: 60px 0 20px; 
         gap: 0; 
-        z-index: 9999; 
+        z-index: 100001 !important; 
         transition: right 0.3s ease; 
         box-shadow: -5px 0 15px rgba(0,0,0,0.2);
         overflow-y: auto; 
@@ -451,46 +465,38 @@ html, body {
     .price-list-page .main-navigation.active { 
         right: 0 !important; 
     }
-    
-    .price-list-page .menu-toggle { 
-        display: block; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-    }
-    
-    .price-list-page .menu-toggle svg { 
-        width: 28px; 
-        height: 28px; 
-        stroke: #ffffff; 
-        stroke-width: 2.5; 
-        stroke-linecap: round; 
-    }
-    
+
+    /* CLOSE (X) BUTTON */
     .price-list-page .close-menu { 
-        display: block; 
-        position: absolute; 
-        top: 10px; 
-        right: 15px; 
-        background: none; 
-        border: none; 
-        cursor: pointer; 
-        z-index: 10000;
+        display: block !important; 
+        position: absolute !important; 
+        top: 15px !important; 
+        right: 15px !important; 
+        background: none !important; 
+        border: none !important; 
+        cursor: pointer !important; 
+        z-index: 100002 !important;
     }
-    
     .price-list-page .close-menu svg { 
-        width: 24px; 
-        height: 24px; 
-        stroke: #ffffff; 
+        width: 24px !important; 
+        height: 24px !important; 
+        stroke: #ffffff !important; 
+        stroke-width: 2.5 !important;
+        fill: none !important;
     }
     
     .price-list-page .nav-link { 
         width: 100%; 
         justify-content: flex-start; 
-        padding: 16px 20px; 
+        padding: 18px 20px; 
         font-size: 14px; 
         border-bottom: 1px solid rgba(255,255,255,0.1); 
         gap: 15px; 
+    }
+    .price-list-page .nav-link svg {
+        width: 22px;
+        height: 22px;
+        stroke: #ffffff;
     }
     
     .price-list-page .menu-overlay { 
@@ -501,32 +507,37 @@ html, body {
         width: 100vw; 
         height: 100vh; 
         background-color: rgba(0,0,0,0.5); 
-        z-index: 9998; 
+        z-index: 100000 !important; 
     }
     
     .price-list-page .menu-overlay.active { 
-        display: block; 
+        display: block !important; 
     }
 
-    /* =========================================
-       INAYOS NA POSISYON SA MOBILE
-    ========================================= */
+    /* POSISYON SA TABLET */
+    .price-list-page .service-content {
+        padding-top: 100px;
+    }
     .price-list-page .how-title-section { 
-        top: 120px; 
         text-align: center; 
+        margin-bottom: 30px;
     }
     .price-list-page .how-title-section h1 { font-size: 27px; }
 
     .price-list-page .price-card-wrapper {
-        top: 320px; /* Ibaba pa natin para may space sa taas */
         width: 90%;
-        max-width: 350px;
+        max-width: 400px;
         padding: 25px 20px; 
     }
-    .price-list-page .price-card { padding: 30px 20px; gap: 20px; }
-    .price-list-page .price-button { max-width: 100%; height: 50px; font-size: 13px; }
+    .price-list-page .price-card { padding: 40px 25px; gap: 20px; }
+    .price-list-page .price-button { max-width: 100%; height: 55px; font-size: 13px; }
 
-    .notif-overlay { right: -50px; width: 300px; }
+    /* NOTIFICATION POPUP SA TABLET */
+    .notif-overlay { 
+        top: 65px; 
+        right: 15px; 
+        width: 300px; 
+    }
 }
 
 @media (max-width: 380px) {
