@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="receipt.css">
    
     <style>
+        /* NAV & NOTIF FIX */
         .notification-wrapper { position: relative; display: flex; align-items: center; }
         .notification-link { background: none; border: 0; color: inherit; cursor: pointer; display: flex; align-items: center; padding: 8px; }
         .notification-link svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -25,14 +26,8 @@
         .notif-mark-read { background: none; border: none; color: #6d6b45; font-size: 11px; font-weight: 700; text-align: right; margin-top: 15px; cursor: pointer; text-decoration: underline; }
         
         .menu-toggle, .close-menu { display: none; }
-        @media (max-width: 850px) {
-            .menu-toggle { display: block; background: none; border: none; color: white; cursor: pointer; }
-            .main-navigation { position: fixed; top: 0; right: -100%; width: 250px; height: 100vh; background: #203B32; flex-direction: column; padding: 60px 0 20px; transition: right 0.3s; z-index: 100; }
-            .main-navigation.active { right: 0; }
-            .close-menu { display: block; position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; cursor: pointer; }
-            .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
-            .menu-overlay.active { display: block; }
-        }
+
+        /* TABLE / RECEIPT STYLES */
         .table-scroll-wrapper { max-height: 250px; overflow-y: auto; border-bottom: 2px solid #203B32; margin-bottom: 20px; }
         .table-scroll-wrapper::-webkit-scrollbar { width: 6px; }
         .table-scroll-wrapper::-webkit-scrollbar-thumb { background: #a5b88f; border-radius: 10px; }
@@ -53,6 +48,109 @@
         .pdf-export-mode th, .pdf-export-mode td { border: 1px solid #203B32 !important; padding: 6px !important; font-size: 10px !important; text-align: left !important; word-wrap: break-word !important; }
         .pdf-export-mode th { background-color: #f0f0f0 !important; color: #203B32 !important; }
         .pdf-export-mode .total-row { background: #a5b88f !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+        /* =========================================
+           TABLET VIEW (1024px and below)
+        ========================================= */
+        @media (max-width: 1024px) {
+            /* Siguraduhing magkatabi ang bell at hamburger */
+            .nav-actions-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                position: relative;
+            }
+
+            /* Ipakita ang hamburger */
+            .menu-toggle { 
+                display: block !important; 
+                background: none !important; 
+                border: none !important; 
+                color: white; 
+                cursor: pointer; 
+            }
+            .menu-toggle svg {
+                width: 28px;
+                height: 28px;
+                stroke: #ffffff;
+                stroke-width: 2.5;
+                fill: none;
+                stroke-linecap: round;
+            }
+
+            /* Slide-in drawer mula sa kanan */
+            .main-navigation { 
+                position: fixed !important; 
+                top: 0 !important; 
+                right: -100% !important; 
+                width: 250px; 
+                height: 100vh; 
+                height: 100dvh;
+                background: #203B32 !important; 
+                display: flex !important; 
+                flex-direction: column !important; 
+                padding: 60px 0 20px !important; 
+                gap: 0 !important;
+                transition: right 0.3s !important; 
+                z-index: 100001 !important; 
+                overflow-y: auto;
+            }
+            .main-navigation.active { 
+                right: 0 !important; 
+            }
+
+            /* Ibalik at ayusin ang Close (X) button */
+            .close-menu { 
+                display: block !important; 
+                position: absolute !important; 
+                top: 15px !important; 
+                right: 15px !important; 
+                background: none !important; 
+                border: none !important; 
+                color: white !important; 
+                cursor: pointer !important; 
+                z-index: 100002 !important; 
+            }
+            .close-menu svg {
+                width: 24px;
+                height: 24px;
+                stroke: #ffffff;
+                stroke-width: 2.5;
+                fill: none;
+            }
+
+            .menu-overlay { 
+                display: none; 
+                position: fixed !important; 
+                inset: 0 !important; 
+                background: rgba(0,0,0,0.5) !important; 
+                z-index: 100000 !important; 
+            }
+            .menu-overlay.active { 
+                display: block !important; 
+            }
+            
+            .nav-link { 
+                width: 100% !important; 
+                justify-content: flex-start !important; 
+                padding: 18px 20px !important; 
+                font-size: 14px !important; 
+                border-bottom: 1px solid rgba(255,255,255,0.1) !important; 
+                gap: 15px !important; 
+            }
+            .nav-link svg {
+                width: 22px;
+                height: 22px;
+                stroke: #ffffff;
+            }
+
+            /* Notification Popup Position */
+            .notif-overlay { 
+                top: 60px; 
+                right: 10px; 
+                width: 300px; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -139,10 +237,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!isNaN(num) && num > maxNum) maxNum = num; 
     });
     
-    // Gumawa ng bagong ID (+1)
     let currentOrderId = "PR-" + String(maxNum + 1).padStart(4, '0'); 
-    
-    // Ipakita sa receipt
     const refHTML = currentOrderId;
 
     let totalAmount = 0;
@@ -170,9 +265,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const finalTotal = (totalAmount + deliveryFee).toFixed(2);
 
-    // ==========================================
     // RENDER RECEIPT
-    // ==========================================
     document.getElementById("receiptContent").innerHTML = `
         <div class="receipt-header">
             <div class="status-group">
@@ -221,9 +314,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     `;
 
-    // ==========================================
     // DOWNLOAD RECEIPT
-    // ==========================================
     document.getElementById("btnDownload").addEventListener("click", () => {
         const element = document.getElementById("receiptContent");
         const btn = document.getElementById("btnDownload");
@@ -300,7 +391,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("btnTrack").addEventListener("click", () => {
-        // BUBURAHIN NATIN YUNG LUMANG SESSION BAGO PUMUNTA SA TRACK PARA FRESH ANG ID
         sessionStorage.removeItem("activeTrackOrder");
         window.location.href = "track tarpaulin.html";
     });
