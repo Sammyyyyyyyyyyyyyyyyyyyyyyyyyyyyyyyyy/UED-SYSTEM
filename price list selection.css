@@ -418,14 +418,14 @@ html, body {
     .price-list-page .nav-link svg { width: 22px; height: 22px; }
 }
 
-/* PINALITAN ANG 700PX NG 1024PX PARA SA TABLET */
+/* TABLET VIEW FIX (1024px and below) */
 @media (max-width: 1024px) {
     .price-list-page .service-header { height: 70px; padding: 0 20px; }
     .price-list-page .brand { font-size: 21px; }
     .price-list-page .brand img { width: 36px; height: 36px; }
     .price-list-page .nav-actions-wrapper { gap: 15px; }
 
-    /* IPAKITA ANG HAMBURGER */
+    /* Show hamburger */
     .price-list-page .menu-toggle { 
         display: block !important; 
         background: none !important; 
@@ -441,7 +441,7 @@ html, body {
         fill: none;
     }
 
-    /* SIDE DRAWER NAVIGATION */
+    /* Side Drawer */
     .price-list-page .main-navigation {
         position: fixed !important; 
         top: 0 !important; 
@@ -449,7 +449,7 @@ html, body {
         width: 250px; 
         height: 100vh;
         height: 100dvh; 
-        background-color: var(--PRINT-COLORS-navigation, #203B32);
+        background-color: #203B32;
         display: flex !important; 
         flex-direction: column; 
         align-items: flex-start;
@@ -466,7 +466,7 @@ html, body {
         right: 0 !important; 
     }
 
-    /* CLOSE (X) BUTTON */
+    /* Close (X) Button */
     .price-list-page .close-menu { 
         display: block !important; 
         position: absolute !important; 
@@ -514,7 +514,7 @@ html, body {
         display: block !important; 
     }
 
-    /* POSISYON SA TABLET */
+    /* Adjust content for tablet */
     .price-list-page .service-content {
         padding-top: 100px;
     }
@@ -532,7 +532,7 @@ html, body {
     .price-list-page .price-card { padding: 40px 25px; gap: 20px; }
     .price-list-page .price-button { max-width: 100%; height: 55px; font-size: 13px; }
 
-    /* NOTIFICATION POPUP SA TABLET */
+    /* Notification Popup position */
     .notif-overlay { 
         top: 65px; 
         right: 15px; 
