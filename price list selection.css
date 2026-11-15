@@ -22,7 +22,7 @@ html, body {
     position: relative;
     width: 100%;
     max-width: 1440px;
-    min-height: 100vh; /* Pinalitan ang 1024px ng 100vh */
+    min-height: 100vh;
     margin: 0 auto;
     background-color: var(--PRINT-COLORS-background, #D9D9D9);
     overflow: hidden;
@@ -35,7 +35,7 @@ html, body {
 ========================================= */
 
 .price-list-page .service-header {
-    position: fixed; /* Ginawang fixed para hindi sumama sa scroll */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -45,7 +45,7 @@ html, body {
     align-items: center;
     justify-content: space-between;
     background-color: var(--PRINT-COLORS-navigation, #203B32);
-    z-index: 99999; /* Mataas para hindi matakpan */
+    z-index: 99999;
 }
 
 .price-list-page .brand {
@@ -184,13 +184,13 @@ html, body {
     width: 100%;
     flex: 1;
     z-index: 2;
-    padding-top: 120px; /* Sapat na espasyo para sa fixed header */
+    padding-top: 120px;
     padding-bottom: 80px;
 }
 
 /* TITLE SECTION */
 .price-list-page .how-title-section {
-    position: relative; /* Ginawang relative para hindi umasa sa absolute */
+    position: relative;
     width: 86%;
     max-width: 1140px;
     margin: 0 auto 40px;
@@ -218,9 +218,9 @@ html, body {
 ========================================= */
 
 .price-list-page .price-card-wrapper {
-    position: relative; /* Ginawang relative */
+    position: relative;
     width: 500px;
-    margin: 0 auto; /* Center gamit ang margin */
+    margin: 0 auto;
     padding: 40px;
     background-color: var(--PRINT-COLORS-muted-green, #a5b88f);
     border-radius: 12px;
@@ -275,7 +275,7 @@ html, body {
 ========================================= */
 
 .price-list-page .foreground-landscape {
-    position: fixed; /* Naka-fixed para laging nasa ilalim */
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
