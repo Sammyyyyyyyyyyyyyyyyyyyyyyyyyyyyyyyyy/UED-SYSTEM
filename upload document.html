@@ -110,68 +110,104 @@
 
         /* =========================================
            TABLET / MINI IPAD NAVIGATION OVERRIDES
-           (Changed 750px to 1024px)
         ========================================= */
         @media(max-width: 1024px) {
             .upload-layout { grid-template-columns: 1fr; }
             .file-list { max-height: 250px; }
 
-            /* Hide the nav links by default */
-            .main-navigation {
-                display: none; /* Hidden by default on tablet */
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #203B32; /* Match header background */
-                flex-direction: column;
-                padding: 20px;
-                border-radius: 0 0 12px 12px;
-                z-index: 1000;
-                margin-top: 10px;
-                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            /* Make the wrapper the anchor for absolute dropdown */
+            .nav-actions-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                position: relative;
             }
 
-            /* Show when active */
+            /* Hide nav links by default */
+            .main-navigation {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 0;
+                width: 240px;
+                background: #203B32;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 10px;
+                z-index: 1000;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            }
+
+            /* Show when toggled */
             .main-navigation.active {
                 display: flex;
             }
 
-            /* Style the nav links for mobile view */
+            /* Nav links styling */
             .main-navigation .nav-link {
                 width: 100%;
                 padding: 12px 15px;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
+                border-radius: 6px;
                 justify-content: flex-start;
+                gap: 12px;
+                color: #fff;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                font-family: 'Poppins';
+                font-size: 13px;
+                font-weight: 500;
             }
 
-            .main-navigation .nav-link:last-child {
-                border-bottom: none;
+            .main-navigation .nav-link svg {
+                width: 20px;
+                height: 20px;
+                stroke: currentColor;
+                fill: none;
+                stroke-width: 2;
+            }
+
+            .main-navigation .nav-link:hover {
+                background: rgba(255,255,255,0.1);
+            }
+
+            /* Hide close button on tablet (optional) */
+            .main-navigation .close-menu {
+                display: none;
             }
 
             /* Show the hamburger menu */
             .menu-toggle {
-                display: block;
-            }
-
-            /* Adjust the wrapper to align items properly */
-            .nav-actions-wrapper {
                 display: flex;
                 align-items: center;
-                gap: 15px;
+                justify-content: center;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 5px;
             }
 
-            /* Hide the close button inside nav on tablet if not needed */
-            .main-navigation .close-menu {
-                display: none; /* Or block if you want it */
+            .menu-toggle svg {
+                width: 28px;
+                height: 28px;
+                stroke: #fff;
+                stroke-width: 2.5;
+                fill: none;
+            }
+
+            /* Notification icon sizing */
+            .notification-link svg {
+                width: 24px;
+                height: 24px;
+                stroke: #fff;
+                fill: none;
+                stroke-width: 2;
             }
         }
 
-        /* Ensure menu toggle is hidden on desktop */
+        /* Desktop: hide hamburger */
         @media(min-width: 1025px) {
-            .menu-toggle {
-                display: none;
-            }
+            .menu-toggle { display: none; }
         }
     </style>
 </head>
@@ -183,7 +219,6 @@
             <span>PRINT</span>
         </a>
         <div class="nav-actions-wrapper">
-            <!-- Main Navigation (Desktop view) -->
             <nav class="main-navigation" id="mainNav">
                 <button class="close-menu" id="closeMenu">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -250,7 +285,6 @@
                 </div>
             </div>
 
-            <!-- Hamburger Menu (Visible on Tablet) -->
             <button class="menu-toggle" id="menuToggle">
                 <svg viewBox="0 0 24 24">
                     <line x1="3" y1="12" x2="21" y2="12"/>
@@ -476,22 +510,15 @@ document.addEventListener("DOMContentLoaded", async function () {
         } catch (error) { alert("Unable to save your files. Please try again."); }
     });
 
-    // ==========================================
     // BACK BUTTON LOGIC (CLEAR STORAGE)
-    // ==========================================
     document.getElementById("backBtn").addEventListener("click", function() {
-        // Burahin ang mga files para malinis sa susunod na order
         localStorage.removeItem("uploadedDocs");
         localStorage.removeItem("finalOrders");
         sessionStorage.removeItem("activeTrackOrder");
-        
-        // Balik sa Select Services
         window.location.href = "select services.html";
     });
 
-    // ==========================================
     // CONTINUE BUTTON
-    // ==========================================
     document.getElementById("mainContinueBtn").addEventListener("click", () => {
         if (savedFiles.length === 0) { noFileModal.classList.add("active"); return; }
         saveMetadata();
