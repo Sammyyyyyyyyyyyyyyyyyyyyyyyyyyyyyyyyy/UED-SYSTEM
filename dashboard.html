@@ -22,15 +22,15 @@
 <div class="dashboard">
 
     <!-- BACKGROUND LANDSCAPES -->
-    <img class="foreground-landscape" src="Foreground landscape.png" alt="" aria-hidden="true">
-    <img class="landscape" src="Landscape.png" alt="" aria-hidden="true">
+    <img class="foreground-landscape" src="img/Foreground landscape.png" alt="" aria-hidden="true">
+    <img class="landscape" src="img/Landscape.png" alt="" aria-hidden="true">
 
     <!-- HEADER -->
     <header class="dashboard-header">
 
         <!-- LOGO -->
         <a href="dashboard.html" class="brand" aria-label="PRINT Home">
-            <img src="Printer.png" alt="">
+            <img src="img/Printer.png" alt="">
             <span>PRINT</span>
         </a>
 
@@ -68,7 +68,6 @@
 
             <!-- NOTIFICATION BELL & POPUP CONTAINER -->
             <div class="notification-wrapper">
-                <!-- Nilagyan natin ng 'has-unread' class yung button -->
                 <button class="notification-link has-unread" id="notificationBtn" aria-label="Notifications">
                     <svg viewBox="0 0 24 24">
                         <path d="M18 8.5C18 5 15.5 3 12 3S6 5 6 8.5C6 15 4 17 3 18H21C20 17 18 15 18 8.5Z"/>
@@ -76,7 +75,6 @@
                     </svg>
                 </button>
 
-                <!-- NOTIFICATIONS POPUP -->
                 <div class="notif-overlay" id="notifOverlay">
                     <div class="notif-popup">
                         <button class="notif-close" id="notifClose">
@@ -85,7 +83,6 @@
                         <h2>Notifications</h2>
                         
                         <div class="notif-list">
-                            <!-- Notification 1 (Unread - Dark Grey Background) -->
                             <div class="notif-item unread">
                                 <div class="notif-icon">
                                     <svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -97,7 +94,6 @@
                                 </div>
                             </div>
 
-                            <!-- Notification 2 (Read) -->
                             <div class="notif-item">
                                 <div class="notif-icon">
                                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 14 8 12"/></svg>
@@ -131,9 +127,8 @@
             <p>What would you like to print today? Start a new order or check the status of an existing one.</p>
         </section>
 
-        <img class="printer-illustration" src="Printer illustration 1x.png" alt="Illustration of a printer">
+        <img class="printer-illustration" src="img/Printer illustration 1x.png" alt="Illustration of a printer">
 
-        <!-- START ORDER BUTTON -->
         <button id="startOrderBtn" class="start-order-button">
             Start Order
         </button>
@@ -143,9 +138,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // =========================================
-        // 1. MOBILE SIDEBAR LOGIC
-        // =========================================
+        // NAVIGATION
         const menuToggle = document.getElementById("menuToggle");
         const closeMenu = document.getElementById("closeMenu");
         const mainNav = document.getElementById("mainNav");
@@ -172,65 +165,58 @@
             });
         }
 
-        // =========================================
-        // 2. START ORDER BUTTON NAVIGATION
-        // =========================================
+        // START ORDER
         const startOrderBtn = document.getElementById("startOrderBtn");
         if (startOrderBtn) {
-                startOrderBtn.addEventListener("click", function() {
-        // I-reset lahat ng files para malinis sa bagong order
-        localStorage.removeItem("uploadedDocs");
-        localStorage.removeItem("uploadedPhotos");
-        localStorage.removeItem("uploadedTarps");
-        localStorage.removeItem("finalOrders");
-        localStorage.removeItem("finalPhotoOrders");
-        localStorage.removeItem("finalTarpaulinOrders");
-        sessionStorage.removeItem("activeTrackOrder");
-        
-        window.location.href = "select services.html";
-    });
+            startOrderBtn.addEventListener("click", function() {
+                localStorage.removeItem("uploadedDocs");
+                localStorage.removeItem("uploadedPhotos");
+                localStorage.removeItem("uploadedTarps");
+                localStorage.removeItem("finalOrders");
+                localStorage.removeItem("finalPhotoOrders");
+                localStorage.removeItem("finalTarpaulinOrders");
+                sessionStorage.removeItem("activeTrackOrder");
+                
+                window.location.href = "select services.html";
+            });
         }
 
-        // =========================================
-        // 3. NOTIFICATIONS POPUP LOGIC
-        // =========================================
-        const notifBtn = document.getElementById('notificationBtn');
-        const notifOverlay = document.getElementById('notifOverlay');
-        const notifClose = document.getElementById('notifClose');
-        const notifMarkRead = document.getElementById('notifMarkRead');
+        // NOTIFICATIONS
+        const notifBtn = document.getElementById("notificationBtn");
+        const notifOverlay = document.getElementById("notifOverlay");
+        const notifClose = document.getElementById("notifClose");
+        const notifMarkRead = document.getElementById("notifMarkRead");
 
         if (notifBtn) {
-            notifBtn.addEventListener('click', function(e) {
+            notifBtn.addEventListener("click", function(e) {
                 e.stopPropagation(); 
-                notifOverlay.classList.toggle('active');
+                notifOverlay.classList.toggle("active");
             });
         }
 
         if (notifClose) {
-            notifClose.addEventListener('click', function() {
-                notifOverlay.classList.remove('active');
+            notifClose.addEventListener("click", function() {
+                notifOverlay.classList.remove("active");
             });
         }
 
-        // Isara kapag clinick sa labas
-        document.addEventListener('click', function(e) {
-            if (notifOverlay && notifOverlay.classList.contains('active')) {
+        document.addEventListener("click", function(e) {
+            if (notifOverlay && notifOverlay.classList.contains("active")) {
                 if (!notifOverlay.contains(e.target) && !notifBtn.contains(e.target)) {
-                    notifOverlay.classList.remove('active');
+                    notifOverlay.classList.remove("active");
                 }
             }
         });
 
-        // Mark all as read logic
         if (notifMarkRead) {
-            notifMarkRead.addEventListener('click', function() {
-                const unreadItems = document.querySelectorAll('.notif-item.unread');
+            notifMarkRead.addEventListener("click", function() {
+                const unreadItems = document.querySelectorAll(".notif-item.unread");
                 unreadItems.forEach(item => {
-                    item.classList.remove('unread');
+                    item.classList.remove("unread");
                 });
                 
                 if (notifBtn) {
-                    notifBtn.classList.remove('has-unread');
+                    notifBtn.classList.remove("has-unread");
                 }
             });
         }
